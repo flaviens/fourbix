@@ -1,2 +1,2 @@
 # fourbix
-Plateforme de prêts entre binets. Projet Modal Web INF473W.
+Plateforme de prêts et gestion des matériels des binets. Projet Modal Web INF473W.

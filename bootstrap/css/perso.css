@@ -1,0 +1,95 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 13 avr. 2014, 09:14:23
+    Author     : olivierserre
+*/
+
+
+@import url(http://fonts.googleapis.com/css?family=Shadows+Into+Light);
+
+
+
+[class*="col-"].gris {
+    background-color: grey;
+    border:solid 1px white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+header{
+    width: 50%;
+    padding:5px;
+    height:100px;
+    margin-left: 25%;
+    background-color:#BEC0ED;
+    border:4px #121D70 dashed;
+    border-radius: 5px;
+}
+
+header h1{
+    color:blue;
+    font-weight: bolder;
+    font-family: Futura;
+    text-align:justify;
+    font-size: 35px;
+}
+
+header img{
+    margin:0 0 0 3%;
+}
+
+.imageFlottante{
+    float:left;
+}
+
+.infos{
+    background-color: #5B65B3;
+    margin-top:20px;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    border:darkblue double 5px;
+    color:white;
+}
+
+.infos h3{
+    text-align: center;
+}
+
+.infos h2{
+    color:white;
+    text-decoration: underline;
+    text-align: center;
+}
+
+.personal{
+    border: white solid 2px;   
+    margin-top : 5px;
+    margin-bottom: 10px;
+}
+
+.personal p{
+    text-align: justify;
+}
+
+.personal .btn{
+    margin-left:20%;
+}
+
+.Moumoune{
+    width: 100%;
+    text-align: center;
+}
+
+.jumbotron{
+    text-align: center;
+    background-color: #D9DDFA;
+}
+
+.temoignage p{
+    font-family: 'Shadows Into Light', cursive;
+    font-size: x-large;
+}

@@ -68,7 +68,37 @@ CHAINE_DE_FIN;
     }
 }
 
+$page_list = array(
+    array(
+        "name"=>"accueil",
+        "title"=>"Accueil de notre site",
+        "menutitle"=>"Accueil"),
+    array(
+        "name"=>"catalogue",
+        "title"=>"Catalogue",
+        "menutitle"=>"Catalogue"),
+    array(
+        "name"=>"binets",
+        "title"=>"Binets",
+        "menutitle"=>"Mes Binets")
+);
 
+function checkPage($askedPage){
+    global $page_list;
+    foreach ($page_list as $page) {
+        if($page['name'] == $askedPage)
+            return true;
+    }
+    return false;
+}
+
+function getPageTitle($askedPage){
+    global $page_list;
+    foreach ($page_list as $page) {
+        if($page['name'] == $askedPage)
+            return $page['title'];
+    }
+}
 
 /* 
  * To change this license header, choose License Headers in Project Properties.

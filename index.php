@@ -11,13 +11,16 @@ var_dump($_SESSION);
 
 require("forms/utils.php");
 require("forms/printForms.php");
-require("contents/accueil.php");
+require("contents/accueil2.php");
 require("database/database.php");
 require("class/Utilisateur.php");
 require("forms/logInOut.php");
 
+$askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';
+$authorized = checkPage($askedPage);
+$pageTitle = $authorized ? getPageTitle('askedPage') : 'Erreur';
 
-$dbh= Database::connect();
+$dbh = Database::connect();
 
 generateHTMLHeader("fourbiX", "css/style.css");
                     
@@ -31,9 +34,22 @@ if (isset($_GET["todo"])){
     }
 }
 
-if (!isset($_GET["page"]) || $_GET["page"]=="accueil"){
+?>
+
+<div id="content">
+	<?php 
+		if($authorized)
+			require("contents/$askedPage.php");
+		else
+			require("contents/erreur.php");
+	?>
+</div>
+
+<?php
+
+/*if (!isset($_GET["page"]) || $_GET["page"]=="accueil"){
     printAccueil(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"], "accueil");
-}
+}*/
 
 generateHTMLFooter();
 

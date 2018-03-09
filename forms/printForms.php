@@ -1,8 +1,8 @@
 <?php
 
-function printLoginForm($askedpage){
+function printLoginForm($askedPage){
     echo <<<CHAINE_DE_FIN
-    <form action="index.php?todo=login&page=$askedpage" method="post">
+    <form action="index.php?todo=login&page=$askedPage" method="post">
         <p>
             <label for="login">Login : </label>
             <input type="text" name="login" id="login" placeholder="login" required>
@@ -24,3 +24,5 @@ function printLogoutForm(){
     </form>
 CHAINE_DE_FIN;
 }
+
+?>

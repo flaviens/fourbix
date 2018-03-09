@@ -81,7 +81,7 @@ $page_list = array(
     array(
         "name"=>"binets",
         "title"=>"Binets",
-        "menutitle"=>"Mes Binets")
+        "menutitle"=>"Mes Binets"),
 );
 
 function checkPage($askedPage){

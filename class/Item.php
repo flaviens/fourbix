@@ -7,6 +7,9 @@ class Item{
     public $marque;
     public $type;
     
+    public function __toString(){
+        
+    }
     
     public function getItemResearch($dbh, $nom){
         $query="SELECT * FROM `item` WHERE LOCATE(?, `nom`)>0 ";

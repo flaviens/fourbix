@@ -54,8 +54,8 @@ CHAINE_DE_FIN;
                     <li class="active"><a href="#">Accueil</a></li>
                     <li><a href="#">Catalogue</a></li>
                     <li style=margin-top:10px>
-                    <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <form class="form-inline" method="post">
+    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
     </form></li>
         <li><a href="#">Mes binets</a></li>
@@ -81,7 +81,11 @@ $page_list = array(
     array(
         "name"=>"binets",
         "title"=>"Binets",
-        "menutitle"=>"Mes Binets")
+        "menutitle"=>"Mes Binets"),
+    array(
+        "name"=>"search",
+        "title"=>"Recherche de matériel",
+        "menutitle"=>"Recherche"),
 );
 
 function checkPage($askedPage){

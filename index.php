@@ -11,7 +11,6 @@ var_dump($_SESSION);
 
 require("forms/utils.php");
 require("forms/printForms.php");
-require("contents/accueil2.php");
 require("database/database.php");
 require("class/Utilisateur.php");
 require("class/Item.php");

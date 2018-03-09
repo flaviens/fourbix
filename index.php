@@ -15,6 +15,7 @@ require("contents/accueil.php");
 require("database/database.php");
 require("class/Utilisateur.php");
 require("forms/logInOut.php");
+require("class/Items.php");
 
 
 $dbh= Database::connect();

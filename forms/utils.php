@@ -33,12 +33,12 @@ function generateNavBar($isLogged){ //TODO genere la navBar
                     <li class="active"><a href="#">Accueil</a></li>
                     <li><a href="#">Catalogue</a></li>
                     <li style=margin-top:10px>
-                    <form class="form-inline">
-    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></li>
-        <li><a href="#">Mes binets</a></li>
+                    <form class="form-inline" method="post">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button></li>
+    </form>
                     <li><a href="#">Connexion</a></li>
-  </form>
+
                 </ul>
             </div>
         </div>
@@ -56,10 +56,11 @@ CHAINE_DE_FIN;
                     <li style=margin-top:10px>
                     <form class="form-inline">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></li>
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
+    </form></li>
         <li><a href="#">Mes binets</a></li>
-                    <li><a href="index.php?todo=logout&page=accueil">Déconnexion</a></li>
-  </form>
+        <li><a href="#">Demande</a></li>
+        <li><a href="index.php?todo=logout&page=accueil">Déconnexion</a></li>
                 </ul>
             </div>
         </div>

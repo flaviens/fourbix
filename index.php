@@ -14,7 +14,9 @@ require("forms/printForms.php");
 require("contents/accueil2.php");
 require("database/database.php");
 require("class/Utilisateur.php");
+require("class/Item.php");
 require("forms/logInOut.php");
+
 
 $askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 $authorized = checkPage($askedPage);
@@ -25,9 +27,9 @@ $dbh = Database::connect();
 generateHTMLHeader("fourbiX", "css/style.css");
 
 if (isset($_GET["todo"])){
-    if ($_GET["todo"]="login"){
+    if ($_GET["todo"]=="login"){
         logIn($dbh);
-    } else if ($_GET["todo"]="logout"){
+    } else if ($_GET["todo"]=="logout"){
         logOut();
     }
 }

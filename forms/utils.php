@@ -58,7 +58,7 @@ CHAINE_DE_FIN;
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></li>
         <li><a href="#">Mes binets</a></li>
-                    <li><a href="#">Déconnexion</a></li>
+                    <li><a href="index.php?todo=logout&page=accueil">Déconnexion</a></li>
   </form>
                 </ul>
             </div>

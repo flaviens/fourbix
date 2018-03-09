@@ -11,6 +11,7 @@ function printLoginForm($askedpage){
 CHAINE_DE_FIN;
 }
 
+//inutile : c'est le bouton connexion qui permet de se déconnecter.
 function printLogoutForm(){
     echo <<<CHAINE_DE_FIN
     <form action="index.php?todo=logout&page=accueil" method="post">

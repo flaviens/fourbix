@@ -21,16 +21,15 @@ $dbh= Database::connect();
 
 generateHTMLHeader("fourbiX", "css/style.css");
                     
-generateNavBar(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
-
 if (isset($_GET["todo"])){
-    if ($_GET["todo"]="login"){
+    if ($_GET["todo"]=="login"){
         logIn($dbh);
-    } else if ($_GET["todo"]="logout"){
+    } else if ($_GET["todo"]=="logout"){
         logOut();
     }
 }
 
+generateNavBar(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 if (!isset($_GET["page"]) || $_GET["page"]=="accueil"){
     printAccueil(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"], "accueil");
 }

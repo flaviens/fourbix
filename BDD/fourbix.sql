@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  lun. 05 mars 2018 à 10:39
+-- Généré le :  ven. 09 mars 2018 à 13:46
 -- Version du serveur :  10.1.26-MariaDB
 -- Version de PHP :  7.1.9
 
@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `binets` (
   `nom` varchar(64) NOT NULL,
-  `image` varchar(64) DEFAULT NULL COMMENT 'Adresse de l''image'
+  `image` varchar(64) DEFAULT NULL COMMENT 'Adresse de limage'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -137,7 +137,7 @@ CREATE TABLE `pretoperation` (
 --
 
 CREATE TABLE `role` (
-  `nom` varchar(64) NOT NULL COMMENT 'Ensemble des noms des rôles disponibles.'
+  `nom` varchar(64) NOT NULL COMMENT 'Ensemble des noms des roles disponibles.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------

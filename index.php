@@ -1,5 +1,5 @@
 <?php
-session_name("Session21nefontqu1");
+session_name("Session21nefontqu1"); #TODO : changer le nom ? A quoi sert le nom ? 
 // ne pas mettre d'espace dans le nom de session !
 session_start();
 if (!isset($_SESSION['initiated'])) {

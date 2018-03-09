@@ -11,29 +11,45 @@ var_dump($_SESSION);
 
 require("forms/utils.php");
 require("forms/printForms.php");
-require("contents/accueil.php");
+require("contents/accueil2.php");
 require("database/database.php");
 require("class/Utilisateur.php");
 require("forms/logInOut.php");
-require("class/Items.php");
 
+$askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';
+$authorized = checkPage($askedPage);
+$pageTitle = $authorized ? getPageTitle('askedPage') : 'Erreur';
 
-$dbh= Database::connect();
+$dbh = Database::connect();
 
 generateHTMLHeader("fourbiX", "css/style.css");
-                    
+
 if (isset($_GET["todo"])){
-    if ($_GET["todo"]=="login"){
+    if ($_GET["todo"]="login"){
         logIn($dbh);
-    } else if ($_GET["todo"]=="logout"){
+    } else if ($_GET["todo"]="logout"){
         logOut();
     }
 }
 
 generateNavBar(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
-if (!isset($_GET["page"]) || $_GET["page"]=="accueil"){
+
+?>
+
+<div id="content">
+	<?php 
+		if($authorized)
+			require("contents/$askedPage.php");
+		else
+			require("contents/erreur.php");
+	?>
+</div>
+
+<?php
+
+/*if (!isset($_GET["page"]) || $_GET["page"]=="accueil"){
     printAccueil(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"], "accueil");
-}
+}*/
 
 generateHTMLFooter();
 

@@ -23,8 +23,6 @@ $pageTitle = $authorized ? getPageTitle('askedPage') : 'Erreur';
 $dbh = Database::connect();
 
 generateHTMLHeader("fourbiX", "css/style.css");
-                    
-generateNavBar(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 
 if (isset($_GET["todo"])){
     if ($_GET["todo"]="login"){
@@ -33,6 +31,8 @@ if (isset($_GET["todo"])){
         logOut();
     }
 }
+
+generateNavBar(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 
 ?>
 

@@ -82,10 +82,7 @@ $page_list = array(
         "name"=>"binets",
         "title"=>"Binets",
         "menutitle"=>"Mes Binets"),
-    array(
-        "name"=>"search",
-        "title"=>"Recherche de matériel",
-        "menutitle"=>"Recherche"),
+
 );
 
 function checkPage($askedPage){

@@ -2,17 +2,28 @@
 
 function printLoginForm($askedPage){
     echo <<<CHAINE_DE_FIN
+    <div class="container">
+    <div class="row">
+    <div class="col-md-4">
+    <div class="panel panel-primary">
+    <div class="panel-heading">Connexion</div>
+    <div class="panel-body">
     <form action="index.php?todo=login&page=$askedPage" method="post">
         <p>
             <label for="login">Login : </label>
-            <input type="text" name="login" id="login" placeholder="login" required>
+            <input type="text" name="login" id="login" placeholder="Login" required>
         </p>
         <p>
             <label for="password">Password : </label>
-            <input type="password" name="password" id="password" placeholder="password" required>
+            <input type="password" name="password" id="password" placeholder="Mot de Passe" required>
         </p>
-        <p><input type="submit" value="Valider"</p>
+        <p><input type="submit" class="btn btn-primary" value="Valider"</p>
     </form>
+    </div
+    </div>
+    </div>
+    </div>
+    </div>
     
 CHAINE_DE_FIN;
 }

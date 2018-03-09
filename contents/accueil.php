@@ -13,7 +13,7 @@ function printAccueil($isLogged, $askedpage){
 
 CHAINE_DE_FIN;
         
-        printLoginForm($askedpage);
+    printLoginForm($askedpage);
     } else{
          echo <<<CHAINE_DE_FIN
     <div class="container">

@@ -16,10 +16,12 @@ class Database {
         return $dbh;
     }
     
-    public static function insererUtilisateur($dbh,$login,$mdp,$nom,$prenom,$promotion,$naissance,$email,$feuille){ //A REFAIRE
-        $sth=$dbh->prepare("INSERT INTO `utilisateurs` (`login`, `mdp`, `nom`, `prenom`, `promotion`, `naissance`, `email`, `feuille`) VALUES(?,SHA1(?),?,?,?,?,?,?)");
-        $sth->execute(array($login,SHA1($mdp),$nom,$prenoms,$promotion,$naissance,$email,$feuille));
-    }
+    #Deja fait dans la classe utilisateur :
+//    public static function insererUtilisateur($dbh,$login,$mdp,$nom,$prenom,$promotion,$naissance,$email,$feuille){ //A REFAIRE
+//        $sth=$dbh->prepare("INSERT INTO `utilisateurs` (`login`, `mdp`, `nom`, `prenom`, `promotion`, `naissance`, `email`, `feuille`) VALUES(?,SHA1(?),?,?,?,?,?,?)");
+//        $sth=$dbh->prepare("INSERT INTO `utilisateurs` (`login`, `mdp`, `nom`, `prenom`, `promotion`, `naissance`, `email`, `feuille`) VALUES(?,SHA1(?),?,?,?,?,?,?)");
+//        $sth->execute(array($login,SHA1($mdp),$nom,$prenoms,$promotion,$naissance,$email,$feuille));
+//    }
     
     public static function requete($dbh, $query){
         

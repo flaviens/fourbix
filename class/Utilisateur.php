@@ -8,7 +8,7 @@ class Utilisateur {
     public $email;
     public $naissance;
     public $login;
-    public $mdp;
+    public $password;
     
     public function __toString() {
         $result = "[" . $this->login . "] " . $this->prenom . " <b>" . $this->nom . "</b>, né le " . substr($this->naissance, 8) . "/" . substr($this->naissance, 5, 2) . "/" . substr($this->naissance, 0, 4) . ", "; #possibilité d'utiliser explode pour découper une chaîne de caractère
@@ -29,18 +29,18 @@ class Utilisateur {
         return $user;
     }
 
-    public static function insererUtilisateur($dbh, $login, $mdp, $nom, $prenom, $formation, $naissance, $email) {
+    public static function insererUtilisateur($dbh, $login, $password, $nom, $prenom, $formation, $naissance, $email) {
         if (Utilisateur::getUtilisateur($dbh, $login) == NULL) {
-            $sth = $dbh->prepare("INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `naissance`, `login`, `mdp`) VALUES(?,?,?,?,?,?,?,SHA1(?))");
-            $sth->execute(array($prenom, $nom, $formation, $email, $naissance, $login, $mdp));
+            $sth = $dbh->prepare("INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `naissance`, `login`, `password`) VALUES(?,?,?,?,?,?,?,SHA1(?))");
+            $sth->execute(array($prenom, $nom, $formation, $email, $naissance, $login, $password));
         } 
     }
 
     public static function testerMdp($dbh, $login, $mdp) {
-        $sth = $dbh->prepare("SELECT `mdp` FROM `utilisateurs` WHERE `login` = ?;");
+        $sth = $dbh->prepare("SELECT `password` FROM `utilisateurs` WHERE `login` = ?;");
         $resultat = $sth->execute(array($login));
         $trueMDP = $sth->fetch(PDO::FETCH_ASSOC);
-        if (SHA1($mdp) == $trueMDP["mdp"]) {
+        if (SHA1($mdp) == $trueMDP["password"]) {
             return true;
         } else {
             return false;

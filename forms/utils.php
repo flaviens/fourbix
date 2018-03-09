@@ -21,9 +21,31 @@ function generateHTMLFooter(){
 </html>";
 }
 
+#Doc : génère la barre de navigation différemment en fonction de si l'utilisateur est connecté ou pas.
 function generateNavBar($isLogged){ //TODO genere la navBar
     if (!$isLogged){
         echo <<< CHAINE_DE_FIN
+    <!-- Static navbar -->
+    <div class="navbar navbar-default" role="navigation" style=margin:2px>
+        <div class="container-fluid">
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Accueil</a></li>
+                    <li><a href="#">Catalogue</a></li>
+                    <li style=margin-top:10px>
+                    <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button></li>
+        <li><a href="#">Mes binets</a></li>
+                    <li><a href="#">Connexion</a></li>
+  </form>
+                </ul>
+            </div>
+        </div>
+    </div>
+CHAINE_DE_FIN;
+    } else{
+            echo <<< CHAINE_DE_FIN
     <!-- Static navbar -->
     <div class="navbar navbar-default" role="navigation" style=margin:2px>
         <div class="container-fluid">

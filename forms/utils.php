@@ -54,7 +54,7 @@ CHAINE_DE_FIN;
                     <li class="active"><a href="#">Accueil</a></li>
                     <li><a href="#">Catalogue</a></li>
                     <li style=margin-top:10px>
-                    <form class="form-inline" method="post">
+                    <form class="form-inline" method="post" action="index.php?page=search">
     <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button>
     </form></li>

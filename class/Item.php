@@ -2,7 +2,7 @@
 
 class Item{
     
-    private $id;
+    public $id;
     public $nom;
     public $marque;
     public $type;
@@ -11,8 +11,8 @@ class Item{
         
     }
     
-    public function getItemResearch($dbh, $nom){
-        $query="SELECT * FROM `item` WHERE LOCATE(?, `nom`)>0 ";
+    public function getItemResearchFunction($dbh, $nom){
+        $query="SELECT * FROM `item` WHERE LOCATE(?, `nom`)>0";
         $sth = $dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array($nom));

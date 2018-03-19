@@ -6,7 +6,7 @@ if (strlen($_POST["search"])>0){
     $items=array();
 }
 
-echo var_dump($items);
+//echo var_dump($items);
 
 function printItem($dbh, $item){ //TODO : génère le format créé par un objet. Le format a generer doit être : le nom de l'objet, sa marque si non NULL, son type si non NULL, l'image de l'objet, la description, le binet qui le prête si offre=true, le stock si isstockpublic=true
     //selectionner dans la base de donnee les sotcks disponibles
@@ -62,7 +62,7 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
 //mettre dans Binet le nom du binet et l'image
 echo <<< CHAINE_DE_FIN
     <table class="table table-striped table-bordered">
-        <thead>
+        <thead class="thead-dark">
             <th scope="col" >Nom</th>
             <th scope="col" >Marque</th>
             <th scope="col" >Type</th>
@@ -77,7 +77,10 @@ echo <<< CHAINE_DE_FIN
 
 CHAINE_DE_FIN;
 //var_dump($items);
-echo printItem($dbh, $items);
+foreach ($items as $item){
+    echo printItem($dbh, $item);
+}
+
 
 echo "</tbody>";
 echo "</table>";

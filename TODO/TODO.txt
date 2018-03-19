@@ -1,0 +1,6 @@
+-Faire une interface admin pour rajouter des utilisateurs, des binets
+
+-Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs.
+
+-Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée
+

@@ -86,8 +86,11 @@ $page_list = array(
         "name"=>"search",
         "title"=>"Recherche de matériel",
         "menutitle"=>"Recherche"),
-
-
+    array(
+        "name"=>"demande",
+        "title"=>"Mes demandes",
+        "menutitle"=>"Demande")
+    
 );
 
 function checkPage($askedPage){

@@ -16,9 +16,14 @@ class Item{
         $sth = $dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array($nom));
-        $item = $sth->fetch();
+        $items=array();
+        $i=0;
+        while ($item=$sth->fetch()){
+            $items[$i]=clone $item;
+            $i=$i+1;
+        }
         $sth->closeCursor();
-        return $item;
+        return $items;
     }
 }
 

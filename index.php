@@ -14,6 +14,7 @@ require("forms/printForms.php");
 require("database/database.php");
 require("class/Utilisateur.php");
 require("class/Item.php");
+require("class/Binet.php");
 require("forms/logInOut.php");
 
 

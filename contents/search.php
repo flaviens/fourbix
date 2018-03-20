@@ -67,7 +67,6 @@ echo <<< CHAINE_DE_FIN
         <h1>Recherche</h1>
         <p>Rechercher ce dont vous avez besoin facilement !</p>
     </div>
-</div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
@@ -96,8 +95,9 @@ foreach ($items as $item){
 }
 
 
-echo "</tbody>";
-echo "</table>";
+echo "</tbody>"
+.    "</table>"
+."</div>";
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

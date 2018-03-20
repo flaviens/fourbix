@@ -18,11 +18,14 @@ CHAINE_DE_FIN;
 
 function generateHTMLFooter(){
     echo "</body>
+        <div class='container'>
+        <footer><p>Ce site a été développé en 2018 pendant le modal Web par des X2016. </p></footer>
+        </div>
 </html>";
 }
 
 #Doc : génère la barre de navigation différemment en fonction de si l'utilisateur est connecté ou pas.
-function generateNavBar($isLogged){ //TODO genere la navBar
+function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
     if (!$isLogged){
         echo <<< CHAINE_DE_FIN
     <!-- Static navbar -->
@@ -30,7 +33,7 @@ function generateNavBar($isLogged){ //TODO genere la navBar
         <div class="container-fluid">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Accueil</a></li>
+                    <li class="active"><a href="index.php?page=accueil">Accueil</a></li>
                     <li><a href="#">Catalogue</a></li>
                     <li style=margin-top:10px>
                     <form class="form-inline" method="post">
@@ -45,13 +48,15 @@ function generateNavBar($isLogged){ //TODO genere la navBar
     </div>
 CHAINE_DE_FIN;
     } else{
+        $isAdmin= Utilisateur::isAdmin($dbh, $_SESSION["login"]);
+        
             echo <<< CHAINE_DE_FIN
     <!-- Static navbar -->
     <div class="navbar navbar-default" role="navigation" style=margin:2px>
         <div class="container-fluid">
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="#">Accueil</a></li>
+                    <li class="active"><a href="index.php?page=accueil">Accueil</a></li>
                     <li><a href="#">Catalogue</a></li>
                     <li style=margin-top:10px>
                     <form class="form-inline" method="post" action="index.php?page=search">
@@ -60,6 +65,15 @@ CHAINE_DE_FIN;
     </form></li>
         <li><a href="#">Mes binets</a></li>
         <li><a href="#">Demande</a></li>
+CHAINE_DE_FIN;
+
+            if ($isAdmin){
+                echo <<< CHAINE_DE_FIN
+                <li><a href="index.php?page=administration">Administration</a></li>
+CHAINE_DE_FIN;
+            }
+            
+            echo <<< CHAINE_DE_FIN
         <li><a href="index.php?todo=logout&page=accueil">Déconnexion</a></li>
                 </ul>
             </div>
@@ -89,7 +103,11 @@ $page_list = array(
     array(
         "name"=>"demande",
         "title"=>"Mes demandes",
-        "menutitle"=>"Demande")
+        "menutitle"=>"Demande"),
+    array(
+        "name"=>"administration",
+        "title"=>"Panneau d'administration",
+        "menutitle"=>"Administration")
     
 );
 

@@ -18,8 +18,8 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
     $sth = $dbh->prepare($query);
     $sth->execute(array($resultat["binet"]));
     $imageBinet=$sth->fetch();
-    var_dump($resultat);
-    var_dump($imageBinet);
+    //var_dump($resultat);
+    //var_dump($imageBinet);
     if ($resultat["offre"]){
         echo"<tr><th scope='row'>";
         echo $item->nom;
@@ -32,8 +32,8 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
             echo $resultat["image"];
             echo " alt='";
             echo $resultat["image"];
-            echo "'/>";
-        echo "</td><td>";
+            echo "' class='image-item-search'/>";
+        echo "</td><td class='description-search'>";
         echo $resultat["description"];
         echo "</td><td style='text-align:center'>";
         echo $resultat["binet"];
@@ -41,7 +41,7 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
             echo $imageBinet["image"];
             echo " alt='";
             echo $imageBinet["image"];
-            echo "'/>";
+            echo "' class='image-binet-search'/>";
         echo "</td><td>";
         if ($resultat["isstockpublic"]){
             echo $resultat["quantite"];
@@ -61,6 +61,13 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
 
 //mettre dans Binet le nom du binet et l'image
 echo <<< CHAINE_DE_FIN
+
+<div class="container">
+    <div class="jumbotron">
+        <h1>Recherche</h1>
+        <p>Rechercher ce dont vous avez besoin facilement !</p>
+    </div>
+</div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
@@ -74,11 +81,18 @@ echo <<< CHAINE_DE_FIN
         </thead>
         <tbody>
    
-
 CHAINE_DE_FIN;
+
+
 //var_dump($items);
+if (sizeof($items)>0){
 foreach ($items as $item){
     echo printItem($dbh, $item);
+}
+} else{
+    if (strlen($_POST["search"])>0){
+        echo "<h4 style='text-align:center'> Votre recherche n'a rien donné ! Désolé...</h4>";
+    }
 }
 
 

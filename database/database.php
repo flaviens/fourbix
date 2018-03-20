@@ -23,8 +23,11 @@ class Database {
 //        $sth->execute(array($login,SHA1($mdp),$nom,$prenoms,$promotion,$naissance,$email,$feuille));
 //    }
     
-    public static function requete($dbh, $query){
-        
+    public static function requete($dbh, $query, $tableau){ //effectuer une requête simple mais sécurisée)
+        $sth=$dbh->prepare($query);
+        $sth->execute($tableau);
+        $result=$sth->fetch();
+        return $result;
     }
 }
  

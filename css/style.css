@@ -5,6 +5,36 @@ and open the template in the editor.
 */
 /* 
     Created on : Feb 23, 2018, 4:14:04 PM
-    Author     : cauchy
+    Author     : Alexandre Binninger
 */
 
+.image-item-search{
+    margin-left:30px;
+    margin-right:30px;
+    margin-top:40px;
+    max-height:300px;
+    max-width:300px;
+}
+
+.image-binet-search{
+    margin-top: 15px;
+    max-height:150px;
+    max-width:150px;
+}
+
+
+.container footer{
+    position: absolute;
+    bottom:20px;
+    border-top: dashed;
+    border-width: 2px;
+    text-align: center;
+}
+
+#enregistrement-invalide{
+    border : 2px solid red;
+    padding: 2px;
+    font-weight: bold;
+    font-size:1.1em;
+    color: darkred;
+}

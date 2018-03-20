@@ -47,12 +47,20 @@ class Utilisateur {
         }
     }
 
-    function secure($tab) {
+    public function secure($tab) {
         foreach ($tab as $cle => $valeur) {
             $tab[$cle] = htmlspecialchars($valeur);
         }
         return $tab;
     }
+    
+    public static function isAdmin($dbh, $login){ //return true if login is admin
+        $query="SELECT `login` FROM `utilisateurs` WHERE `login`=(SELECT `utilisateur` FROM `membres` WHERE `membres`.`role`='admin' AND `membres`.`binet`='Administrateurs') AND `login`=?;";
+        $sth=$dbh->prepare($query);
+        $result=$sth->execute(array($login));
+        return $result;
+    }
+    
     
     
 

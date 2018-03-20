@@ -33,7 +33,7 @@ if (isset($_GET["todo"])){
     }
 }
 
-generateNavBar(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
+generateNavBar($dbh, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 
 ?>
 
@@ -54,6 +54,6 @@ generateNavBar(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 
 generateHTMLFooter();
 
-
+$dbh=null;
 ?>
 

@@ -1,6 +1,16 @@
--Faire une interface admin pour rajouter des utilisateurs, des binets
+-Faire une interface admin pour rajouter des utilisateurs, des binets... Faire un Javascript pour permettre de cacher/faire apparaître les deux formulaires. Dans l'administration, gérer l'administration des rôles des utilisateurs par exemple.
+
+-(Easy) : mettre un sel pour les mots de passe
 
 -Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs.
 
 -Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée
+
+-Demande : Interface pour réaliser une demande | consulter ses demandes | vérifier si le chèque de caution a bien été encaissé
+
+-Catalogue : faire une page par binet (qui sera générée en fonction des informations post), et si on clique sur un objet cela nous redirige vers le lien pour faire une demande. On peut également faire un caroussel avec : https://tympanus.net/codrops/2011/08/16/circular-content-carousel/
+
+-Javascript : quand on a la souris sur "mes binets", alors "mes binets" affiche les binets dans lesquels on se trouve
+
+
 

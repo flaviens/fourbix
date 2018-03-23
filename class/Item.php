@@ -26,6 +26,21 @@ class Item{
         return $items;
     }
 
+    public function getItemMultipleResearch($dbh, $search){
+        $query="SELECT * FROM `item` WHERE `nom` LIKE CONCAT('%', :search, '%') OR `marque` LIKE CONCAT('%', :search, '%')";
+        $sth = $dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+        $sth->execute(array('search' => $search));
+        $items=array();
+        $i=0;
+        while ($item=$sth->fetch()){
+            $items[$i]=clone $item;
+            $i=$i+1;
+        }
+        $sth->closeCursor();
+        return $items;
+    }
+
 }
 
 /* 

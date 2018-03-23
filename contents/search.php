@@ -1,7 +1,8 @@
 <?php
 
 if (strlen($_POST["search"])>0){
-    $items=Item::getItemResearchFunction($dbh, $_POST["search"]);
+    //$items=Item::getItemResearchFunction($dbh, $_POST["search"]);
+    $items=Item::getItemMultipleResearch($dbh, $_POST["search"]);
 } else {
     $items=array();
 }
@@ -22,11 +23,11 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
     //var_dump($imageBinet);
     if ($resultat["offre"]){
         echo"<tr><th scope='row'>";
-        echo $item->nom;
+        echo htmlspecialchars($item->nom);
         echo "</th> <td>";
-        echo $item->marque;
+        echo htmlspecialchars($item->marque);
         echo "</td><td>";
-        echo $item->type;
+        echo htmlspecialchars($item->type);
         echo "</td><td>";
             echo "<img src=images/items/";
             echo $resultat["image"];
@@ -34,9 +35,9 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
             echo $resultat["image"];
             echo "' class='image-item-search'/>";
         echo "</td><td class='description-search'>";
-        echo $resultat["description"];
+        echo htmlspecialchars($resultat["description"]);
         echo "</td><td style='text-align:center'>";
-        echo $resultat["binet"];
+        echo htmlspecialchars($resultat["binet"]);
             echo "<br /><img src=images/binets/";
             echo $imageBinet["image"];
             echo " alt='";
@@ -44,13 +45,13 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
             echo "' class='image-binet-search'/>";
         echo "</td><td>";
         if ($resultat["isstockpublic"]){
-            echo $resultat["quantite"];
+            echo htmlspecialchars($resultat["quantite"]);
             echo "</td><td>";
         } else {
             echo "Non renseigné</td><td>";
         }
         if (strlen($resultat["caution"])>0){
-            echo $resultat["caution"];
+            echo htmlspecialchars($resultat["caution"]);
             echo "€</td>";
         }else {
             echo "Non renseigné</td>";
@@ -67,6 +68,13 @@ echo <<< CHAINE_DE_FIN
         <h1>Recherche</h1>
         <p>Recherchez ce dont vous avez besoin facilement !</p>
     </div>
+   
+CHAINE_DE_FIN;
+
+
+//var_dump($items);
+if (sizeof($items)>0){
+    echo <<< CHAINE_DE_FIN
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
@@ -79,25 +87,21 @@ echo <<< CHAINE_DE_FIN
             <th scope="col" >Caution</th>
         </thead>
         <tbody>
-   
+
 CHAINE_DE_FIN;
+    foreach ($items as $item){
+        echo printItem($dbh, $item);
+    }
 
-
-//var_dump($items);
-if (sizeof($items)>0){
-foreach ($items as $item){
-    echo printItem($dbh, $item);
-}
+    echo "</tbody>"
+    .    "</table>"
+    ."</div>";
 } else{
     if (strlen($_POST["search"])>0){
         echo "<h4 style='text-align:center'> Votre recherche n'a rien donné ! Désolé...</h4>";
     }
 }
 
-
-echo "</tbody>"
-.    "</table>"
-."</div>";
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates

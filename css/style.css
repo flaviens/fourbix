@@ -22,6 +22,24 @@ and open the template in the editor.
     max-width:150px;
 }
 
+.image-binet-catalogue{
+    max-height:150px;
+    max-width:150px;
+}
+
+.image-caroussel{
+    margin-top: 15px;
+    max-height:400px;
+    max-width:400px;
+    text-align: center;
+}
+
+.carousel-caption{
+    text-align: right;
+    color:#000000;
+    text-shadow: #FFFFFF 1px 1px, #FFFFFF -1px 1px, #FFFFFF -1px -1px, #FFFFFF 1px -1px;
+}
+
 
 .enregistrement-invalide{
     border : 2px solid red;
@@ -51,3 +69,25 @@ footer{
 #rechercheBinetsCatalogue{
     text-align: center;
 }
+
+
+.carousel-indicators li {
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    margin: 10px;
+    text-indent: 0;
+    cursor: pointer;
+    border: none;
+    border-radius: 50%;
+    background-color: #cccccc  ;
+    box-shadow: inset 1px 1px 1px 1px rgba(0,0,0,0.5);    
+}
+.carousel-indicators .active {
+    width: 18px;
+    height: 18px;
+    margin: 10px;
+    background-color: #909090;
+}
+
+

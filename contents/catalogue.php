@@ -36,9 +36,10 @@ function resultSearch($dbh){
 return $binets;
 }
 
-function getItemsFromBinets($dbh, $nomBinet){
-        $query="SELECT `item`, `description`, `image` FROM `stock` WHERE `binet`=?";
-        $sth=$dbh->prepare();
+function getItemsFromBinets($dbh, $nomBinet){ 
+        $query="SELECT * FROM `item` WHERE `id` IN (SELECT `item` FROM `stock` WHERE `binet`=? AND `offre`=1)";
+        $sth=$dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array($nomBinet));
         $items=array();
         $i=0;
@@ -49,35 +50,121 @@ function getItemsFromBinets($dbh, $nomBinet){
         return $items;
     }
 
-function printBinets($dbh, $binet){
+function printBinets($dbh, $binet, $indexCarousel){
    $query="SELECT image FROM `binets` WHERE `nom`=?";
    $sth=$dbh->prepare($query);
-   $sth->excute(array($binet.nom));
+   $sth->execute(array($binet->nom));
    $imageBinet=$sth->fetch();
+   $imageBinet=$imageBinet["image"];
    
    echo <<< CHAINE_DE_FIN
+   <tr><th scope='row' height=400>
+   <span style="text-align:center">$binet->nom </span> <br/> <img src='images/binets/$imageBinet' alt='$imageBinet' class='image-binet-catalogue' />
+   </th>      
+CHAINE_DE_FIN;
+   echo "<td>";
+   $items=getItemsFromBinets($dbh, $binet->nom);
+   $length= sizeof($items);
    
    
+   echo <<< CHAINE_DE_FIN
+   <div id="myCarousel$indexCarousel" class="carousel slide" data-ride="carousel">
+  <!-- Indicators -->
+<ol class="carousel-indicators">
+CHAINE_DE_FIN;
+   
+   for ($j=0; $j<$length; $j++){
+       if ($j==0){
+           echo "<li data-target='#myCarousel$indexCarousel' data-slide-to='0' class='active'></li>";
+       }else{
+           echo <<< CHAINE_DE_FIN
+       <li data-target="#myCarousel$indexCarousel" data-slide-to="$j"></li>
+CHAINE_DE_FIN;
+       }
+   }
+   
+          echo <<< CHAINE_DE_FIN
+         </ol>
+     <div class="carousel-inner">
+CHAINE_DE_FIN;
+   
+    $i=0;
+   foreach ($items as $item) { //each item is an Item object
+    $query="SELECT `image`, `description` FROM `stock` WHERE `item`=?";
+    $sth = $dbh->prepare($query);
+    $sth->execute(array($item->id));
+    $MatosArray=$sth->fetch();
+    $imageMatos=$MatosArray["image"];
+    $descriptionMatos=$MatosArray["description"];
+    if ($i==0){ //TODO : la description peut être améliorée : si elle est trop longue, la couper.
+        echo <<< CHAINE_DE_FIN
+      <!-- Wrapper for slides -->
+    <div class="item active">
+      <img src="images/items/$imageMatos" alt="$imageMatos" class="image-caroussel">
+      <div class="carousel-caption">
+        <h3>$item->nom</h3>
+        <p>$descriptionMatos</p>
+      </div>
+    </div>
+
+CHAINE_DE_FIN;
+    } else{
+        echo <<< CHAINE_DE_FIN
+      <!-- Wrapper for slides -->
+    <div class="item">
+      <img src="images/items/$imageMatos" alt="$imageMatos" class="image-caroussel">
+        <div class="carousel-caption">
+        <h3>$item->nom</h3>
+        <p>$descriptionMatos</p>
+      </div>
+    </div>
+
+CHAINE_DE_FIN;
+    }
+      
+   $i++;
+   }
+   echo <<< CHAINE_DE_FIN
+     <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel$indexCarousel" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel$indexCarousel" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+   </td>
 CHAINE_DE_FIN;
    
 }
 
 
-function printAllBinets($dbh, $binets){ //TODO : imprimer ce qu'on a dans notre tableau : un gros tableau avec le binet + image, puis avec un caroussel sympa des objets de ce binet
+function printAllBinets($dbh, $binets){ 
    echo <<< CHAINE_DE_FIN
     <div class="container">
      <div class="panel panel-info">
             <div class="panel-heading">Binets</div>
             <div class="panel-body">
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered" style="table-layout:fixed">
         <thead class="thead-dark">
-            <th scope="col" >Binet</th>
-            <th scope="col" >Ce qu'on a à vous proposer !</th>
+            <th scope="col" width=170px>Binet</th>
+            <th scope="col" >Ce qu'on propose</th>
         </thead>
+        <tbody>
 CHAINE_DE_FIN;
-
+   $i=0; //numéro pour le carousel
+   foreach ($binets as $binet) {
+       //var_dump($binet);
+       if ($binet->nom!="Administrateurs"){ //Les administrateurs ne prêtent rien.
+        printBinets($dbh, $binet, $i);
+       }
+       $i++;
+   }
    
     echo <<< CHAINE_DE_FIN
+   </tbody>
     </table>
     </div>
     </div>
@@ -93,7 +180,10 @@ printRechercheForm();
 
 $binets=resultSearch($dbh);
 
-printBinets($dbh, $binets);
+if ($binets!=NULL){
+    printAllBinets($dbh, $binets);
+}
+
 
 
 /* 

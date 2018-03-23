@@ -32,3 +32,5 @@
 
 --> on utilise bootstrap donc relativement responsive design
 --> sécurité : on a pensé qu'une personne non admin pourrait avoir accès à la page amdin et on a réglé ça.
+
+- Faire un boucle pour afficher des items

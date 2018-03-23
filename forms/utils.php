@@ -119,7 +119,10 @@ $page_list = array(
         "menutitle"=>"Administration"),
     array("name"=>"inscription",
         "title"=>"Inscription",
-        "menutitle"=>"S'inscrire")
+        "menutitle"=>"S'inscrire"),
+    array("name"=>"stock",
+        "title"=>"Stock",
+        "menutitle"=>"Stock")
 );
 
 function checkPage($askedPage){

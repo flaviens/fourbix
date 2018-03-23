@@ -14,14 +14,14 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
     $query="SELECT * FROM `stock` WHERE `item`=?";
     $sth = $dbh->prepare($query);
     $sth->execute(array($item->id));
-    $resultat=$sth->fetch();
-    $query="SELECT image FROM `binets` WHERE `nom`=?";
-    $sth = $dbh->prepare($query);
-    $sth->execute(array($resultat["binet"]));
-    $imageBinet=$sth->fetch();
-    //var_dump($resultat);
-    //var_dump($imageBinet);
-    if ($resultat["offre"]){
+    while ($resultat=$sth->fetch()){
+        $query="SELECT image FROM `binets` WHERE `nom`=?";
+        $sth2 = $dbh->prepare($query);
+        $sth2->execute(array($resultat["binet"]));
+        $imageBinet=$sth2->fetch();
+        //var_dump($resultat);
+        //var_dump($imageBinet);
+        if ($resultat["offre"]){
         echo"<tr><th scope='row'>";
         echo htmlspecialchars($item->nom);
         echo "</th> <td>";
@@ -38,9 +38,9 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
         echo htmlspecialchars($resultat["description"]);
         echo "</td><td style='text-align:center'>";
         echo htmlspecialchars($resultat["binet"]);
-            echo "<br /><img src=images/binets/";
+            echo "<br /><img src='images/binets/";
             echo $imageBinet["image"];
-            echo " alt='";
+            echo "' alt='";
             echo $imageBinet["image"];
             echo "' class='image-binet-search'/>";
         echo "</td><td>";
@@ -57,6 +57,7 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
             echo "Non renseigné</td>";
         }
         echo "</tr>";
+        }
     }
 }
 

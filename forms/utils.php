@@ -82,6 +82,10 @@ $page_list = array(
         "name"=>"binets",
         "title"=>"Binets",
         "menutitle"=>"Mes Binets"),
+    array(
+        "name"=>"inscription",
+        "title"=>"Inscription",
+        "menutitle"=>"S'inscrire")
 );
 
 function checkPage($askedPage){

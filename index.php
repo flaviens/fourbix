@@ -16,7 +16,6 @@ require("class/Utilisateur.php");
 require("class/Item.php");
 require("forms/logInOut.php");
 
-
 $askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 $authorized = checkPage($askedPage);
 $pageTitle = $authorized ? getPageTitle('askedPage') : 'Erreur';

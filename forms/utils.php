@@ -9,6 +9,11 @@ function generateHTMLHeader($titre, $linkCSS) {
     <!-- CSS Bootstrap -->
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="$linkCSS">
+        <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+        <script type="text/javascript" src="js/code.js"></script>
+        <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
+            <script type="text/javascript" src="bootstrap/js/jquery.js"></script>
+            <script type="text/javascript" src="bootstrap/js/npm.js"></script>
         <title>$titre</title>
     </head>
         <body>
@@ -17,11 +22,14 @@ CHAINE_DE_FIN;
 }
 
 function generateHTMLFooter(){
-    echo "</body>
-        <div class='container'>
-        <footer><p>Ce site a été développé en 2018 pendant le modal Web par des X2016. </p></footer>
-        </div>
-</html>";
+    echo <<< CHAINE_DE_FIN
+    </body>
+    <footer class="page-footer font-small pt-4 mt-4">
+        <div class="footer-copyright py-3 text-center">
+            Ce site a été réalisé en 2018 par des X2016 en modal Web.
+    </footer>
+</html>
+CHAINE_DE_FIN;
 }
 
 #Doc : génère la barre de navigation différemment en fonction de si l'utilisateur est connecté ou pas.
@@ -34,7 +42,7 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.php?page=accueil">Accueil</a></li>
-                    <li><a href="#">Catalogue</a></li>
+                    <li><a href="index.php?page=catalogue">Catalogue</a></li>
                     <li style=margin-top:10px>
                     <form class="form-inline" method="post">
     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="search">
@@ -57,7 +65,7 @@ CHAINE_DE_FIN;
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li class="active"><a href="index.php?page=accueil">Accueil</a></li>
-                    <li><a href="#">Catalogue</a></li>
+                    <li><a href="index.php?page=catalogue">Catalogue</a></li>
                     <li style=margin-top:10px>
                     <form class="form-inline" method="post" action="index.php?page=search">
     <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
@@ -86,7 +94,7 @@ CHAINE_DE_FIN;
 $page_list = array(
     array(
         "name"=>"accueil",
-        "title"=>"Accueil de notre site",
+        "title"=>"Accueil",
         "menutitle"=>"Accueil"),
     array(
         "name"=>"catalogue",

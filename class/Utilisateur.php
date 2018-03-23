@@ -31,7 +31,7 @@ class Utilisateur {
 
     public static function insererUtilisateur($dbh, $login, $password, $nom, $prenom, $formation, $naissance, $email) {
         if (Utilisateur::getUtilisateur($dbh, $login) == NULL) {
-            $sth = $dbh->prepare("INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `naissance`, `login`, `password`) VALUES(?,?,?,?,?,?,?,SHA1(?))");
+            $sth = $dbh->prepare("INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `naissance`, `login`, `password`) VALUES(?,?,?,?,?,?,SHA1(?))");
             $sth->execute(array($prenom, $nom, $formation, $email, $naissance, $login, $password));
         } 
     }
@@ -55,10 +55,10 @@ class Utilisateur {
     }
     
     public static function isAdmin($dbh, $login){ //return true if login is admin
-        $query="SELECT `login` FROM `utilisateurs` WHERE `login`=(SELECT `utilisateur` FROM `membres` WHERE `membres`.`role`='admin' AND `membres`.`binet`='Administrateurs') AND `login`=?;";
+        $query="SELECT `login` FROM `utilisateurs` WHERE `login` IN (SELECT `utilisateur` FROM `membres` WHERE `membres`.`role`='admin' AND `membres`.`binet`='Administrateurs') AND `login`=?;";
         $sth=$dbh->prepare($query);
-        $result=$sth->execute(array($login));
-        return $result;
+        $sth->execute(array($login));
+        return $sth->rowCount()==1;
     }
     
     

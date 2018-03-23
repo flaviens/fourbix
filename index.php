@@ -20,11 +20,11 @@ require("forms/logInOut.php");
 
 $askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 $authorized = checkPage($askedPage);
-$pageTitle = $authorized ? getPageTitle('askedPage') : 'Erreur';
+$pageTitle = $authorized ? getPageTitle($askedPage) : 'Erreur';
 
 $dbh = Database::connect();
 
-generateHTMLHeader("fourbiX", "css/style.css");
+generateHTMLHeader("fourbiX - $pageTitle", "css/style.css");
 
 if (isset($_GET["todo"])){
     if ($_GET["todo"]=="login"){
@@ -36,10 +36,12 @@ if (isset($_GET["todo"])){
 
 generateNavBar($dbh, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 
+
 ?>
 
+
 <div id="content">
-	<?php 
+	<?php
 		if($authorized)
 			require("contents/$askedPage.php");
 		else

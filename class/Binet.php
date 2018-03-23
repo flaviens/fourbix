@@ -19,6 +19,21 @@ class Binet{
            $sth->execute(array($nom, $nom ."-logo.png"));
         }   
     }
+    
+    public static function getBinetResearchFunction($dbh, $nom){
+        $query="SELECT * FROM `binets` WHERE LOCATE(?, `nom`)>0";
+        $sth = $dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Binet');
+        $sth->execute(array($nom));
+        $binets=array();
+        $i=0;
+        while ($binet=$sth->fetch()){
+            $binets[$i]=clone $binet;
+            $i=$i+1;
+        }
+        $sth->closeCursor();
+        return $binets;
+    }
 }
 
 /* 

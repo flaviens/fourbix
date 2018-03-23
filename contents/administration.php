@@ -12,6 +12,10 @@ CHAINE_DE_FIN;
 
 // Creation d'utilisateur.
 
+$isAdministrateur=Utilisateur::isAdmin($dbh, $_SESSION["login"]);
+
+if ($isAdministrateur){
+
 $form_values_valid_user=false;
  
 if(isset($_POST["login"]) && $_POST["login"] != "" &&
@@ -22,7 +26,6 @@ if(isset($_POST["login"]) && $_POST["login"] != "" &&
    isset($_POST["up2"]) && $_POST["up2"]!= "" &&
    isset($_POST["nom"]) && $_POST["nom"] != ""  &&
    isset($_POST["prenom"]) && $_POST["prenom"] != "" ){
-    //$dbh=Database::connect();
     $sth=$dbh->prepare("SELECT `login` FROM `utilisateurs` WHERE `login`=?;");
     $sth->execute(array($_POST["login"]));
    if ($sth->rowCount()==0 && $_POST["up"]==$_POST["up2"]){
@@ -41,8 +44,7 @@ echo <<< CHAINE_DE_FIN
 
 CHAINE_DE_FIN;
 
-if (!$form_values_valid_user) {
-
+if ($form_values_valid_user) {echo "<div><p class='enregistrement-valide'>Enregistrement d'utilisateur réussi !</p></div>";}
 
 
 if (isset($_POST["login"])) $login=$_POST["login"];
@@ -81,7 +83,7 @@ echo <<< CHAINE_DE_FIN
 </p>
 <p>
   <label for="formation">Formation</label>
-  <input id="formation" type=text value=$formation name=formation>
+  <input id="formation" type=text required value=$formation name=formation>
 </p>
 <p>
   <label for="naissance">Date de naissance</label>
@@ -101,15 +103,12 @@ echo <<< CHAINE_DE_FIN
 </div>
 </div>
 CHAINE_DE_FIN;
-} else{
-    echo "<p class='enregistrement-valide'>Enregistrement d'utilisateur réussi !</p>";
-}
+
 
 
 //Creation de Binets
 
 $form_values_valid_binet=false;
-//var_dump($_FILES);
 
 echo "<div class='col-md-4 gris'>";
 
@@ -121,16 +120,16 @@ if (isset($_POST["binet"]) && $_POST["binet"]!=""){
     if (isset($_FILES['image']) && $_FILES['image']['name']!=""){
         if ($_FILES['image']['error'] > 0){
             switch($_FILES['image']['error']){
-                case "UPLOAD_ERR_NO_FILE" :
+                case 4 : //"UPLOAD_ERR_NO_FILE"
                     $error_file="L'image n'a pas été téléversée.";
                     break;
-                case "UPLOAD_ERR_INI_SIZE" :
+                case 1 : //"UPLOAD_ERR_INI_SIZE"
                     $error_file="L'image est trop grosse !";
                     break;
-                case "UPLOAD_ERR_FORM_SIZE" :
+                case 2 : //"UPLOAD_ERR_FORM_SIZE"
                     $error_file="L'image est trop grosse !";
                     break;
-                case "UPLOAD_ERR_PARTIAL" :
+                case 3 : //"UPLOAD_ERR_PARTIAL"
                      $error_file="L'image n'a pas été complètement téléversée.";
                     break;
                 default :
@@ -145,7 +144,7 @@ if (isset($_POST["binet"]) && $_POST["binet"]!=""){
         }
         
         if (isset($error_file)){
-           echo "<div class='container'><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
+           echo "<div><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
         } else{
             $adresse_image="images/binets/".$_POST['binet']."-logo.png";
             $resultat = move_uploaded_file($_FILES['image']['tmp_name'],$adresse_image);
@@ -163,11 +162,11 @@ if (isset($_POST["binet"]) && $_POST["binet"]!=""){
     }
     
    } else{
-       echo "<div class='container'><span class='enregistrement-invalide'>Format invalide : le binet existe déjà.</span></div><br/>";
+       echo "<div><span class='enregistrement-invalide'>Format invalide : le binet existe déjà.</span></div><br/>";
    }
 }
 
-if (!$form_values_valid_binet){
+if ($form_values_valid_binet){ echo "<div><p class='enregistrement-valide'>Enregistrement de binet réussi !</p></div>";}
 
 echo <<< CHAINE_DE_FIN
             <div class="panel panel-warning">
@@ -183,11 +182,93 @@ echo <<< CHAINE_DE_FIN
    <label for="image"> Image : (1 Mo max | format jpeg, jpg, gif ou png)</label>
    <input id="image" type=file name=image>
  </p>
- <input type=submit class="btn btn-warning" value="Ajouter le Binet">   
+ <input type=submit class="btn btn-warning" value="Ajouter le Binet">
+ </form>
+</div>
+</div>
 CHAINE_DE_FIN;
-} else{
-    echo "<p class='enregistrement-valide'>Enregistrement de binet réussi !</p>";
+
+
+echo "</div>";
+
+//Ajouter un rôle
+
+function genereRolesChoices($dbh){
+    $sth=$dbh->prepare("SELECT `nom` FROM `role`");
+    $sth->execute();
+    $roles=array();
+    while($role=$sth->fetch()){
+        $toPrint=$role['nom'];
+        echo "<option>$toPrint</option>";
+    }
+       
+    $sth->closeCursor();
 }
+
+$form_values_valid_role=false;
+
+echo "<div class='col-md-4 gris'>";
+
+if(isset($_POST["loginRole"]) && $_POST["loginRole"] != "" &&
+   isset($_POST["binetRole"]) && $_POST["binetRole"] != "" &&
+   isset($_POST["role"]) && $_POST["role"]!= ""){
+    $sth=$dbh->prepare("SELECT `login` FROM `utilisateurs` WHERE `login`=?;");
+    $sth->execute(array($_POST["loginRole"]));
+   if ($sth->rowCount()==1){
+     $sth->closeCursor();
+     $sth=$dbh->prepare("SELECT `nom` FROM `binets` WHERE `nom`=?;");
+     $sth->execute(array($_POST["binetRole"]));
+     if ($sth->rowCount()==1){
+         $sth=$dbh->prepare("INSERT INTO `membres` (`id`, `utilisateur`, `binet`, `role`) VALUES (NULL, ?, ?, ?)");
+         $sth->execute(array($_POST["loginRole"], $_POST["binetRole"], $_POST["role"]));
+         $form_values_valid_role=true;
+         $sth->closeCursor();
+     } else{
+         echo "<div><span class='enregistrement-invalide'>Erreur de binet.</span></div><br/>";
+     }
+   } else{
+       echo "<div><span class='enregistrement-invalide'>Erreur de login.</span></div><br/>";
+   }
+   
+}
+
+
+
+if ($form_values_valid_role){ echo "<div><p class='enregistrement-valide'>Enregistrement du rôle réussi !</p></div>";}
+    
+if (isset($_POST["loginRole"])) $loginRole=$_POST["loginRole"];
+else $loginRole="''";
+if (isset($_POST["binetRole"])) $binetRole=$_POST["binetRole"];
+else $binetRole="''";
+
+echo <<< CHAINE_DE_FIN
+            <div class="panel panel-success">
+            <div class="panel-heading">Ajouter un rôle</div>
+            <div class="panel-body">
+                <form action=index.php?page=administration method=post>
+ <p>
+  <label for="loginRole">login :</label>
+  <input id="loginRole" type=text name=loginRole value=$loginRole required>
+ </p>
+ <p>
+  <label for="binetRole">Binet :</label>
+  <input id="binetRole" type=text name=binetRole value=$binetRole required>
+ </p>
+ <p>
+     <label for="role">Role :</label>
+      <select id="role" name=role class="form-control">
+    
+CHAINE_DE_FIN;
+
+genereRolesChoices($dbh);
+
+echo <<< CHAINE_DE_FIN
+    </select>
+ </p>
+   
+ <input type=submit class="btn btn-success" value="Ajouter le rôle">
+</div>
+CHAINE_DE_FIN;
 
 
 echo "</div></div></div>";
@@ -196,4 +277,14 @@ echo "</div></div></div>";
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+} else{
+    
+    echo <<< CHAINE_DE_FIN
+    <div class=container>
+    <div class="alert alert-danger" role="alert" id="pasAdmin">
+  /!\ Vous n'êtes pas administrateur ! /!\
+</div>
+    </div>
+CHAINE_DE_FIN;
+}
 

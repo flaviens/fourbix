@@ -65,7 +65,7 @@ echo <<< CHAINE_DE_FIN
 <div class="container">
     <div class="jumbotron">
         <h1>Recherche</h1>
-        <p>Rechercher ce dont vous avez besoin facilement !</p>
+        <p>Recherchez ce dont vous avez besoin facilement !</p>
     </div>
     <table class="table table-striped table-bordered">
         <thead class="thead-dark">

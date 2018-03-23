@@ -46,3 +46,16 @@ and open the template in the editor.
     font-size:1.1em;
     color: darkgreen;
 }
+
+footer{
+    background-color: #bdbdbd;
+}
+
+#pasAdmin{
+    font-weight: bold;
+    text-align: center;
+}
+
+#rechercheBinetsCatalogue{
+    text-align: center;
+}

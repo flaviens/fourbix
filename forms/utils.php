@@ -115,8 +115,10 @@ $page_list = array(
     array(
         "name"=>"administration",
         "title"=>"Panneau d'administration",
-        "menutitle"=>"Administration")
-    
+        "menutitle"=>"Administration"),
+    array("name"=>"inscription",
+        "title"=>"Inscription",
+        "menutitle"=>"S'inscrire")
 );
 
 function checkPage($askedPage){

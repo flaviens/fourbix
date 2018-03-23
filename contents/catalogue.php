@@ -36,8 +36,53 @@ function resultSearch($dbh){
 return $binets;
 }
 
-function printBinets($binets){ //TODO : imprimer ce qu'on a dans notre tableau : un gros tableau avec le binet + image, puis avec un caroussel sympa des objets de ce binet
+function getItemsFromBinets($dbh, $nomBinet){
+        $query="SELECT `item`, `description`, `image` FROM `stock` WHERE `binet`=?";
+        $sth=$dbh->prepare();
+        $sth->execute(array($nomBinet));
+        $items=array();
+        $i=0;
+        while ($item=$sth->fetch()){
+            $items[$i]= clone $item;
+            $i++;
+        }
+        return $items;
+    }
+
+function printBinets($dbh, $binet){
+   $query="SELECT image FROM `binets` WHERE `nom`=?";
+   $sth=$dbh->prepare($query);
+   $sth->excute(array($binet.nom));
+   $imageBinet=$sth->fetch();
    
+   echo <<< CHAINE_DE_FIN
+   
+   
+CHAINE_DE_FIN;
+   
+}
+
+
+function printAllBinets($dbh, $binets){ //TODO : imprimer ce qu'on a dans notre tableau : un gros tableau avec le binet + image, puis avec un caroussel sympa des objets de ce binet
+   echo <<< CHAINE_DE_FIN
+    <div class="container">
+     <div class="panel panel-info">
+            <div class="panel-heading">Binets</div>
+            <div class="panel-body">
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+            <th scope="col" >Binet</th>
+            <th scope="col" >Ce qu'on a à vous proposer !</th>
+        </thead>
+CHAINE_DE_FIN;
+
+   
+    echo <<< CHAINE_DE_FIN
+    </table>
+    </div>
+    </div>
+    </div>
+CHAINE_DE_FIN;
     
 }
 
@@ -48,7 +93,7 @@ printRechercheForm();
 
 $binets=resultSearch($dbh);
 
-printBinets($binets);
+printBinets($dbh, $binets);
 
 
 /* 

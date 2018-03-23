@@ -23,14 +23,6 @@ and open the template in the editor.
 }
 
 
-.container footer{
-    position: absolute;
-    bottom:20px;
-    border-top: dashed;
-    border-width: 2px;
-    text-align: center;
-}
-
 .enregistrement-invalide{
     border : 2px solid red;
     padding: 2px;

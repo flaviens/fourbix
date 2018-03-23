@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  ven. 09 mars 2018 à 13:46
+-- Généré le :  ven. 23 mars 2018 à 14:02
 -- Version du serveur :  10.1.26-MariaDB
 -- Version de PHP :  7.1.9
 
@@ -32,6 +32,16 @@ CREATE TABLE `binets` (
   `nom` varchar(64) NOT NULL,
   `image` varchar(64) DEFAULT NULL COMMENT 'Adresse de limage'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `binets`
+--
+
+INSERT INTO `binets` (`nom`, `image`) VALUES
+('Administrateurs', NULL),
+('Binet des profs', 'Binet des profs-logo.png'),
+('Binet Pokemon', 'Binet Pokemon-logo.png'),
+('Binet Reseau', 'BR.png');
 
 -- --------------------------------------------------------
 
@@ -86,6 +96,15 @@ CREATE TABLE `item` (
   `type` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `item`
+--
+
+INSERT INTO `item` (`id`, `nom`, `marque`, `type`) VALUES
+(1, 'testNom', 'testMarque', 'autre'),
+(2, 'câble ethernet', 'CCAUTP', 'Informatique'),
+(3, 'clef USB', 'Origin Info System', 'Informatique');
+
 -- --------------------------------------------------------
 
 --
@@ -111,6 +130,19 @@ CREATE TABLE `membres` (
   `role` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Table relationnelle entre les utilisateurs et les binets.';
 
+--
+-- Déchargement des données de la table `membres`
+--
+
+INSERT INTO `membres` (`id`, `utilisateur`, `binet`, `role`) VALUES
+(1, 'Burrakauchy', 'Administrateurs', 'admin'),
+(5, 'Burrakauchy', 'Binet Reseau', 'admin'),
+(6, 'Burrakauchy', 'Binet Reseau', 'matosManager'),
+(8, 'Burrakauchy', 'Binet Reseau', 'matosManager'),
+(9, 'olivier', 'Binet des profs', 'admin'),
+(10, 'olivier', 'Administrateurs', 'admin'),
+(11, 'dominique', 'Binet des profs', 'matosManager');
+
 -- --------------------------------------------------------
 
 --
@@ -120,7 +152,7 @@ CREATE TABLE `membres` (
 CREATE TABLE `pretoperation` (
   `id` int(11) NOT NULL,
   `utilisateur` varchar(64) NOT NULL,
-  `binet_emprunter` varchar(64) DEFAULT NULL,
+  `binet_emprunteur` varchar(64) DEFAULT NULL,
   `binet_preteur` varchar(64) NOT NULL,
   `debut` date NOT NULL COMMENT 'debut du pret',
   `date_rendu` date DEFAULT NULL COMMENT 'date de rendu',
@@ -140,6 +172,14 @@ CREATE TABLE `role` (
   `nom` varchar(64) NOT NULL COMMENT 'Ensemble des noms des roles disponibles.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `role`
+--
+
+INSERT INTO `role` (`nom`) VALUES
+('admin'),
+('matosManager');
+
 -- --------------------------------------------------------
 
 --
@@ -157,6 +197,14 @@ CREATE TABLE `stock` (
   `isstockpublic` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'le stock est il public ?',
   `caution` float DEFAULT NULL COMMENT 'caution eventuelle'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `stock`
+--
+
+INSERT INTO `stock` (`id`, `binet`, `item`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`) VALUES
+(1, 'Binet Reseau', 2, 10, 'Un super cable ethernet de 10m ! Vous n\'en renviendrez pas ! Il n\'y en aura pas pour tout le monde.', 'ethernet.jpeg', 1, 1, 2),
+(2, 'Binet Reseau', 3, 50, 'Une clef USB vous permettra de transporter vos données : c\'est l\'objet indispensable de tous les étudiants du platâl !', 'usbKey.jpeg', 1, 1, 0.25);
 
 -- --------------------------------------------------------
 
@@ -181,6 +229,14 @@ CREATE TABLE `types` (
   `nom` varchar(64) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `types`
+--
+
+INSERT INTO `types` (`nom`) VALUES
+('autre'),
+('Informatique');
+
 -- --------------------------------------------------------
 
 --
@@ -196,6 +252,15 @@ CREATE TABLE `utilisateurs` (
   `password` varchar(40) NOT NULL,
   `naissance` date NOT NULL COMMENT 'Pour savoir si la personne est majeure.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `utilisateurs`
+--
+
+INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `login`, `password`, `naissance`) VALUES
+('Alexandre', 'Binninger', 'X2016', 'alexandre.binninger@polytechnique.edu', 'Burrakauchy', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', '1996-06-15'),
+('Dominique', 'Rossin', 'Adjoint DER', 'dominique.rossin@polytechnique.edu', 'dominique', '9cc140dd813383e134e7e365b203780da9376438', '1970-02-11'),
+('Olivier', 'Serre', 'professeur', 'olivier.serre@polytechnique.edu', 'olivier', '663194f2b9123a38cd9e2e2811f8d2fd387b765e', '1980-03-14');
 
 --
 -- Index pour les tables déchargées
@@ -239,7 +304,8 @@ ALTER TABLE `item`
 -- Index pour la table `itemlent`
 --
 ALTER TABLE `itemlent`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `idItem` (`idItem`);
 
 --
 -- Index pour la table `membres`
@@ -255,7 +321,7 @@ ALTER TABLE `membres`
 --
 ALTER TABLE `pretoperation`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `binet_emprunter` (`binet_emprunter`),
+  ADD KEY `binet_emprunter` (`binet_emprunteur`),
   ADD KEY `binet_preteur` (`binet_preteur`),
   ADD KEY `caution` (`caution`),
   ADD KEY `item_lent` (`item_lent`),
@@ -320,7 +386,7 @@ ALTER TABLE `demandes`
 -- AUTO_INCREMENT pour la table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `itemlent`
@@ -332,7 +398,7 @@ ALTER TABLE `itemlent`
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pour la table `pretoperation`
@@ -344,7 +410,7 @@ ALTER TABLE `pretoperation`
 -- AUTO_INCREMENT pour la table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `suggestions`
@@ -376,6 +442,12 @@ ALTER TABLE `item`
   ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`type`) REFERENCES `types` (`nom`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
+-- Contraintes pour la table `itemlent`
+--
+ALTER TABLE `itemlent`
+  ADD CONSTRAINT `itemlent_ibfk_1` FOREIGN KEY (`idItem`) REFERENCES `item` (`id`);
+
+--
 -- Contraintes pour la table `membres`
 --
 ALTER TABLE `membres`
@@ -387,7 +459,7 @@ ALTER TABLE `membres`
 -- Contraintes pour la table `pretoperation`
 --
 ALTER TABLE `pretoperation`
-  ADD CONSTRAINT `pretoperation_ibfk_1` FOREIGN KEY (`binet_emprunter`) REFERENCES `binets` (`nom`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `pretoperation_ibfk_1` FOREIGN KEY (`binet_emprunteur`) REFERENCES `binets` (`nom`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_2` FOREIGN KEY (`binet_preteur`) REFERENCES `binets` (`nom`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_3` FOREIGN KEY (`caution`) REFERENCES `cautions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_4` FOREIGN KEY (`item_lent`) REFERENCES `itemlent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,

@@ -75,7 +75,7 @@ CHAINE_DE_FIN;
 //var_dump($items);
 if (sizeof($items)>0){
     echo <<< CHAINE_DE_FIN
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered sortable">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
             <th scope="col" >Marque</th>

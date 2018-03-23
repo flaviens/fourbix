@@ -34,6 +34,19 @@ class Binet{
         $sth->closeCursor();
         return $binets;
     }
+
+    public static function getAllBinets($dbh){
+        $query="SELECT * from `binets` ORDER BY `nom` ASC";
+        $sth = $dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Binet');
+        $sth->execute();
+        $binets = array();
+        while($binet = $sth->fetch()){
+            array_push($binets, $binet);
+        }
+        $sth->closeCursor();
+        return $binets;
+    }
 }
 
 /* 

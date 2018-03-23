@@ -11,7 +11,7 @@ class Item{
         
     }
     
-    public function getItemResearchFunction($dbh, $nom){
+    public static function getItemResearchFunction($dbh, $nom){
         $query="SELECT * FROM `item` WHERE LOCATE(?, `nom`)>0";
         $sth = $dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
@@ -24,6 +24,31 @@ class Item{
         }
         $sth->closeCursor();
         return $items;
+    }
+
+    public static function getItemMultipleResearch($dbh, $search){
+        $query="SELECT * FROM `item` WHERE `nom` LIKE CONCAT('%', :search, '%') OR `marque` LIKE CONCAT('%', :search, '%')";
+        $sth = $dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+        $sth->execute(array('search' => $search));
+        $items=array();
+        $i=0;
+        while ($item=$sth->fetch()){
+            $items[$i]=clone $item;
+            $i=$i+1;
+        }
+        $sth->closeCursor();
+        return $items;
+    }
+
+    public static function getItemById($dbh, $id){
+        $query = "SELECT * FROM item WHERE id = ?";
+        $sth = $dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+        $sth->execute(array($id));
+        $item = $sth->fetch();
+        $sth->closeCursor();
+        return $item;
     }
 
 }

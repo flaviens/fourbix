@@ -11,6 +11,7 @@ function generateHTMLHeader($titre, $linkCSS) {
         <link rel="stylesheet" type="text/css" href="$linkCSS">
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/code.js"></script>
+        <script type="text/javascript" src="js/sorttable.js"></script>
         <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
             <script type="text/javascript" src="bootstrap/js/jquery.js"></script>
             <script type="text/javascript" src="bootstrap/js/npm.js"></script>
@@ -118,7 +119,10 @@ $page_list = array(
         "menutitle"=>"Administration"),
     array("name"=>"inscription",
         "title"=>"Inscription",
-        "menutitle"=>"S'inscrire")
+        "menutitle"=>"S'inscrire"),
+    array("name"=>"stock",
+        "title"=>"Stock",
+        "menutitle"=>"Stock")
 );
 
 function checkPage($askedPage){

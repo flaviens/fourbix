@@ -15,6 +15,7 @@ require("database/database.php");
 require("class/Utilisateur.php");
 require("class/Item.php");
 require("class/Binet.php");
+require("class/Stock.php");
 require("forms/logInOut.php");
 
 $askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';

@@ -205,6 +205,13 @@ function genereRolesChoices($dbh){
     $sth->closeCursor();
 }
 
+function generateBinetChoices($dbh){
+  $binets = Binet::getAllBinets($dbh);
+  foreach ($binets as $binet){
+    echo '<option>' . $binet->nom . '</option>';
+  }
+}
+
 $form_values_valid_role=false;
 
 echo "<div class='col-md-4 gris'>";
@@ -247,15 +254,22 @@ echo <<< CHAINE_DE_FIN
             <div class="panel-body">
                 <form action=index.php?page=administration method=post>
  <p>
-  <label for="loginRole">login :</label>
+  <label for="loginRole">login : </label>
   <input id="loginRole" type=text name=loginRole value=$loginRole required>
  </p>
  <p>
-  <label for="binetRole">Binet :</label>
-  <input id="binetRole" type=text name=binetRole value=$binetRole required>
+  <label for="binetRole">Binet : </label>
+  <select id="binetRole" name="binetRole" class="form-control" required>
+CHAINE_DE_FIN;
+  //<input id="binetRole" type=text name=binetRole value=$binetRole required>
+
+generateBinetChoices($dbh);
+
+echo <<< CHAINE_DE_FIN
+  </select>
  </p>
  <p>
-     <label for="role">Role :</label>
+     <label for="role">Role : </label>
       <select id="role" name=role class="form-control">
     
 CHAINE_DE_FIN;

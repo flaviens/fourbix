@@ -19,7 +19,7 @@ require("class/Stock.php");
 require("forms/logInOut.php");
 
 $askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';
-$authorized = checkPage($askedPage);
+$authorized = checkPage($askedPage, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 $pageTitle = $authorized ? getPageTitle($askedPage) : 'Erreur';
 
 $dbh = Database::connect();

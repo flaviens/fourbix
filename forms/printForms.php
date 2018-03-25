@@ -14,7 +14,7 @@ function printLoginForm($askedPage){
     <div class="row">
     <div class="col-md-4">
     <div class="panel panel-primary">
-    <div class="panel-heading">Connexion</div>
+    <div class="panel-heading"><span class="glyphicon glyphicon-log-in"></span> Connexion</div>
     <div class="panel-body">
     <form action="index.php?todo=login&page=$askedPage" method="post">
         <p>

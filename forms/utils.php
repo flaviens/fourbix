@@ -140,7 +140,7 @@ $page_list = array(
         "name" => "administration",
         "title" => "Panneau d'administration",
         "menutitle" => "Administration",
-        "loggedIn" => false),
+        "loggedIn" => true),
     array("name" => "inscription",
         "title" => "Inscription",
         "menutitle" => "S'inscrire",
@@ -151,11 +151,12 @@ $page_list = array(
         "loggedIn" => true)
 );
 
-function checkPage($askedPage){
+function checkPage($askedPage, $logged){
     global $page_list;
     foreach ($page_list as $page) {
         if($page['name'] == $askedPage){
-            if( !$page['loggedIn'])
+            if($page['loggedIn'] and !$logged)
+                return false;
             return true;
         }
     }

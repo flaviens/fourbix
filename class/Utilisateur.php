@@ -6,9 +6,9 @@ class Utilisateur {
     public $nom;
     public $formation;
     public $email;
-    public $naissance;
     public $login;
     public $password;
+    public $naissance;
     
     public function __toString() {
         $result = "[" . $this->login . "] " . $this->prenom . " <b>" . $this->nom . "</b>, né le " . substr($this->naissance, 8) . "/" . substr($this->naissance, 5, 2) . "/" . substr($this->naissance, 0, 4) . ", "; #possibilité d'utiliser explode pour découper une chaîne de caractère

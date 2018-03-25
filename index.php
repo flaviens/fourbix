@@ -28,7 +28,7 @@ generateHTMLHeader("fourbiX - $pageTitle", "css/style.css");
 
 if (isset($_GET["todo"])){
     if ($_GET["todo"]=="login"){
-        logIn($dbh);
+        $validLogin = logIn($dbh);
     } else if ($_GET["todo"]=="logout"){
         logOut();
     }

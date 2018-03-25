@@ -36,8 +36,8 @@ function resultSearch($dbh){
 return $binets;
 }
 
-function getItemsFromBinets($dbh, $nomBinet){ 
-        $query="SELECT * FROM `item` WHERE `id` IN (SELECT `item` FROM `stock` WHERE `binet`=? AND `offre`=1)";
+function getItemsFromBinetsWithImage($dbh, $nomBinet){ 
+        $query="SELECT * FROM `item` WHERE `id` IN (SELECT `item` FROM `stock` WHERE `binet`=? AND `offre`=1 AND `image` IS NOT NULL)";
         $sth=$dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array($nomBinet));
@@ -62,14 +62,15 @@ function printBinets($dbh, $binet, $indexCarousel){
    <span style="text-align:center">$binet->nom </span> <br/> <img src='images/binets/$imageBinet' alt='$imageBinet' class='image-binet-catalogue' />
            <form action=index.php?page=binet method=post>
            <p>
-           <input type="hidden" name="pageBinet" value="$binet->nom">
+           <input type="hidden" name="pageBinet" value="$binet->nom"></p>
+           <p style="text-align:center">
            <input type=submit class="btn btn-primary" value="Voir la page">
            </p>
            </form>
    </th>      
 CHAINE_DE_FIN;
    echo "<td>";
-   $items=getItemsFromBinets($dbh, $binet->nom);
+   $items=getItemsFromBinetsWithImage($dbh, $binet->nom);
    $length= sizeof($items);
    
    
@@ -154,9 +155,9 @@ function printAllBinets($dbh, $binets){
             <div class="panel-heading">Binets</div>
             <div class="panel-body">
     <table class="table table-striped table-bordered" style="table-layout:fixed">
-        <thead class="thead-dark">
+        <thead class="thead-dark" style="texte-align:center">
             <th scope="col" width=170px>Binet</th>
-            <th scope="col" >Ce qu'on propose</th>
+            <th scope="col">Ce qu'on propose</th>
         </thead>
         <tbody>
 CHAINE_DE_FIN;

@@ -280,6 +280,7 @@ echo <<< CHAINE_DE_FIN
  </p>
    
  <input type=submit class="btn btn-success" value="Ajouter le rôle">
+</form>
 </div>
 CHAINE_DE_FIN;
 

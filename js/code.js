@@ -1,8 +1,15 @@
-$(document).ready(function(){
-   $('.toBeToggled').hide();
-   $('.toBeClicked').click(function(){
-   $('.toBeToggled').slideToggle("slow");
+
+$(document).ready(function(){ //TODO : à refaire, c'est complètement sous-optimal...
+   $('.toBeToggled0').hide();
+   $('.toBeClicked0').click(function(){
+   $('.toBeToggled0').slideToggle("slow");
    });
+   
+   $('.toBeToggled1').hide();
+   $('.toBeClicked1').click(function(){
+   $('.toBeToggled1').slideToggle("slow");
+   });
+   
 });
 
 

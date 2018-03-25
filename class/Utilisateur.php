@@ -61,6 +61,22 @@ class Utilisateur {
         return $sth->rowCount()==1;
     }
     
+    public static function isAdminBinet($dbh, $login, $binet){ //return true if login is admin
+        $query="SELECT `login` FROM `utilisateurs` WHERE `login` IN (SELECT `utilisateur` FROM `membres` WHERE `membres`.`role`='admin' AND `membres`.`binet`=?) AND `login`=?;";
+        $sth=$dbh->prepare($query);
+        $sth->execute(array($binet, $login));
+        return $sth->rowCount()==1;
+    }
+    
+    
+    
+    public static function isMatosManager($dbh, $login, $binet){ //return true if login is admin
+        $query="SELECT `login` FROM `utilisateurs` WHERE `login` IN (SELECT `utilisateur` FROM `membres` WHERE `membres`.`role`='matosManager' AND `membres`.`binet`=?) AND `login`=?;";
+        $sth=$dbh->prepare($query);
+        $sth->execute(array($binet, $login));
+        return $sth->rowCount()==1;
+    }
+    
     
     
 

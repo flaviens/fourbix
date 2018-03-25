@@ -8,7 +8,7 @@
 
 -(Easy) : mettre un sel pour les mots de passe
 
--Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs.
+-Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs. En gros, faire la page binets avec : "nos demandes, administration si on est admin du binet, gestion de l'inventaire si on est admin OU inventorymanager, ensemble du matos proposé pour tout le monde"
 
 -Lors d'une demande, les admin et respos matériels reçoivent un mail. (Dur à faire ?)
 

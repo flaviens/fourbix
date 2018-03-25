@@ -196,7 +196,6 @@ echo "</div>";
 function genereRolesChoices($dbh){
     $sth=$dbh->prepare("SELECT `nom` FROM `role`");
     $sth->execute();
-    $roles=array();
     while($role=$sth->fetch()){
         $toPrint=$role['nom'];
         echo "<option>$toPrint</option>";

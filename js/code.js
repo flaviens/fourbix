@@ -1,4 +1,9 @@
-
+$(document).ready(function(){
+   $('.toBeToggled').hide();
+   $('.toBeClicked').click(function(){
+   $('.toBeToggled').slideToggle("slow");
+   });
+});
 
 
 

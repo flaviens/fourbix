@@ -106,6 +106,10 @@ $page_list = array(
         "title"=>"Binets",
         "menutitle"=>"Mes Binets"),
     array(
+        "name"=>"binet",
+        "title"=>"Page Binet",
+        "menutitle"=>"Page Binet"),
+    array(
         "name"=>"search",
         "title"=>"Recherche de matériel",
         "menutitle"=>"Recherche"),

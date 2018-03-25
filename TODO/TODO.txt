@@ -15,7 +15,7 @@
 -Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée
 
 -Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs. En gros, faire la page binets avec : "nos demandes, administration si on est admin du binet, gestion de l'inventaire si on est admin OU inventorymanager, ensemble du matos proposé pour tout le monde"
--Dans l'interface de gestion : possibilité de rajouter du matériel. Possibilité de changer l'image ?
+-Dans l'interface de gestion : possibilité de rajouter du matériel. Possibilité de changer l'image ? Possibilité de mettre des items et du stock !!
 -Page du binet : rajouter les différentes personnes ainsi que les différents respos.
 -Faire un bouton "commander" vers la page de l'objet. 
 

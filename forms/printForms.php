@@ -1,17 +1,25 @@
 <?php
 
 function printLoginForm($askedPage){
+    global $validLogin;
+    if (isset($_POST["login"])){
+        $login=$_POST["login"];
+        if (!$validLogin)
+            echo "<div class='container'><span class='enregistrement-invalide'>Login invalide : login ou mot de passe incorrects</span></div><br/>";
+    }
+    else
+        $login="''";
     echo <<<CHAINE_DE_FIN
     <div class="container">
     <div class="row">
     <div class="col-md-4">
     <div class="panel panel-primary">
-    <div class="panel-heading">Connexion</div>
+    <div class="panel-heading"><span class="glyphicon glyphicon-log-in"></span> Connexion</div>
     <div class="panel-body">
     <form action="index.php?todo=login&page=$askedPage" method="post">
         <p>
             <label for="login">Login : </label>
-            <input type="text" name="login" id="login" placeholder="Login" required>
+            <input type="text" name="login" id="login" placeholder="Login" value=$login required>
         </p>
         <p>
             <label for="password">Password : </label>

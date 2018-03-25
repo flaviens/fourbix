@@ -1,12 +1,14 @@
 <?php
 
 function logIn($dbh){
-    $bool=isset($_POST["login"]) && isset($_POST["password"]) && Utilisateur::testerMdp($dbh, $_POST["login"], $_POST["password"]);
+    $valid=isset($_POST["login"]) && isset($_POST["password"]) && Utilisateur::testerMdp($dbh, $_POST["login"], $_POST["password"]);
     
-    if ($bool){
-        $_SESSION['loggedIn']=true;
-        $_SESSION['login']=$_POST["login"];
+    if ($valid){
+        $_SESSION['loggedIn'] = true;
+        $_SESSION['login'] = $_POST["login"];
     }
+
+    return $valid;
 }
 
 function logOut(){  

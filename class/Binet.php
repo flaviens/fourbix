@@ -2,7 +2,7 @@
 
 class Binet{
     public $nom;
-    
+ 
     public static function getBinet($dbh, $nom){
         $query = "SELECT * FROM `binets` WHERE `nom`=?;";
         $sth=$dbh->prepare($query);
@@ -46,6 +46,13 @@ class Binet{
         }
         $sth->closeCursor();
         return $binets;
+    }
+    
+    public static function doesBinetExist($dbh, $nom){
+        $query="SELECT * FROM `binets` WHERE `nom`=?";
+        $sth=$dbh->prepare($query);
+        $sth->execute(array($nom));
+        return $sth->rowCount()==1;
     }
 }
 

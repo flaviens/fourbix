@@ -60,6 +60,12 @@ function printBinets($dbh, $binet, $indexCarousel){
    echo <<< CHAINE_DE_FIN
    <tr><th scope='row' height=400>
    <span style="text-align:center">$binet->nom </span> <br/> <img src='images/binets/$imageBinet' alt='$imageBinet' class='image-binet-catalogue' />
+           <form action=index.php?page=binet method=post>
+           <p>
+           <input type="hidden" name="pageBinet" value="$binet->nom">
+           <input type=submit class="btn btn-primary" value="Voir la page">
+           </p>
+           </form>
    </th>      
 CHAINE_DE_FIN;
    echo "<td>";

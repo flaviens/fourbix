@@ -32,6 +32,12 @@ and open the template in the editor.
     max-width:150px;
 }
 
+.pageBinetLogo{
+    float:right;
+    max-height:150px;
+    max-width:150px;
+}
+
 .image-caroussel{
     margin-top: 15px;
     max-height:400px;

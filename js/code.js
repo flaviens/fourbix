@@ -9,6 +9,7 @@ $(document).ready(function(){ //TODO : à refaire, c'est complètement sous-opti
    $('.toBeClicked1').click(function(){
    $('.toBeToggled1').slideToggle("slow");
    });
+  
    
 });
 

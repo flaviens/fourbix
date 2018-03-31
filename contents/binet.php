@@ -7,7 +7,8 @@ function printHeaderPage($binet){ //TODO : rajouter l'image du binet ?
     echo <<< CHAINE_DE_FIN
     <div class="container">
     <div class="jumbotron">
-        <h1>$binet</h1>
+            <img src='images/binets/$binet-logo.png' alt='$binet-logo.png' class='pageBinetLogo'>
+            <h1>$binet</h1>
         <p>Consultez ici la page de ce binet !</p>
     </div>
 </div>
@@ -45,7 +46,7 @@ function genereTableDelete($dbh, $binet){
                     <input type="hidden" name="pageBinet" value="$binet">
                     <input type="hidden" name="loginRoleBinetDelete" value="$nomUtilisateur">
                     <input type="hidden" name="roleDelete" value="$nomRole">
-                    <input type=submit class="btn btn-danger" value="X" style="text-align:center">
+                    <input type=submit class="btn btn-danger toBeWarnedDelete" value="X" style="text-align:center" onclick="return confirm('Confirmer la suppression.');">
                     </form>
                 </td>
         </tr>
@@ -179,7 +180,7 @@ function printItems($dbh, $isManager, $binet){
                 <br/><p style="text-align:center"><input type='hidden' name='pageBinet' value='$binet'>
                 <input type='hidden' name='itemUpdateID' value='$itemUpdateID'>
                 <input type='hidden' name='toDelete' value='true'>   
-                <input type=submit class="btn btn-danger" value="Supprimer"></p>
+                <input type=submit class="btn btn-danger" value="Supprimer" onclick="return confirm('Confirmer la suppression.');"></p>
             </form>
 CHAINE_DE_FIN;
         }
@@ -295,22 +296,125 @@ function deleteStock($dbh, $itemUpdateID){
     $sth->closeCursor();
 }
 
-function printAddItemsForm(){
+function genereTypes($dbh){
+    $sth=$dbh->prepare("SELECT `nom` FROM `types`");
+    $sth->execute();
+    while($type=$sth->fetch()){
+        $toPrint=$type['nom'];
+        echo "<option>$toPrint</option>";
+    }
+       
+    $sth->closeCursor();
+}
+
+function printAddItemForms($dbh, $binet){
+    
+    if (isset($_POST["nomItem"])) $nomItem= htmlspecialchars ($_POST["nomItem"]);
+    else $nomItem="";
+    
+    if (isset($_POST["marqueItem"])) $marqueItem= htmlspecialchars ($_POST["marqueItem"]);
+    else $marqueItem="";
+        
+    if (isset($_POST["quantiteItem"])) $quantiteItem= htmlspecialchars ($_POST["quantiteItem"]);
+    else $quantiteItem="";
+    
+    if (isset($_POST["descriptionItem"])) $descriptionItem= htmlspecialchars ($_POST["descriptionItem"]);
+    else $descriptionItem="";
+    
+    if (isset($_POST["cautionItem"])) $cautionItem= htmlspecialchars ($_POST["cautionItem"]);
+    else $cautionItem="";
+    
+    echo <<< CHAINE_DE_FIN
+    <form action=index.php?page=binet method=post enctype='multipart/form-data'>
+    <div class='col-md-6 gris'>    
+        <input type="hidden" name="pageBinet" value="$binet" />
+ <p>
+  <label for="nomItem">Nom :</label>
+  <input id="nomItem" type=text name=nomItem value='$nomItem' required>
+ </p>
+ <p>
+  <label for="marqueItem">Marque :</label>
+  <input id="marqueItem" type=text name=marqueItem value='$marqueItem'>
+ </p>
+ <p>
+  <label for="typeItem">Type :</label>
+  <select id="typeItem" name=typeItem required>
+CHAINE_DE_FIN;
+    
+    genereTypes($dbh);
+    
+    echo <<< CHAINE_DE_FIN
+    </select>
+ </p>
+ <p>
+  <label for="quantiteItem">Quantité :</label>
+  <input id="quantiteItem" type=number step='any' name=quantiteItem value='$quantiteItem'>
+ </p>
+ <p>
+  <span style="font-weight:bold">Stock public ?</span>
+    <input type="radio" value='oui' name=isStockPublicItem id="StockPublicItem" checked><label for="StockPublicItem">oui</label>
+    <input type="radio" value='non' name=isStockPublicItem id="StockPriveItem"><label for="StockPriveItem">non</label>
+ </p>
+    <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />         
+ <p>
+   <label for="imageItem"> Image : (1 Mo max | format jpeg, jpg, gif ou png)</label>
+   <input id="imageItem" type=file name=imageItem>
+ </p>
+</div>
+<div class='col-md-6 gris'>
+ <p>
+  <label for="descriptionItem">Description :</label><br/>
+  <textarea id="descriptionItem" rows=5 name=descriptionItem>$descriptionItem</textarea>
+ </p>
+ <p>
+  <span style="font-weight:bold">Offre publique ?</span>
+    <input type="radio" value='oui' name=isOffrePublicItem id="OffrePublicItem" checked><label for="OffrePublicItem">oui</label>
+    <input type="radio" value='non' name=isOffrePublicItem id="OffrePriveItem"><label for="OffrePriveItem">non</label>
+ </p>
+ <p>
+  <label for="cautionItem">Caution :</label>
+  <input id="cautionItem" type=number step='0.01' name=cautionItem value='$cautionItem'>
+ </p>
+ <input type=submit class="btn btn-warning" value="Ajouter l'objet">
+ </form>
+    </div>
+CHAINE_DE_FIN;
+}
+
+function printGestionItemsForm($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class="container">
 <div class="panel panel-warning">
             <div class="panel-heading toBeClicked1" style="text-align:center">Gestion de l'inventaire</div>
             <div class="panel-body toBeToggled1">
     <div class='row '>
-        <div class='col-md-12 gris'>
 CHAINE_DE_FIN;
     
+    printAddItemForms($dbh, $binet);
     
     echo <<< CHAINE_DE_FIN
-    </div></div></div></div></div>
+    </div></div></div></div>
 CHAINE_DE_FIN;
     
 }
+
+function addItem($dbh, $nomItem, $marqueItem, $typeItem){
+    $query="INSERT INTO `item` (`id`, `nom`, `marque`, `type`) VALUES (NULL, ?, ?, ?);";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($nomItem, $marqueItem, $typeItem));
+    return $dbh->lastInsertId();
+     
+}
+
+function addStock($dbh, $binet, $idItem, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem){
+    $query="INSERT INTO `stock` (`id`, `binet`, `item`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`) VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $sth=$dbh->prepare($query);
+    $resultat=$sth->execute(array($binet, $idItem, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem));
+    $sth->closeCursor();
+    return $resultat;
+}
+
+
 
         
 if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"]) && $_POST["pageBinet"]!="Administrateurs"){
@@ -348,6 +452,75 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
     }
     
     if ($isManager){
+        
+        printgestionItemsForm($dbh, $binet);
+        if (isset($_POST["nomItem"]) && $_POST["nomItem"]!="" &&
+            isset($_POST["marqueItem"]) &&
+            isset($_POST["typeItem"]) &&
+            isset($_POST["quantiteItem"]) &&
+            isset($_POST["descriptionItem"]) &&
+            isset($_POST["isStockPublicItem"]) &&
+            isset($_POST["isOffrePublicItem"]) &&
+            isset($_POST["cautionItem"])){
+            $nomItem= htmlspecialchars ($_POST["nomItem"]);
+            $marqueItem= htmlspecialchars ($_POST["marqueItem"]);
+            $typeItem= htmlspecialchars($_POST["typeItem"]);
+            $quantiteItem= htmlspecialchars ($_POST["quantiteItem"]);
+            $descriptionItem= htmlspecialchars ($_POST["descriptionItem"]);
+            $isStockPublicItem= $_POST["isStockPublicItem"]=="oui" ? true : false;
+            $isOffrePublicItem=$_POST["isOffrePublicItem"] == "oui" ? true : false;
+            $cautionItem= htmlspecialchars ($_POST["cautionItem"]);
+            $idItem=addItem($dbh, $nomItem, $marqueItem, $typeItem);
+            
+            if (isset($_FILES['imageItem']) && $_FILES['imageItem']['name']!=""){
+            if ($_FILES['imageItem']['error'] > 0){
+            switch($_FILES['imageItem']['error']){
+                case 4 : //"UPLOAD_ERR_NO_FILE"
+                    $error_file="L'image n'a pas été téléversée.";
+                    break;
+                case 1 : //"UPLOAD_ERR_INI_SIZE"
+                    $error_file="L'image est trop grosse !";
+                    break;
+                case 2 : //"UPLOAD_ERR_FORM_SIZE"
+                    $error_file="L'image est trop grosse !";
+                    break;
+                case 3 : //"UPLOAD_ERR_PARTIAL"
+                     $error_file="L'image n'a pas été complètement téléversée.";
+                    break;
+                default :
+                    $error_file="ERREUR";
+                    break;
+            }
+        } else{
+            if ($_FILES["imageItem"]['size']>1048576){ $error_file="L'image est trop grosse !";}
+            $extensions_valides = array( 'jpg' , 'jpeg' , 'gif' , 'png' );
+            $extension_upload = strtolower(  substr(  strrchr($_FILES['imageItem']['name'], '.')  ,1)  );
+            if (!in_array($extension_upload,$extensions_valides) ){ $error_file="Extension incorrecte ($extension_upload).";}
+        }
+        
+        if (isset($error_file)){
+           echo "<div><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
+        } else{
+            $adresse_image="images/items/".$idItem."-image.png";
+            $resultat = move_uploaded_file($_FILES['imageItem']['tmp_name'],$adresse_image);
+            if ($resultat){
+               echo "<p class='enregistrement-valide'>L'image a bien été téléversée !</p>";
+                $imageItem=$idItem."-image.png";
+            } else{
+                 $imageItem=NULL;
+                  echo "<p class='enregistrement-invalide'>BUG : l'image n'a pas pu être téléversée !</p>";
+            }
+        }
+        } else{
+            $imageItem=NULL;
+        }  
+          if (addStock($dbh, $binet, $idItem, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem)){
+              echo "<p class='enregistrement-valide'>Enregistrement dans le stock effectué !</p>";
+          } else{
+               echo "<p class='enregistrement-invalide'>BUG : pas d'enregistrement dans le stock !</p>";
+          }
+        }
+        
         if (isset($_POST['stockQuantity']) && $_POST['stockQuantity']!="" &&
             isset($_POST['description']) && $_POST['description']!="" &&
             isset($_POST['isOfferPublic']) && $_POST['isOfferPublic']!="" &&
@@ -367,8 +540,6 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
             isset($_POST['itemUpdateID']) && $_POST['itemUpdateID']!=""){
         deleteStock($dbh, $_POST["itemUpdateID"]);
         }
-        
-        printAddItemsForm();
     }
     
     printTableItems($dbh, $isManager, $binet);

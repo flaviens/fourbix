@@ -1,0 +1,38 @@
+-Faire une interface admin pour rajouter des utilisateurs, des binets... Faire un Javascript pour permettre de cacher/faire apparaître les deux formulaires. Dans l'administration, gérer l'administration des rôles des utilisateurs par exemple.
+
+-Page Administration : ne pas oublier d'avoir une liste pour trouver les utilisateurs.
+
+-Administration : report de bugs, de suggestions pour le développement du site.
+
+-Interface admin : rajouter en bas un tableau de recherche pour pouvoir voir quels sont les membres de tel ou tel binet.
+
+-(Easy) : mettre un sel pour les mots de passe
+
+-Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs. En gros, faire la page binets avec : "nos demandes, administration si on est admin du binet, gestion de l'inventaire si on est admin OU inventorymanager, ensemble du matos proposé pour tout le monde"
+
+-Lors d'une demande, les admin et respos matériels reçoivent un mail. (Dur à faire ?)
+
+-Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée
+
+-Demande : Interface pour réaliser une demande | consulter ses demandes | vérifier si le chèque de caution a été encaissé
+
+-Catalogue : faire une page par binet (qui sera générée en fonction des informations post), et si on clique sur un objet cela nous redirige vers le lien pour faire une demande. On peut également faire un caroussel avec : https://tympanus.net/codrops/2011/08/16/circular-content-carousel/  ||| Possibilité d'utiliser bootstrap : https://getbootstrap.com/docs/4.0/components/carousel/ !
+
+-Javascript : quand on a la souris sur "mes binets", alors "mes binets" affiche les binets dans lesquels on se trouve
+
+
+DONE :
+
+-mettre du htmlspecialchars
+-Catalogue : faire une page par binet (qui sera générée en fonction des informations post), et si on clique sur un objet cela nous redirige vers le lien pour faire une demande. On peut également faire un$
+
+
+-A faire : un site strucutré, du javascript est un BON BONUS, soigner la sécurité
+
+
+-Trucs à dire dans le rapport :
+
+--> on utilise bootstrap donc relativement responsive design
+--> sécurité : on a pensé qu'une personne non admin pourrait avoir accès à la page amdin et on a réglé ça.
+--> on peut trier les éléments du tableau
+--> requete INNER JOIN ON pour la page des binets

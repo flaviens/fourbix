@@ -37,7 +37,7 @@ return $binets;
 }
 
 function getItemsFromBinetsWithImage($dbh, $nomBinet){ 
-        $query="SELECT * FROM `item` WHERE `id` IN (SELECT `item` FROM `stock` WHERE `binet`=? AND `offre`=1 AND `image` IS NOT NULL)";
+        $query="SELECT * FROM `item` WHERE `id` IN (SELECT `item` FROM `stock` WHERE `binet`=? AND `offre`=1 AND `quantite`>0 AND `image` IS NOT NULL)";
         $sth=$dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array($nomBinet));

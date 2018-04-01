@@ -81,7 +81,7 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 ?>
 	<div class="row"><div class="col-md-4 col-md-offset-2">
 		<div class="panel panel-primary">
-		<div class="panel-heading" data-toggle="collapse" data-target="#demande-form">
+		<div class="panel-heading isClickable" data-toggle="collapse" data-target="#demande-form">
 			<h3 class="panel-title"><span class="glyphicon glyphicon-shopping-cart"></span> Faire une demande de prêt</h3>
 		</div>
 		<div class="panel-body panel-collapse collapse" id="demande-form">

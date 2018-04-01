@@ -17,6 +17,14 @@ body{
     background: url('../images/logo/background.png') repeat fixed;
 }
 
+.navbar {
+    box-shadow: 1px 1px 1px 1px grey;
+}
+
+.navbar li a{
+    font-family:fantasy, serif;
+}   
+
 footer{
     margin-top:15px;
     bottom:2px;
@@ -31,6 +39,24 @@ footer{
 .container{
     background-color:white;
 }
+
+.isClickable:hover{
+    box-shadow : 1px 1px 1px 1px grey;
+}
+
+.jumbotron{
+    background: url('../images/logo/jumbotron-background.jpg') repeat fixed;
+}
+
+.jumbotron h1{
+    font-family: "Jazz LET", serif; 
+}
+
+.jumbotron p{
+    font-family: "Marker Felt", serif;
+    font-style:italic;
+}
+
 
 .image-item-search{
     margin-left:30px;
@@ -71,9 +97,12 @@ footer{
 
 .titreSite{
     text-align:center;
-    font-family:  'progress','Jazz LET', Impact, serif;
+    font-family:  'progress','Jazz LET', Impact, fantsy, serif;
     font-size:1.6em;
-    margin-top:3px;
+}
+
+.panel-heading{
+    font-family: fantasy, serif;
 }
 
 .upperNavBar{

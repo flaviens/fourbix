@@ -5,6 +5,7 @@ $(document).ready(function(){ //TODO : à refaire, c'est complètement sous-opti
    $('.toBeToggled0').slideToggle("slow");
    });
    
+   
    $('.toBeToggled1').hide();
    $('.toBeClicked1').click(function(){
    $('.toBeToggled1').slideToggle("slow");

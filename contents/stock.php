@@ -81,36 +81,41 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 				echo "<div><span class='enregistrement-valide'>Demande de prêt réussi ! Veuillez attendre la confirmation du binet. </span></div>"
 ?>
 
-		<h3>Faire une demande de prêt</h3>
-		<form action=<?php echo "'index.php?page=stock&id=$stock->id'";?> method="post" oninput="binet.setCustomValidity(binet.value == '' && checkBinet.value == 'yes' ? 'Veuillez sélectionner binet.' : '')">
-			<p>
-				<label for="quantite">Quantité : </label>
-				<input type="number" name="quantite" id="quantite" min="1" max="<?php echo htmlspecialchars($stock->quantite) ?>" required>
-			</p>
-			<p><label for="commentaire">Commentaire : </label></p>
-			<p><textarea name="commentaire" id="commentaire" placeholder="Écrivez votre commentaire." style="margin-bottom: 3px"></textarea></p>
-			<p>
-				<label for="date-debut">Date de début : </label>
-				<input type="date" name="date-debut" id="date-debut">
-			</p>
-			<p>
-				<label for="date-fin">Date de fin estimée : </label>
-				<input type="date" name="date-fin" id="date-fin">
-			</p>
-			<p>
-				<label for="checkBinet">Demande faite par un binet ? </label>
-				<input type="radio" name="checkBinet" id="yesBinet" value="yes" onclick="showBinet()" style="margin-left: 5px">Oui
-				<input type="radio" name="checkBinet" id="noBinet" value="no" onclick="showBinet()" style="margin-left: 5px" checked="on">Non
-			</p>
-			<p id="binet-emprunteur" style="display: none">
-				<label for="binet">Binet : </label>
-				<select name="binet" id="binet">
-				<option value="" disabled selected>Sélectionnez votre binet</option>
-				<?php Binet::generateBinetsByMemberOptions($dbh, $_SESSION["login"]); ?>
-				</select>
-			</p>
-			<input type=submit class="btn btn-primary" value="Faire la demande">
-		</form>
+		<div class="panel panel-primary">
+		<div class="panel-heading" data-toggle="collapse" data-target="#demande-form">
+			<h3 class="panel-title"><span class="glyphicon glyphicon-shopping-cart"></span> Faire une demande de prêt</h3>
+		</div>
+		<div class="panel-body panel-collapse collapse" id="demande-form">
+			<form action=<?php echo "'index.php?page=stock&id=$stock->id'";?> method="post" oninput="binet.setCustomValidity(binet.value == '' && checkBinet.value == 'yes' ? 'Veuillez sélectionner binet.' : '')">
+				<p>
+					<label for="quantite">Quantité : </label>
+					<input type="number" name="quantite" id="quantite" min="1" max="<?php echo htmlspecialchars($stock->quantite) ?>" required>
+				</p>
+				<p><label for="commentaire">Commentaire : </label></p>
+				<p><textarea name="commentaire" id="commentaire" placeholder="Écrivez votre commentaire." style="margin-bottom: 3px"></textarea></p>
+				<p>
+					<label for="date-debut">Date de début : </label>
+					<input type="date" name="date-debut" id="date-debut">
+				</p>
+				<p>
+					<label for="date-fin">Date de fin estimée : </label>
+					<input type="date" name="date-fin" id="date-fin">
+				</p>
+				<p>
+					<label for="checkBinet">Demande faite par un binet ? </label>
+					<input type="radio" name="checkBinet" id="yesBinet" value="yes" onclick="showBinet()" style="margin-left: 5px">Oui
+					<input type="radio" name="checkBinet" id="noBinet" value="no" onclick="showBinet()" style="margin-left: 5px" checked="on">Non
+				</p>
+				<p id="binet-emprunteur" style="display: none">
+					<label for="binet">Binet : </label>
+					<select name="binet" id="binet">
+					<option value="" disabled selected>Sélectionnez votre binet</option>
+					<?php Binet::generateBinetsByMemberOptions($dbh, $_SESSION["login"]); ?>
+					</select>
+				</p>
+				<input type=submit class="btn btn-primary" value="Valider">
+			</form>
+		</div></div>
 	</div>
 </div></div>
 

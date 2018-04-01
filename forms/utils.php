@@ -58,7 +58,8 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
                     <li style=margin-top:10px>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                    <li><a href="index.php?page=inscription"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
+                    <li><a href="index.php?page=accueil"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
                 </ul>
             </div>
         </div>
@@ -99,11 +100,11 @@ CHAINE_DE_FIN;
                     <li><a href="index.php?page=administration">Administration</a></li>
 CHAINE_DE_FIN;
             }
-            
+            $prenom = Utilisateur::getUtilisateur($dbh, $login)->prenom;
             echo <<< CHAINE_DE_FIN
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">$login</a></li>
+                    <li><a href="#">$prenom</a></li>
                     <li><a href="index.php?todo=logout&page=accueil"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 </ul>
                     

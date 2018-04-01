@@ -172,8 +172,9 @@ function printItems($dbh, $isManager, $binet){
         //var_dump($resultat);
         //var_dump($imageBinet);
         $itemUpdateID=$resultat[0];
-        echo"<tr><th scope='row'>";
+        echo"<tr><th scope='row'><a href='index.php?page=stock&id={$resultat['id']}'>";
         echo htmlspecialchars($resultat["nom"]);
+        echo "</a>";
         if ($isManager){
             echo <<< CHAINE_DE_FIN
         <form action=index.php?page=binet method=post>

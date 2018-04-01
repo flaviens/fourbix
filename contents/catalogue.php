@@ -4,6 +4,7 @@ function printHeaderPage(){
     echo <<< CHAINE_DE_FIN
     <div class="container">
     <div class="jumbotron">
+        <img src='images/logo/catalogue-logo.png' alt='catalogue-logo.png' class='pageLogo'>
         <h1>Catalogue</h1>
         <p>Consultez ici le matériel que mettent à disposition les binets !</p>
     </div>

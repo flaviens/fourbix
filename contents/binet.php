@@ -9,7 +9,7 @@ function printHeaderPage($binet){ //TODO : rajouter l'image du binet ?
     <div class="jumbotron">
             <img src='images/binets/$binet-logo.png' alt='$binet-logo.png' class='pageLogo'>
             <h1>$binet</h1>
-        <p>Consultez ici la page de ce binet !</p>
+        <p>Consultez ici ce que ce binet souhaite vous proposer.</p>
     </div>
 </div>
 CHAINE_DE_FIN;

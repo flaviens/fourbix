@@ -4,9 +4,9 @@ echo <<< CHAINE_DE_FIN
 
 <div class="container">
     <div class="jumbotron">
-<img src='images/logo/administration-logo.png' alt='administration-logo.png' class='pageLogo'>
+<img src='images/logo/administration2-logo.png' alt='administration2-logo.png' class='pageLogo'>
         <h1>Administration</h1>
-        <p>Panneau d'administration : ajoute ou supprime définitivement un utilisateur.</p>
+        <p>Panneau d'administration : ajoute un utilisateur, un binet, un rôle.</p>
     </div>
 </div>  
 CHAINE_DE_FIN;

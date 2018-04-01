@@ -13,6 +13,7 @@ and open the template in the editor.
     src: url('polices/progress_3/PROGRESS PERSONAL USE.ttf') format('truetype');
 }
 
+
 body{
     background: url('../images/logo/background.png') repeat fixed;
 }
@@ -53,6 +54,7 @@ footer{
 }
 
 .jumbotron h1{
+    
     font-family: "Jazz LET", serif; 
 }
 
@@ -61,6 +63,9 @@ footer{
     font-style:italic;
 }
 
+.accueil-content{
+    font-size: 1.15em;
+}
 
 .image-item-search{
     margin-left:30px;
@@ -103,6 +108,13 @@ footer{
     text-align:center;
     font-family:  'progress','Jazz LET', Impact, fantsy, serif;
     font-size:1.6em;
+}
+
+.nomSite{
+    font-family:  'progress','Jazz LET', Impact, fantsy, serif;
+    font-size: 1.4em;
+    color:grey;
+    text-shadow:1px 1px 1px black;
 }
 
 .panel-heading{

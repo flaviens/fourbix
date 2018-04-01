@@ -29,7 +29,8 @@ generateHTMLHeader("fourbiX - $pageTitle", "css/style.css");
 if (isset($_GET["todo"])){
     if ($_GET["todo"]=="login"){
         $validLogin = logIn($dbh);
-    } else if ($_GET["todo"]=="logout"){
+    }
+    else if ($_GET["todo"]=="logout"){
         logOut();
     }
 }
@@ -43,11 +44,12 @@ generateNavBar($dbh, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 <div id="content">
 	<?php
 		if($authorized)
-                    if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]){
+                    /*if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]){
                         require("contents/$askedPage.php");
                     }else{
                         require("contents/accueil.php");
-                    }			
+                    }*/
+                    require("contents/$askedPage.php");
 		else
 			require("contents/erreur.php");
 	?>

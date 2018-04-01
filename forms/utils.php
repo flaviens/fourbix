@@ -29,6 +29,7 @@ function generateHTMLFooter(){
     <footer class="page-footer font-small pt-4 mt-4">
         <div class="footer-copyright py-3 text-center">
             Ce site a été réalisé en 2018 par des X2016 en modal Web.
+        </div>
     </footer>
 </html>
 CHAINE_DE_FIN;
@@ -57,7 +58,8 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
                     <li style=margin-top:10px>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
+                    <li><a href="index.php?page=inscription"><span class="glyphicon glyphicon-user"></span> S'inscrire</a></li>
+                    <li><a href="index.php?page=accueil"><span class="glyphicon glyphicon-log-in"></span> Connexion</a></li>
                 </ul>
             </div>
         </div>
@@ -85,9 +87,9 @@ CHAINE_DE_FIN;
                     <li><a href="index.php?page=accueil">Accueil</a></li>
                     <li><a href="index.php?page=catalogue">Catalogue</a></li>
                     <li style=margin-top:10px>
-                    <form class="form-inline" method="post" action="index.php?page=search">
-                        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><span class="glyphicon glyphicon-search"></span> Recherche</button>
+                    <form class="form-inline" method="get" action="index.php">
+                        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Cherchez un item" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="search" name="page"><span class="glyphicon glyphicon-search"></span></button>
                     </form></li>
                     <li><a href="#">Mes binets</a></li>
                     <li><a href="#">Demande</a></li>
@@ -98,11 +100,11 @@ CHAINE_DE_FIN;
                     <li><a href="index.php?page=administration">Administration</a></li>
 CHAINE_DE_FIN;
             }
-            
+            $prenom = Utilisateur::getUtilisateur($dbh, $login)->prenom;
             echo <<< CHAINE_DE_FIN
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">$login</a></li>
+                    <li><a href="#">$prenom</a></li>
                     <li><a href="index.php?todo=logout&page=accueil"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 </ul>
                     

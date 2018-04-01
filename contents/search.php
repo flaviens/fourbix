@@ -1,8 +1,8 @@
 <?php
 
-if (strlen($_POST["search"])>0){
+if (strlen($_GET["search"])>0){
     //$items=Item::getItemResearchFunction($dbh, $_POST["search"]);
-    $items=Item::getItemMultipleResearch($dbh, $_POST["search"]);
+    $items=Item::getItemMultipleResearch($dbh, $_GET["search"]);
 } else {
     $items=array();
 }
@@ -101,7 +101,7 @@ CHAINE_DE_FIN;
     .    "</table>"
     ."</div>";
 } else{
-    if (strlen($_POST["search"])>0){
+    if (strlen($_GET["search"])>0){
         echo "<h4 style='text-align:center'> Votre recherche n'a rien donné ! Désolé...</h4>";
     }
 }

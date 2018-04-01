@@ -34,7 +34,6 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 </div>
 
 <div class="demande">
-	<div class="row"><div class="col-md-4 col-md-offset-2">
 <?php
 		$valid_demande = false;
 		if($stock->quantite > 0){
@@ -80,7 +79,7 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 			if ($valid_demande)
 				echo "<div><span class='enregistrement-valide'>Demande de prêt réussi ! Veuillez attendre la confirmation du binet. </span></div>"
 ?>
-
+	<div class="row"><div class="col-md-4 col-md-offset-2">
 		<div class="panel panel-primary">
 		<div class="panel-heading" data-toggle="collapse" data-target="#demande-form">
 			<h3 class="panel-title"><span class="glyphicon glyphicon-shopping-cart"></span> Faire une demande de prêt</h3>

@@ -66,35 +66,35 @@ echo <<< CHAINE_DE_FIN
             <div class="panel-body">
                 <form action=index.php?page=administration method=post oninput="up2.setCustomValidity(up2.value != up.value ? 'Les mots de passe diffèrent.' : '')">
 <p>
-  <label for="login">login:</label>
+  <label for="login">Login : </label>
   <input id="login" type=text value=$login name=login required>
  </p>
 <p>
-  <label for="nom">Nom:</label>
+  <label for="nom">Nom : </label>
   <input id="nom" type=text value=$nom required name=nom>
  </p>
 <p>
-  <label for="prenom">Prénom:</label>
+  <label for="prenom">Prénom : </label>
   <input id="prenom" type=text value=$prenom required name=prenom>
  </p>
 <p>
-  <label for="mail">Adresse mail</label>
+  <label for="mail">Adresse mail : </label>
   <input id="mail" type=email required value=$email name=email>
 </p>
 <p>
-  <label for="formation">Formation</label>
+  <label for="formation">Formation : </label>
   <input id="formation" type=text required value=$formation name=formation>
 </p>
 <p>
-  <label for="naissance">Date de naissance</label>
+  <label for="naissance">Date de naissance : </label>
   <input id="naissance" type=date value=$naissance name=naissance>
 </p>
  <p>
-  <label for="password1">Password:</label>
+  <label for="password1">Password : </label>
   <input id="password1" type=password required name=up>
  </p>
  <p>
-  <label for="password2">Confirm password:</label>
+  <label for="password2">Confirm password : </label>
   <input id="password2" type=password name=up2>
  </p>
   <input type=submit class="btn btn-primary" value="Créer l'utilisateur">

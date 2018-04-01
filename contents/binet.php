@@ -251,7 +251,7 @@ CHAINE_DE_FIN;
         echo "</td><td>";
         if (!$isManager){
         if (strlen($resultat->caution)>0){
-            echo htmlspecialchars($resultat["caution"]);
+            echo htmlspecialchars($resultat->caution);
             echo " &euro;";
         }else {
             echo "Non renseigné ou sans caution.</td>";
@@ -434,7 +434,7 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
     printHeaderPage($binet);
     //Si la page s'affiche, on sait par la condition dans index.php que $_SESSION[loggedIn] est actif et que l'utilisateur a un login.
     $role; //rôle du visiteur pour ce binet.
-    if (Utilisateur::isAdminBinet($dbh, $_SESSION["login"], $binet) || Utilisateur::isAdmin($dbh, $_SESSION["login"])){
+    if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] && (Utilisateur::isAdminBinet($dbh, $_SESSION["login"], $binet) || Utilisateur::isAdmin($dbh, $_SESSION["login"]))){
         $role="admin";
         $isManager=true;
         
@@ -455,7 +455,7 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
             }
         }
         printAdministration($dbh, $binet);
-    } elseif (Utilisateur::isMatosManager($dbh, $_SESSION["login"], $binet)) {
+    } elseif (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] && Utilisateur::isMatosManager($dbh, $_SESSION["login"], $binet)) {
         $role="matosManager";
         $isManager=true;
     } else{

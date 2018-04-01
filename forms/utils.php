@@ -29,6 +29,7 @@ function generateHTMLFooter(){
     <footer class="page-footer font-small pt-4 mt-4">
         <div class="footer-copyright py-3 text-center">
             Ce site a été réalisé en 2018 par des X2016 en modal Web.
+        </div>
     </footer>
 </html>
 CHAINE_DE_FIN;

@@ -254,7 +254,7 @@ CHAINE_DE_FIN;
             echo htmlspecialchars($resultat["caution"]);
             echo " &euro;";
         }else {
-            echo "Non renseigné ou sans caution.</td>";
+            echo "Non renseigné ou sans caution.";
         }
         } else{
             $caution=htmlspecialchars($resultat->caution);

@@ -41,7 +41,7 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 				$quantite = $_POST['quantite'];
 				
 				if(isset($_POST['commentaire']) and $_POST['commentaire'] != "")
-					$commentaire = $_POST['commentaire'];
+					$commentaire = htmlspecialchars ($_POST['commentaire']);
 				else
 					$commentaire = NULL;
 

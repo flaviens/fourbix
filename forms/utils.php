@@ -19,6 +19,9 @@ function generateHTMLHeader($titre, $linkCSS) {
         <title>$titre</title>
     </head>
         <body>
+            <div class='titreSite'>
+            <h1>FourbiX</h1>
+            </div>
             
 CHAINE_DE_FIN;
 }

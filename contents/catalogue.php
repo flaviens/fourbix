@@ -36,20 +36,6 @@ function resultSearch($dbh){
 return $binets;
 }
 
-function getItemsFromBinetsWithImage($dbh, $nomBinet){ 
-        $query="SELECT * FROM `item` WHERE `id` IN (SELECT `item` FROM `stock` WHERE `binet`=? AND `offre`=1 AND `quantite`>0 AND `image` IS NOT NULL)";
-        $sth=$dbh->prepare($query);
-        $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
-        $sth->execute(array($nomBinet));
-        $items=array();
-        $i=0;
-        while ($item=$sth->fetch()){
-            $items[$i]= clone $item;
-            $i++;
-        }
-        return $items;
-    }
-
 function printBinets($dbh, $binet, $indexCarousel){
    $query="SELECT image FROM `binets` WHERE `nom`=?";
    $sth=$dbh->prepare($query);
@@ -70,8 +56,8 @@ function printBinets($dbh, $binet, $indexCarousel){
    </th>      
 CHAINE_DE_FIN;
    echo "<td>";
-   $items=getItemsFromBinetsWithImage($dbh, $binet->nom);
-   $length= sizeof($items);
+   $items = Item::getItemsFromBinetsWithImage($dbh, $binet->nom);
+   $length = sizeof($items);
    
    
    echo <<< CHAINE_DE_FIN
@@ -97,12 +83,8 @@ CHAINE_DE_FIN;
    
     $i=0;
    foreach ($items as $item) { //each item is an Item object
-    $query="SELECT `image`, `description` FROM `stock` WHERE `item`=?";
-    $sth = $dbh->prepare($query);
-    $sth->execute(array($item->id));
-    $MatosArray=$sth->fetch();
-    $imageMatos=$MatosArray["image"];
-    $descriptionMatos=$MatosArray["description"];
+    $imageMatos=$item->image;
+    $descriptionMatos=$item->description;
     if ($i==0){ //TODO : la description peut être améliorée : si elle est trop longue, la couper.
         echo <<< CHAINE_DE_FIN
       <!-- Wrapper for slides -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  Dim 01 avr. 2018 à 15:53
+-- Généré le :  Dim 01 avr. 2018 à 22:43
 -- Version du serveur :  10.1.30-MariaDB
 -- Version de PHP :  7.2.1
 
@@ -77,7 +77,7 @@ CREATE TABLE `cautions` (
 CREATE TABLE `demandes` (
   `id` int(11) NOT NULL,
   `utilisateur` varchar(64) NOT NULL,
-  `stock_id` int(11) NOT NULL,
+  `item` int(11) NOT NULL,
   `binet` varchar(64) NOT NULL,
   `quantite` int(11) NOT NULL,
   `commentaire` text,
@@ -90,7 +90,7 @@ CREATE TABLE `demandes` (
 -- Déchargement des données de la table `demandes`
 --
 
-INSERT INTO `demandes` (`id`, `utilisateur`, `stock_id`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`) VALUES
+INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`) VALUES
 (4, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
 (5, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
 (6, 'olivier', 2, 'Binet Reseau', 3, 'coucou', '2018-04-01', NULL, NULL),
@@ -116,36 +116,45 @@ INSERT INTO `demandes` (`id`, `utilisateur`, `stock_id`, `binet`, `quantite`, `c
 -- --------------------------------------------------------
 
 --
--- Structure de la table `item`
---
-
-CREATE TABLE `item` (
-  `id` int(11) NOT NULL,
-  `nom` varchar(128) NOT NULL,
-  `marque` varchar(128) DEFAULT NULL,
-  `type` varchar(64) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `item`
---
-
-INSERT INTO `item` (`id`, `nom`, `marque`, `type`) VALUES
-(1, 'testNom', 'testMarque', 'autre'),
-(2, 'câble ethernet', 'CCAUTP', 'Informatique'),
-(3, 'clef USB', 'Origin Info System', 'Informatique');
-
--- --------------------------------------------------------
-
---
 -- Structure de la table `itemlent`
 --
 
 CREATE TABLE `itemlent` (
   `id` int(11) NOT NULL,
-  `idItem` int(11) NOT NULL,
+  `item` int(11) NOT NULL,
   `quantite` float NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `items`
+--
+
+CREATE TABLE `items` (
+  `id` int(11) NOT NULL,
+  `nom` varchar(128) NOT NULL,
+  `marque` varchar(128) DEFAULT NULL,
+  `type` varchar(64) DEFAULT NULL,
+  `binet` varchar(64) NOT NULL,
+  `quantite` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `image` varchar(128) DEFAULT NULL,
+  `offre` tinyint(1) NOT NULL DEFAULT '1',
+  `isstockpublic` tinyint(1) NOT NULL DEFAULT '1',
+  `caution` float NOT NULL DEFAULT '0',
+  `quantite_prete` int(11) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `items`
+--
+
+INSERT INTO `items` (`id`, `nom`, `marque`, `type`, `binet`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`, `quantite_prete`) VALUES
+(1, 'Câble Ethernet', 'CCAUTP', 'Informatique', 'Binet Reseau', 15, 'Un super cable ethernet de 10m ! Vous n\'en renviendrez pas ! Il n\'y en aura pas pour tout le monde.', 'ethernet.jpeg', 1, 1, 1.5, 0),
+(2, 'Câble Ethernet', 'CCAUTP', 'Informatique', 'Binet Pokemon', 50, 'Un cable ethernet pour tous les attraper !', 'ethernet.jpeg', 1, 1, 0.5, 0),
+(3, 'Clef USB', 'Origin Info System', 'Informatique', 'Binet Reseau', 50, 'Une clef USB vous permettra de transporter vos données : c\'est l\'objet indispensable de tous les étudiants du platâl !', 'usbKey.jpeg', 1, 1, 0.25, 0),
+(7, 'Routeur WiFi', 'TP-Link', 'Informatique', 'Binet Reseau', 1, '515', 'image-item20180401223856.png', 1, 1, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -209,33 +218,6 @@ CREATE TABLE `role` (
 INSERT INTO `role` (`nom`) VALUES
 ('admin'),
 ('matosManager');
-
--- --------------------------------------------------------
-
---
--- Structure de la table `stock`
---
-
-CREATE TABLE `stock` (
-  `id` int(11) NOT NULL,
-  `binet` varchar(64) NOT NULL,
-  `item` int(11) NOT NULL,
-  `quantite` float NOT NULL,
-  `description` text NOT NULL,
-  `image` varchar(128) DEFAULT NULL COMMENT 'lien vers une image pour un eventuel catalogue',
-  `offre` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'pour savoir si on affiche dans le catalogue',
-  `isstockpublic` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'le stock est il public ?',
-  `caution` float DEFAULT NULL COMMENT 'caution eventuelle'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `stock`
---
-
-INSERT INTO `stock` (`id`, `binet`, `item`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`) VALUES
-(1, 'Binet Reseau', 2, 10, 'Un super cable ethernet de 10m ! Vous n\'en renviendrez pas ! Il n\'y en aura pas pour tout le monde.', 'ethernet.jpeg', 1, 1, 2),
-(2, 'Binet Reseau', 3, 50, 'Une clef USB vous permettra de transporter vos données : c\'est l\'objet indispensable de tous les étudiants du platâl !', 'usbKey.jpeg', 1, 1, 0.25),
-(3, 'Binet Pokemon', 2, 10, 'Un cable ethernet pour tous les attraper !', 'ethernet.jpeg', 1, 1, 0.5);
 
 -- --------------------------------------------------------
 
@@ -324,23 +306,24 @@ ALTER TABLE `cautions`
 ALTER TABLE `demandes`
   ADD PRIMARY KEY (`id`),
   ADD KEY `utilisateur` (`utilisateur`),
-  ADD KEY `stock_id` (`stock_id`),
+  ADD KEY `stock_id` (`item`),
   ADD KEY `binet` (`binet`),
   ADD KEY `binet_emprunteur` (`binet_emprunteur`);
-
---
--- Index pour la table `item`
---
-ALTER TABLE `item`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `type` (`type`);
 
 --
 -- Index pour la table `itemlent`
 --
 ALTER TABLE `itemlent`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `idItem` (`idItem`);
+  ADD KEY `idItem` (`item`);
+
+--
+-- Index pour la table `items`
+--
+ALTER TABLE `items`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `type` (`type`),
+  ADD KEY `binet` (`binet`);
 
 --
 -- Index pour la table `membres`
@@ -368,14 +351,6 @@ ALTER TABLE `pretoperation`
 --
 ALTER TABLE `role`
   ADD PRIMARY KEY (`nom`);
-
---
--- Index pour la table `stock`
---
-ALTER TABLE `stock`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `binet` (`binet`),
-  ADD KEY `item` (`item`);
 
 --
 -- Index pour la table `suggestions`
@@ -418,16 +393,16 @@ ALTER TABLE `demandes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT pour la table `item`
---
-ALTER TABLE `item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
 -- AUTO_INCREMENT pour la table `itemlent`
 --
 ALTER TABLE `itemlent`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `items`
+--
+ALTER TABLE `items`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `membres`
@@ -440,12 +415,6 @@ ALTER TABLE `membres`
 --
 ALTER TABLE `pretoperation`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `stock`
---
-ALTER TABLE `stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `suggestions`
@@ -469,20 +438,21 @@ ALTER TABLE `bugreports`
 ALTER TABLE `demandes`
   ADD CONSTRAINT `demandes_ibfk_1` FOREIGN KEY (`binet`) REFERENCES `binets` (`nom`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `demandes_ibfk_2` FOREIGN KEY (`binet_emprunteur`) REFERENCES `binets` (`nom`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `demandes_ibfk_3` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `demandes_ibfk_4` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `item`
---
-ALTER TABLE `item`
-  ADD CONSTRAINT `item_ibfk_1` FOREIGN KEY (`type`) REFERENCES `types` (`nom`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `demandes_ibfk_4` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `demandes_ibfk_5` FOREIGN KEY (`item`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `itemlent`
 --
 ALTER TABLE `itemlent`
-  ADD CONSTRAINT `itemlent_ibfk_1` FOREIGN KEY (`idItem`) REFERENCES `item` (`id`);
+  ADD CONSTRAINT `itemlent_ibfk_1` FOREIGN KEY (`item`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `items`
+--
+ALTER TABLE `items`
+  ADD CONSTRAINT `items_ibfk_1` FOREIGN KEY (`binet`) REFERENCES `binets` (`nom`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `items_ibfk_2` FOREIGN KEY (`type`) REFERENCES `types` (`nom`);
 
 --
 -- Contraintes pour la table `membres`
@@ -502,13 +472,6 @@ ALTER TABLE `pretoperation`
   ADD CONSTRAINT `pretoperation_ibfk_4` FOREIGN KEY (`item_lent`) REFERENCES `itemlent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_5` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_6` FOREIGN KEY (`demande`) REFERENCES `demandes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Contraintes pour la table `stock`
---
-ALTER TABLE `stock`
-  ADD CONSTRAINT `stock_ibfk_1` FOREIGN KEY (`binet`) REFERENCES `binets` (`nom`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `stock_ibfk_2` FOREIGN KEY (`item`) REFERENCES `item` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

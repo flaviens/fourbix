@@ -6,13 +6,16 @@ class Item{
     public $nom;
     public $marque;
     public $type;
-    
-    public function __toString(){
-        
-    }
+    public $binet;
+    public $quantite;
+    public $description;
+    public $image;
+    public $offre;
+    public $isstockpublic;
+    public $caution;
     
     public static function getItemResearchFunction($dbh, $nom){
-        $query="SELECT * FROM `item` WHERE LOCATE(?, `nom`)>0";
+        $query="SELECT * FROM items WHERE LOCATE(?, nom)>0";
         $sth = $dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array($nom));
@@ -27,14 +30,14 @@ class Item{
     }
 
     public static function getItemMultipleResearch($dbh, $search){
-        $query="SELECT * FROM `item` WHERE `nom` LIKE CONCAT('%', :search, '%') OR `marque` LIKE CONCAT('%', :search, '%')";
+        $query="SELECT * FROM items WHERE nom LIKE CONCAT('%', :search, '%') OR marque LIKE CONCAT('%', :search, '%')";
         $sth = $dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array('search' => $search));
         $items=array();
         $i=0;
         while ($item=$sth->fetch()){
-            $items[$i]=clone $item;
+            $items[$i] = clone $item;
             $i=$i+1;
         }
         $sth->closeCursor();
@@ -42,7 +45,7 @@ class Item{
     }
 
     public static function getItemById($dbh, $id){
-        $query = "SELECT * FROM item WHERE id = ?";
+        $query = "SELECT * FROM items WHERE id = ?";
         $sth = $dbh->prepare($query);
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
         $sth->execute(array($id));
@@ -51,11 +54,34 @@ class Item{
         return $item;
     }
 
+    public static function getItemsFromBinetsWithImage($dbh, $nomBinet){ 
+        $query="SELECT * FROM items WHERE binet=? AND offre=1 AND quantite>0 AND image IS NOT NULL";
+        $sth=$dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+        $sth->execute(array($nomBinet));
+        $items=array();
+        $i=0;
+        while ($item=$sth->fetch()){
+            $items[$i] = clone $item;
+            $i++;
+        }
+        return $items;
+    }
+
+    public static function getItemsFromBinets($dbh, $nomBinet){ 
+        $query="SELECT * FROM items WHERE binet=?";
+        $sth=$dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
+        $sth->execute(array($nomBinet));
+        $items=array();
+        $i=0;
+        while ($item=$sth->fetch()){
+            $items[$i] = clone $item;
+            $i++;
+        }
+        return $items;
+    }
+
 }
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
+?>

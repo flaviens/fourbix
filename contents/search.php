@@ -11,19 +11,15 @@ if (strlen($_GET["search"])>0){
 
 function printItem($dbh, $item){ //TODO : génère le format créé par un objet. Le format a generer doit être : le nom de l'objet, sa marque si non NULL, son type si non NULL, l'image de l'objet, la description, le binet qui le prête si offre=true, le stock si isstockpublic=true
     //selectionner dans la base de donnee les sotcks disponibles
-    $query="SELECT * FROM `stock` WHERE `item`=?";
+    $query="SELECT image FROM `binets` WHERE `nom`=?";
     $sth = $dbh->prepare($query);
-    $sth->execute(array($item->id));
-    while ($resultat=$sth->fetch()){
-        $query="SELECT image FROM `binets` WHERE `nom`=?";
-        $sth2 = $dbh->prepare($query);
-        $sth2->execute(array($resultat["binet"]));
-        $imageBinet=$sth2->fetch();
-        $sth2->closeCursor();
-        //var_dump($resultat);
-        //var_dump($imageBinet);
-        if ($resultat["offre"]){
-        echo"<tr><th scope='row'><a href='index.php?page=stock&id={$resultat['id']}'>";
+    $sth->execute(array($item->binet));
+    $imageBinet=$sth->fetch();
+    $sth->closeCursor();
+    //var_dump($resultat);
+    //var_dump($imageBinet);
+    if ($item->offre){
+        echo"<tr><th scope='row'><a href='index.php?page=item&id={$item->id}'>";
         echo htmlspecialchars($item->nom);
         echo "</a></th> <td>";
         echo htmlspecialchars($item->marque);
@@ -31,34 +27,33 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
         echo htmlspecialchars($item->type);
         echo "</td><td>";
             echo "<img src=images/items/";
-            echo $resultat["image"];
+            echo htmlspecialchars($item->image);
             echo " alt='";
-            echo $resultat["image"];
+            echo htmlspecialchars($item->image);
             echo "' class='image-item-search'/>";
         echo "</td><td class='description-search'>";
-        echo htmlspecialchars($resultat["description"]);
+        echo htmlspecialchars($item->description);
         echo "</td><td style='text-align:center'>";
-        echo htmlspecialchars($resultat["binet"]);
+        echo htmlspecialchars($item->binet);
             echo "<br /><img src='images/binets/";
-            echo $imageBinet["image"];
+            echo htmlspecialchars($imageBinet["image"]);
             echo "' alt='";
-            echo $imageBinet["image"];
+            echo htmlspecialchars($imageBinet["image"]);
             echo "' class='image-binet-search'/>";
         echo "</td><td>";
-        if ($resultat["isstockpublic"]){
-            echo htmlspecialchars($resultat["quantite"]);
+        if ($item->isstockpublic){
+            echo htmlspecialchars($item->quantite);
             echo "</td><td>";
         } else {
             echo "Non renseigné</td><td>";
         }
-        if (strlen($resultat["caution"])>0){
-            echo htmlspecialchars($resultat["caution"]);
+        if (strlen($item->caution)>0){
+            echo htmlspecialchars($item->caution);
             echo " &euro;</td>";
         }else {
             echo "Non renseigné</td>";
         }
         echo "</tr>";
-        }
     }
     $sth->closeCursor();
 }

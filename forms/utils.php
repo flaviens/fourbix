@@ -85,9 +85,9 @@ CHAINE_DE_FIN;
                     <li><a href="index.php?page=accueil">Accueil</a></li>
                     <li><a href="index.php?page=catalogue">Catalogue</a></li>
                     <li style=margin-top:10px>
-                    <form class="form-inline" method="post" action="index.php?page=search">
-                        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><span class="glyphicon glyphicon-search"></span> Recherche</button>
+                    <form class="form-inline" method="get" action="index.php">
+                        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Cherchez un item" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="search" name="page"><span class="glyphicon glyphicon-search"></span></button>
                     </form></li>
                     <li><a href="#">Mes binets</a></li>
                     <li><a href="#">Demande</a></li>

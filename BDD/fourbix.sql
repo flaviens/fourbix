@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.4
+-- version 4.7.7
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  ven. 23 mars 2018 à 14:02
--- Version du serveur :  10.1.26-MariaDB
--- Version de PHP :  7.1.9
+-- Généré le :  Dim 01 avr. 2018 à 15:53
+-- Version du serveur :  10.1.30-MariaDB
+-- Version de PHP :  7.2.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -77,11 +77,41 @@ CREATE TABLE `cautions` (
 CREATE TABLE `demandes` (
   `id` int(11) NOT NULL,
   `utilisateur` varchar(64) NOT NULL,
-  `binet` varchar(64) DEFAULT NULL,
-  `description` text,
-  `debut` date DEFAULT NULL COMMENT 'debut du besoin',
-  `fin` date DEFAULT NULL COMMENT 'fin estimee'
+  `stock_id` int(11) NOT NULL,
+  `binet` varchar(64) NOT NULL,
+  `quantite` int(11) NOT NULL,
+  `commentaire` text,
+  `debut` date DEFAULT NULL,
+  `fin` date DEFAULT NULL,
+  `binet_emprunteur` varchar(64) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `demandes`
+--
+
+INSERT INTO `demandes` (`id`, `utilisateur`, `stock_id`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`) VALUES
+(4, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
+(5, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
+(6, 'olivier', 2, 'Binet Reseau', 3, 'coucou', '2018-04-01', NULL, NULL),
+(7, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', NULL, NULL),
+(8, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-10', '2018-04-01', NULL),
+(9, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-17', '2018-04-01', NULL),
+(10, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL),
+(11, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL),
+(12, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
+(13, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
+(14, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-17', '2018-04-01', NULL),
+(15, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-10', '2018-04-01', NULL),
+(16, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
+(17, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
+(18, 'olivier', 2, 'Binet Reseau', 1, NULL, NULL, NULL, NULL),
+(19, 'olivier', 2, 'Binet Reseau', 2, 'coucou', '2018-04-01', '2018-04-02', NULL),
+(20, 'olivier', 2, 'Binet Reseau', 3, 'yguygu', '2018-04-01', '2018-04-03', 'Administrateurs'),
+(21, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
+(22, 'olivier', 2, 'Binet Reseau', 3, NULL, NULL, NULL, 'Administrateurs'),
+(23, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL),
+(24, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,7 +234,8 @@ CREATE TABLE `stock` (
 
 INSERT INTO `stock` (`id`, `binet`, `item`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`) VALUES
 (1, 'Binet Reseau', 2, 10, 'Un super cable ethernet de 10m ! Vous n\'en renviendrez pas ! Il n\'y en aura pas pour tout le monde.', 'ethernet.jpeg', 1, 1, 2),
-(2, 'Binet Reseau', 3, 50, 'Une clef USB vous permettra de transporter vos données : c\'est l\'objet indispensable de tous les étudiants du platâl !', 'usbKey.jpeg', 1, 1, 0.25);
+(2, 'Binet Reseau', 3, 50, 'Une clef USB vous permettra de transporter vos données : c\'est l\'objet indispensable de tous les étudiants du platâl !', 'usbKey.jpeg', 1, 1, 0.25),
+(3, 'Binet Pokemon', 2, 10, 'Un cable ethernet pour tous les attraper !', 'ethernet.jpeg', 1, 1, 0.5);
 
 -- --------------------------------------------------------
 
@@ -260,6 +291,8 @@ CREATE TABLE `utilisateurs` (
 INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `login`, `password`, `naissance`) VALUES
 ('Alexandre', 'Binninger', 'X2016', 'alexandre.binninger@polytechnique.edu', 'Burrakauchy', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', '1996-06-15'),
 ('Dominique', 'Rossin', 'Adjoint DER', 'dominique.rossin@polytechnique.edu', 'dominique', '9cc140dd813383e134e7e365b203780da9376438', '1970-02-11'),
+('Martins', 'Oliveira', 'X2016', 'gabriel@mail.com', 'gabriel', '7c222fb2927d828af22f592134e8932480637c0d', '1996-06-10'),
+('Joao', 'Silva', 'X2016', 'joao@gmail.com', 'joao', '356a192b7913b04c54574d18c28d46e6395428ab', '2018-04-01'),
 ('Olivier', 'Serre', 'professeur', 'olivier.serre@polytechnique.edu', 'olivier', '663194f2b9123a38cd9e2e2811f8d2fd387b765e', '1980-03-14');
 
 --
@@ -290,8 +323,10 @@ ALTER TABLE `cautions`
 --
 ALTER TABLE `demandes`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `utilisateur` (`utilisateur`),
+  ADD KEY `stock_id` (`stock_id`),
   ADD KEY `binet` (`binet`),
-  ADD KEY `utilisateur` (`utilisateur`);
+  ADD KEY `binet_emprunteur` (`binet_emprunteur`);
 
 --
 -- Index pour la table `item`
@@ -380,7 +415,7 @@ ALTER TABLE `cautions`
 -- AUTO_INCREMENT pour la table `demandes`
 --
 ALTER TABLE `demandes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pour la table `item`
@@ -410,7 +445,7 @@ ALTER TABLE `pretoperation`
 -- AUTO_INCREMENT pour la table `stock`
 --
 ALTER TABLE `stock`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `suggestions`
@@ -433,7 +468,9 @@ ALTER TABLE `bugreports`
 --
 ALTER TABLE `demandes`
   ADD CONSTRAINT `demandes_ibfk_1` FOREIGN KEY (`binet`) REFERENCES `binets` (`nom`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `demandes_ibfk_2` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `demandes_ibfk_2` FOREIGN KEY (`binet_emprunteur`) REFERENCES `binets` (`nom`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `demandes_ibfk_3` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `demandes_ibfk_4` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `item`
@@ -464,7 +501,7 @@ ALTER TABLE `pretoperation`
   ADD CONSTRAINT `pretoperation_ibfk_3` FOREIGN KEY (`caution`) REFERENCES `cautions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_4` FOREIGN KEY (`item_lent`) REFERENCES `itemlent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_5` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `pretoperation_ibfk_6` FOREIGN KEY (`demande`) REFERENCES `demandes` (`id`) ON UPDATE CASCADE;
+  ADD CONSTRAINT `pretoperation_ibfk_6` FOREIGN KEY (`demande`) REFERENCES `demandes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `stock`

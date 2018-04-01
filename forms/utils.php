@@ -161,6 +161,10 @@ $page_list = array(
     array("name" => "stock",
         "title" => "Stock",
         "menutitle" => "Stock",
+        "loggedIn" => true),
+    array("name" => "item",
+        "title" => "Inventaire",
+        "menutitle" => "Inventaire",
         "loggedIn" => true)
 );
 

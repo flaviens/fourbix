@@ -165,16 +165,17 @@ CHAINE_DE_FIN;
 }
 
 function printItems($dbh, $isManager, $binet){
-    $query="SELECT * FROM `stock` INNER JOIN `item` ON `item`.`id`=`stock`.`item` WHERE `binet`=? ";
+    $query="SELECT * FROM items WHERE binet = ?";
     $sth = $dbh->prepare($query);
+    $sth->setFetchMode(PDO::FETCH_CLASS, 'Item');
     $sth->execute(array($binet));
-    while ($resultat=$sth->fetch()){
+    while ($resultat = $sth->fetch()){
         //var_dump($resultat);
         //var_dump($imageBinet);
-        $itemUpdateID=$resultat[0];
-        if ($resultat["offre"] || $isManager){
-        echo"<tr><th scope='row'><a href='index.php?page=stock&id={$resultat['id']}'>";
-        echo htmlspecialchars($resultat["nom"]);
+        $itemUpdateID=$resultat->id;
+        if ($resultat->offre || $isManager){
+        echo"<tr><th scope='row'><a href='index.php?page=item&id={$resultat->id}'>";
+        echo htmlspecialchars($resultat->nom);
         echo "</a>";
         if ($isManager){
             echo <<< CHAINE_DE_FIN
@@ -191,23 +192,23 @@ CHAINE_DE_FIN;
             echo "<form action=index.php?page=binet method=post><input type='hidden' name='pageBinet' value='$binet'><input type='hidden' name='itemUpdateID' value='$itemUpdateID'>";
         }
         echo "<td>";
-        echo htmlspecialchars($resultat["marque"]);
+        echo htmlspecialchars($resultat->marque);
         echo "</td><td>";
-        echo htmlspecialchars($resultat["type"]);
+        echo htmlspecialchars($resultat->type);
         echo "</td><td>";
             echo "<img src=images/items/";
-            echo $resultat["image"];
+            echo htmlspecialchars($resultat->image);
             echo " alt='";
-            echo $resultat["image"];
+            echo htmlspecialchars($resultat->image);
             echo "' class='image-item-search'/>";
         echo "</td><td class='description-search'>";
         if ($isManager){
-            $description= htmlspecialchars($resultat['description']);
+            $description= htmlspecialchars($resultat->description);
             echo "<label for='description'>Description modifiable : </label><textarea name='description' rows='5'/>$description</textarea>";
         } else{
-        echo htmlspecialchars($resultat["description"]);
+        echo htmlspecialchars($resultat->description);
         }
-        if (!$resultat["offre"]){
+        if (!$resultat->offre){
             echo"<br/> <p class='notPublicBinetItem'>L'offre n'est pas publique</p>";
         }
         if ($isManager){
@@ -220,14 +221,14 @@ CHAINE_DE_FIN;
         }
         echo "</td><td>";
         if (!$isManager){
-        if ($resultat["isstockpublic"]){
-            echo htmlspecialchars($resultat["quantite"]);
+        if ($resultat->isstockpublic){
+            echo htmlspecialchars($resultat->quantite);
             
         } else {
             echo "Non renseigné";
         }
         } else{
-            $stockNumber=$resultat["quantite"];
+            $stockNumber=$resultat->quantite;
             echo <<<CHAINE_DE_FIN
             <p>
                 <label for="stockQuantity">Stock:</label>
@@ -239,23 +240,23 @@ CHAINE_DE_FIN;
             </p>
             
 CHAINE_DE_FIN;
-            if (!$resultat["isstockpublic"]){
+            if (!$resultat->isstockpublic){
                 echo"<br/> <p class='notPublicBinetItem'>Le stock n'est pas public.</p>";
             }
         }
         echo "</td><td>";
         if (!$isManager){
-        if (strlen($resultat["caution"])>0){
+        if (strlen($resultat->caution)>0){
             echo htmlspecialchars($resultat["caution"]);
-            echo "€";
+            echo " &euro;";
         }else {
             echo "Non renseigné ou sans caution.</td>";
         }
         } else{
-            $caution=htmlspecialchars($resultat["caution"]);
+            $caution=htmlspecialchars($resultat->caution);
             echo <<< CHAINE_DE_FIN
             <label for="caution">Montant :</label>
-            <input type=number value=$caution step='0.01' name=caution id="caution">
+            <input type=number value=$caution step='0.01' name=caution id="caution" min='0'>
 CHAINE_DE_FIN;
             
         }
@@ -279,14 +280,14 @@ CHAINE_DE_FIN;
 }
 
 function updateStock($dbh, $stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID){
-    $query="UPDATE `stock` SET `quantite`=? , `description`=?, `offre`=?, `isstockpublic`=? , `caution`=? WHERE `id`=? ;";
+    $query="UPDATE `items` SET `quantite`=? , `description`=?, `offre`=?, `isstockpublic`=? , `caution`=? WHERE `id`=? ;";
     $sth=$dbh->prepare($query);
     $sth->execute(array($stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID));
     $sth->closeCursor();
 }
 
 function deleteStock($dbh, $itemUpdateID){
-    $query="DELETE FROM `stock` WHERE `stock`.`id`=?";
+    $query="DELETE FROM `items` WHERE `id`=?";
     $sth=$dbh->prepare($query);
     $resultat=$sth->execute(array($itemUpdateID));
     if ($resultat){
@@ -399,8 +400,8 @@ CHAINE_DE_FIN;
     
 }
 
-function addItem($dbh, $nomItem, $marqueItem, $typeItem){
-    $query="INSERT INTO `item` (`id`, `nom`, `marque`, `type`) VALUES (NULL, ?, ?, ?);";
+/*function addItem($dbh, $nomItem, $marqueItem, $typeItem){
+    $query="INSERT INTO `items` (`nom`, `marque`, `type`) VALUES (?, ?, ?);";
     $sth=$dbh->prepare($query);
     $sth->execute(array($nomItem, $marqueItem, $typeItem));
     return $dbh->lastInsertId();
@@ -413,9 +414,15 @@ function addStock($dbh, $binet, $idItem, $quantiteItem, $descriptionItem, $image
     $resultat=$sth->execute(array($binet, $idItem, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem));
     $sth->closeCursor();
     return $resultat;
+}*/
+
+function addItem($dbh, $nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem){
+    $query="INSERT INTO `items` (`nom`, `marque`, `type`, `binet`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $sth=$dbh->prepare($query);
+    $resultat=$sth->execute(array($nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem));
+    $sth->closeCursor();
+    return $resultat;
 }
-
-
 
         
 if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"]) && $_POST["pageBinet"]!="Administrateurs"){
@@ -456,13 +463,13 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
         
         printgestionItemsForm($dbh, $binet);
         if (isset($_POST["nomItem"]) && $_POST["nomItem"]!="" &&
-            isset($_POST["marqueItem"]) &&
-            isset($_POST["typeItem"]) &&
-            isset($_POST["quantiteItem"]) &&
-            isset($_POST["descriptionItem"]) &&
-            isset($_POST["isStockPublicItem"]) &&
-            isset($_POST["isOffrePublicItem"]) &&
-            isset($_POST["cautionItem"])){
+                isset($_POST["marqueItem"]) &&
+                isset($_POST["typeItem"]) &&
+                isset($_POST["quantiteItem"]) &&
+                isset($_POST["descriptionItem"]) &&
+                isset($_POST["isStockPublicItem"]) &&
+                isset($_POST["isOffrePublicItem"]) &&
+                isset($_POST["cautionItem"])){
             $nomItem= htmlspecialchars ($_POST["nomItem"]);
             $marqueItem= htmlspecialchars ($_POST["marqueItem"]);
             $typeItem= htmlspecialchars($_POST["typeItem"]);
@@ -471,7 +478,7 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
             $isStockPublicItem= $_POST["isStockPublicItem"]=="oui" ? true : false;
             $isOffrePublicItem=$_POST["isOffrePublicItem"] == "oui" ? true : false;
             $cautionItem= htmlspecialchars ($_POST["cautionItem"]);
-            $idItem=addItem($dbh, $nomItem, $marqueItem, $typeItem);
+            //$idItem=addItem($dbh, $nomItem, $marqueItem, $typeItem);
             
             if (isset($_FILES['imageItem']) && $_FILES['imageItem']['name']!=""){
             if ($_FILES['imageItem']['error'] > 0){
@@ -502,11 +509,11 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
         if (isset($error_file)){
            echo "<div><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
         } else{
-            $adresse_image="images/items/".$idItem."-image.png";
-            $resultat = move_uploaded_file($_FILES['imageItem']['tmp_name'],$adresse_image);
+            $adresse_image="images/items/image-item".date('YmdHis').".png";
+            $resultat = move_uploaded_file($_FILES['imageItem']['tmp_name'], $adresse_image);
             if ($resultat){
                echo "<p class='enregistrement-valide'>L'image a bien été téléversée !</p>";
-                $imageItem=$idItem."-image.png";
+                $imageItem="image-item".date('YmdHis').".png";
             } else{
                  $imageItem=NULL;
                   echo "<p class='enregistrement-invalide'>BUG : l'image n'a pas pu être téléversée !</p>";
@@ -515,7 +522,7 @@ if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"
         } else{
             $imageItem=NULL;
         }  
-          if (addStock($dbh, $binet, $idItem, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem)){
+          if (addItem($dbh, $nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem)){
               echo "<p class='enregistrement-valide'>Enregistrement dans le stock effectué !</p>";
           } else{
                echo "<p class='enregistrement-invalide'>BUG : pas d'enregistrement dans le stock !</p>";

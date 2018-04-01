@@ -61,9 +61,21 @@ class Binet{
             echo '<option>' . htmlspecialchars($binet->nom) . '</option>';
         }
     }
+    
+    public static function generateBinetsByMember($dbh, $login){
+        $query="SELECT binet FROM membres WHERE utilisateur = ? AND binet!='Administrateurs' GROUP BY binet ORDER BY binet ASC";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array($login));
+        $binets = array();
+        while($membre = $sth->fetch()){
+            array_push($binets, $membre['binet']);
+        }
+        $sth->closeCursor();
+        return $binets;
+    }
 
     public static function generateBinetsByMemberOptions($dbh, $login){
-        $query="SELECT binet from membres WHERE utilisateur = ? ORDER BY binet ASC";
+        $query="SELECT binet FROM membres WHERE utilisateur = ? ORDER BY binet ASC";
         $sth = $dbh->prepare($query);
         $sth->execute(array($login));
         $binets = array();

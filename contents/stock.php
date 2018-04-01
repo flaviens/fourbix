@@ -122,10 +122,10 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 		}
 	}
 	else
-		echo "<p>Cet item n'existe pas ou n'est pas disponible.</p>";
+		echo "<h4 style='text-align:center'>Cet item n'existe pas ou n'est pas disponible.</h4>";
 }
 else
-	echo "<p>Cet item n'existe pas ou n'est pas disponible.</p>";
+	echo "<h4 style='text-align:center'>Cet item n'existe pas ou n'est pas disponible.</h4>";
 
 ?>
 

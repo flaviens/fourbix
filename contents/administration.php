@@ -204,13 +204,6 @@ function genereRolesChoices($dbh){
     $sth->closeCursor();
 }
 
-function generateBinetChoices($dbh){
-  $binets = Binet::getAllBinets($dbh);
-  foreach ($binets as $binet){
-    echo '<option>' . $binet->nom . '</option>';
-  }
-}
-
 $form_values_valid_role=false;
 
 echo "<div class='col-md-4 gris'>";
@@ -262,7 +255,7 @@ echo <<< CHAINE_DE_FIN
 CHAINE_DE_FIN;
   //<input id="binetRole" type=text name=binetRole value=$binetRole required>
 
-generateBinetChoices($dbh);
+Binet::generateBinetOptions($dbh);
 
 echo <<< CHAINE_DE_FIN
   </select>

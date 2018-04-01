@@ -54,6 +54,28 @@ class Binet{
         $sth->execute(array($nom));
         return $sth->rowCount()==1;
     }
+
+    public static function generateBinetOptions($dbh){
+        $binets = Binet::getAllBinets($dbh);
+        foreach ($binets as $binet){
+            echo '<option>' . htmlspecialchars($binet->nom) . '</option>';
+        }
+    }
+
+    public static function generateBinetsByMemberOptions($dbh, $login){
+        $query="SELECT binet from membres WHERE utilisateur = ? ORDER BY binet ASC";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array($login));
+        $binets = array();
+        while($membre = $sth->fetch()){
+            if (!in_array($membre['binet'], $binets))
+                array_push($binets, $membre['binet']);
+        }
+        $sth->closeCursor();
+        foreach ($binets as $binet){
+            echo '<option>' . htmlspecialchars($binet) . '</option>';
+        }
+    }
 }
 
 /* 

@@ -19,12 +19,13 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
         $sth2 = $dbh->prepare($query);
         $sth2->execute(array($resultat["binet"]));
         $imageBinet=$sth2->fetch();
+        $sth2->closeCursor();
         //var_dump($resultat);
         //var_dump($imageBinet);
         if ($resultat["offre"]){
-        echo"<tr><th scope='row'>";
+        echo"<tr><th scope='row'><a href='index.php?page=stock&id={$resultat['id']}'>";
         echo htmlspecialchars($item->nom);
-        echo "</th> <td>";
+        echo "</a></th> <td>";
         echo htmlspecialchars($item->marque);
         echo "</td><td>";
         echo htmlspecialchars($item->type);
@@ -52,13 +53,14 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
         }
         if (strlen($resultat["caution"])>0){
             echo htmlspecialchars($resultat["caution"]);
-            echo "€</td>";
+            echo " &euro;</td>";
         }else {
             echo "Non renseigné</td>";
         }
         echo "</tr>";
         }
     }
+    $sth->closeCursor();
 }
 
 //mettre dans Binet le nom du binet et l'image

@@ -17,9 +17,9 @@ function printRechercheForm(){
      <div class="panel panel-info">
             <div class="panel-heading">Quels binets vous intéressent ?</div>
             <div class="panel-body">
-        <form class="form-inline" method="post" id="rechercheBinetsCatalogue">
+        <form class="form-inline" method="get" id="rechercheBinetsCatalogue">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchBinets">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Recherche</button></li>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="page" value="catalogue"><span class="glyphicon glyphicon-search"></span></button></li>
         </form>
     </div>
     </div>
@@ -28,8 +28,8 @@ CHAINE_DE_FIN;
 }
 
 function resultSearch($dbh){
-    if (isset($_POST["searchBinets"]) && strlen($_POST["searchBinets"])>0){
-    $binets=Binet::getBinetResearchFunction($dbh, $_POST["searchBinets"]);
+    if (isset($_GET["searchBinets"]) && strlen($_GET["searchBinets"])>0){
+    $binets=Binet::getBinetResearchFunction($dbh, $_GET["searchBinets"]);
 } else {
     $binets=array();
 }

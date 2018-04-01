@@ -1,28 +1,34 @@
--Faire une interface admin pour rajouter des utilisateurs, des binets... Faire un Javascript pour permettre de cacher/faire apparaître les deux formulaires. Dans l'administration, gérer l'administration des rôles des utilisateurs par exemple.
-
 -Page Administration : ne pas oublier d'avoir une liste pour trouver les utilisateurs.
 
 -Administration : report de bugs, de suggestions pour le développement du site.
 
--Interface admin : rajouter en bas un tableau de recherche pour pouvoir voir quels sont les membres de tel ou tel binet.
+-Interface admin : rajouter en bas un tableau de recherche pour pouvoir voir quels sont les membres de tel ou tel binet. (Ou alors : un gros ladder avec tous les utilisateurs ?)
 
 -(Easy) : mettre un sel pour les mots de passe
 
--Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs. En gros, faire la page binets avec : "nos demandes, administration si on est admin du binet, gestion de l'inventaire si on est admin OU inventorymanager, ensemble du matos proposé pour tout le monde"
+-Mettre un formulaire d'inscription avec une Capcha ? (c'est mieux pour la soutenance, c'est plus visible comme systeme).
 
--Lors d'une demande, les admin et respos matériels reçoivent un mail. (Dur à faire ?)
+-Lors d'une demande, les admins et respos matériels reçoivent un mail. (Dur à faire ?)
 
 -Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée
 
+
+
+-Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs. En gros, faire la page binets avec : "nos demandes, administration si on est admin du binet, gestion de l'inventaire si on est admin OU inventorymanager, ensemble du matos proposé pour tout le monde"
+-Dans l'interface de gestion : possibilité de rajouter du matériel. Possibilité de changer l'image ? Possibilité de mettre des items et du stock !!
+-Page du binet : rajouter les différentes personnes ainsi que les différents respos.
+-Faire un bouton "commander" vers la page de l'objet. 
+
 -Demande : Interface pour réaliser une demande | consulter ses demandes | vérifier si le chèque de caution a été encaissé
 
--Catalogue : faire une page par binet (qui sera générée en fonction des informations post), et si on clique sur un objet cela nous redirige vers le lien pour faire une demande. On peut également faire un caroussel avec : https://tympanus.net/codrops/2011/08/16/circular-content-carousel/  ||| Possibilité d'utiliser bootstrap : https://getbootstrap.com/docs/4.0/components/carousel/ !
+-Javascript : quand on a la souris sur "mes binets", alors "mes binets" affiche les binets dans lesquels on se trouve. Faire un alert pour le delete d'un utilisateur ?
 
--Javascript : quand on a la souris sur "mes binets", alors "mes binets" affiche les binets dans lesquels on se trouve
 
--Préciser si notre site est responsive design
-
+DONE :
+-Faire une interface admin pour rajouter des utilisateurs, des binets... Dans l'administration, gérer l'administration des rôles des utilisateurs par exemple.
 -mettre du htmlspecialchars
+-Catalogue : faire une page par binet (qui sera générée en fonction des informations post), et si on clique sur un objet cela nous redirige vers le lien pour faire une demande. On peut également faire un un caroussel avec : https://tympanus.net/codrops/2011/08/16/circular-content-carousel/  ||| Possibilité d'utiliser bootstrap : https://getbootstrap.com/docs/4.0/components/carousel/ !
+
 
 
 -A faire : un site strucutré, du javascript est un BON BONUS, soigner la sécurité
@@ -32,5 +38,23 @@
 
 --> on utilise bootstrap donc relativement responsive design
 --> sécurité : on a pensé qu'une personne non admin pourrait avoir accès à la page amdin et on a réglé ça.
+--> on peut trier les éléments du tableau
+--> requete INNER JOIN ON pour la page des binets, requete Update complexe
+--> ne s'affiche pas dans le caroussel si le stock <=0
 
-- Faire un boucle pour afficher des items
+UPDATE `stock` SET `quantite`=? , `description`=?, `offre`=?, `isstockpublic`=? , `caution`=? WHERE `id`=? ;
+
+
+<form action=index.php?page=binet method=post>
+                <br/><p style="text-align:center"><input type='hidden' name='pageBinet' value='$binet'>
+                <input type='hidden' name='itemUpdateID' value='$itemUpdateID'>
+                <input type='hidden' name='toDelete' value='true'>   
+                <input type=submit class="btn btn-danger" value="Supprimer"></p>
+            </form>
+
+
+
+
+
+
+

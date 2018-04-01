@@ -21,8 +21,19 @@ and open the template in the editor.
     max-height:150px;
     max-width:150px;
 }
+.notPublicBinetItem{
+    font-weight: bold;
+    color:red;
+    font-size: 1.1em;
+}
 
 .image-binet-catalogue{
+    max-height:150px;
+    max-width:150px;
+}
+
+.pageBinetLogo{
+    float:right;
     max-height:150px;
     max-width:150px;
 }

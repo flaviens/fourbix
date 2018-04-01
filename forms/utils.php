@@ -48,11 +48,11 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">FroubiX</a>
+                <a class="navbar-brand" href="index.php">FourbiX</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="index.php?page=accueil">Accueil</a></li>
+                    <li><a href="index.php?page=accueil">Accueil</a></li>
                     <li><a href="index.php?page=catalogue">Catalogue</a></li>
                     <li style=margin-top:10px>
                 </ul>
@@ -64,7 +64,8 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
     </nav>
 CHAINE_DE_FIN;
     } else{
-        $isAdmin= Utilisateur::isAdmin($dbh, $_SESSION["login"]);
+        $login= htmlspecialchars($_SESSION["login"]);
+        $isAdmin= Utilisateur::isAdmin($dbh, $login);
         
             echo <<< CHAINE_DE_FIN
     <!-- Static navbar -->
@@ -77,11 +78,11 @@ CHAINE_DE_FIN;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">FroubiX</a>
+                <a class="navbar-brand" href="index.php">FourbiX</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-left">
-                    <li class="active"><a href="index.php?page=accueil">Accueil</a></li>
+                    <li><a href="index.php?page=accueil">Accueil</a></li>
                     <li><a href="index.php?page=catalogue">Catalogue</a></li>
                     <li style=margin-top:10px>
                     <form class="form-inline" method="post" action="index.php?page=search">
@@ -101,8 +102,10 @@ CHAINE_DE_FIN;
             echo <<< CHAINE_DE_FIN
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#">$login</a></li>
                     <li><a href="index.php?todo=logout&page=accueil"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 </ul>
+                    
             </div>
         </div>
     </nav>
@@ -125,6 +128,11 @@ $page_list = array(
         "name" => "binets",
         "title" => "Binets",
         "menutitle" => "Mes Binets",
+        "loggedIn" => false),
+    array( //NE PAS SUPPRIMER !!
+        "name" => "binet",
+        "title" => "Binet",
+        "menutitle" => "Page Binet",
         "loggedIn" => false),
     array(
         "name" => "search",

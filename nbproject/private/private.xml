@@ -8,10 +8,12 @@
             <file>file:/opt/lampp/htdocs/fourbix/css/style.css</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/catalogue.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/class/Item.php</file>
-            <file>file:/opt/lampp/htdocs/fourbix/contents/erreur.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/index.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/class/Utilisateur.php</file>
+            <file>file:/opt/lampp/htdocs/fourbix/contents/accueil.php</file>
+            <file>file:/opt/lampp/htdocs/fourbix/forms/printForms.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/forms/utils.php</file>
+            <file>file:/opt/lampp/htdocs/fourbix/forms/logInOut.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/database/database.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/class/Binet.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/search.php</file>

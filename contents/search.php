@@ -71,13 +71,14 @@ echo <<< CHAINE_DE_FIN
         <h1>Recherche</h1>
         <p>Recherchez ce dont vous avez besoin facilement !</p>
     </div>
-   
+</div>
 CHAINE_DE_FIN;
 
 
 //var_dump($items);
 if (sizeof($items)>0){
     echo <<< CHAINE_DE_FIN
+    <div class="container">
     <table class="table table-striped table-bordered sortable">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  Dim 01 avr. 2018 à 22:43
+-- Généré le :  Dim 01 avr. 2018 à 23:50
 -- Version du serveur :  10.1.30-MariaDB
 -- Version de PHP :  7.2.1
 
@@ -217,7 +217,8 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`nom`) VALUES
 ('admin'),
-('matosManager');
+('matosManager'),
+('membre');
 
 -- --------------------------------------------------------
 

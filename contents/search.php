@@ -68,6 +68,7 @@ echo <<< CHAINE_DE_FIN
 
 <div class="container">
     <div class="jumbotron">
+    <img src='images/logo/recherche-logo.png' alt='recherche-logo.png' class='pageLogo'>
         <h1>Recherche</h1>
         <p>Recherchez ce dont vous avez besoin facilement !</p>
     </div>

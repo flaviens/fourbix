@@ -7,7 +7,7 @@ function printHeaderPage($binet){ //TODO : rajouter l'image du binet ?
     echo <<< CHAINE_DE_FIN
     <div class="container">
     <div class="jumbotron">
-            <img src='images/binets/$binet-logo.png' alt='$binet-logo.png' class='pageBinetLogo'>
+            <img src='images/binets/$binet-logo.png' alt='$binet-logo.png' class='pageLogo'>
             <h1>$binet</h1>
         <p>Consultez ici la page de ce binet !</p>
     </div>
@@ -172,6 +172,7 @@ function printItems($dbh, $isManager, $binet){
         //var_dump($resultat);
         //var_dump($imageBinet);
         $itemUpdateID=$resultat[0];
+        if ($resultat["offre"] || $isManager){
         echo"<tr><th scope='row'><a href='index.php?page=stock&id={$resultat['id']}'>";
         echo htmlspecialchars($resultat["nom"]);
         echo "</a>";
@@ -185,7 +186,6 @@ function printItems($dbh, $isManager, $binet){
             </form>
 CHAINE_DE_FIN;
         }
-        if ($resultat["offre"] || $isManager){
         echo "</th>";
         if($isManager){
             echo "<form action=index.php?page=binet method=post><input type='hidden' name='pageBinet' value='$binet'><input type='hidden' name='itemUpdateID' value='$itemUpdateID'>";

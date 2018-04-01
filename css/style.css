@@ -32,10 +32,15 @@ and open the template in the editor.
     max-width:150px;
 }
 
-.pageBinetLogo{
+.pageLogo{
     float:right;
     max-height:150px;
     max-width:150px;
+}
+
+.titreSite{
+    text-align:center;
+    font-style: arial;
 }
 
 .image-caroussel{

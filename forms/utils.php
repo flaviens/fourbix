@@ -19,8 +19,8 @@ function generateHTMLHeader($titre, $linkCSS) {
         <title>$titre</title>
     </head>
         <body>
-            <div class='titreSite'>
-            <h1>FourbiX</h1>
+            <div class='upperNavBar'>
+            
             </div>
             
 CHAINE_DE_FIN;
@@ -52,7 +52,7 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">FourbiX</a>
+                <a class="navbar-brand titreSite" href="index.php">FourbiX</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
@@ -83,7 +83,7 @@ CHAINE_DE_FIN;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.php">FourbiX</a>
+                <a class="navbar-brand titreSite" href="index.php">FourbiX</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-left">

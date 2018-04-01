@@ -135,7 +135,7 @@ function DeleteRole($dbh, $login, $binet, $role){
 
 function printTableItems($dbh, $isManager, $binet){
      echo <<< CHAINE_DE_FIN
-    <div class="container">
+    <div class="container-fluid">
     <table class="table table-striped table-bordered sortable">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
@@ -199,7 +199,11 @@ CHAINE_DE_FIN;
             echo $resultat["image"];
             echo " alt='";
             echo $resultat["image"];
+            if ($isManager){
+                echo "' class='image-item-Manager'/>";
+            }else{
             echo "' class='image-item-search'/>";
+            }
         echo "</td><td class='description-search'>";
         if ($isManager){
             $description= htmlspecialchars($resultat['description']);

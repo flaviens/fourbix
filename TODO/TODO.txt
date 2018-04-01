@@ -31,7 +31,8 @@ DONE :
 
 
 
--A faire : un site strucutré, du javascript est un BON BONUS, soigner la sécurité
+
+-A faire : un site structuré, du javascript est un BON BONUS, soigner la sécurité
 
 
 -Trucs à dire dans le rapport :
@@ -42,15 +43,6 @@ DONE :
 --> requete INNER JOIN ON pour la page des binets, requete Update complexe
 --> ne s'affiche pas dans le caroussel si le stock <=0
 
-UPDATE `stock` SET `quantite`=? , `description`=?, `offre`=?, `isstockpublic`=? , `caution`=? WHERE `id`=? ;
-
-
-<form action=index.php?page=binet method=post>
-                <br/><p style="text-align:center"><input type='hidden' name='pageBinet' value='$binet'>
-                <input type='hidden' name='itemUpdateID' value='$itemUpdateID'>
-                <input type='hidden' name='toDelete' value='true'>   
-                <input type=submit class="btn btn-danger" value="Supprimer"></p>
-            </form>
 
 
 

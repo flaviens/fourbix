@@ -7,7 +7,7 @@ if (!isset($_SESSION['initiated'])) {
     $_SESSION['initiated'] = true;
 }
 // Décommenter la ligne suivante pour afficher le tableau $_SESSION pour le debuggage
-var_dump($_SESSION);
+//var_dump($_SESSION);
 
 require("forms/utils.php");
 require("forms/printForms.php");
@@ -41,7 +41,7 @@ generateNavBar($dbh, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 ?>
 
 
-<div id="content">
+<div id="content" class="container content">
 	<?php
 		if($authorized)
                     /*if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]){

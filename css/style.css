@@ -8,12 +8,41 @@ and open the template in the editor.
     Author     : Alexandre Binninger
 */
 
+@font-face {
+    font-family:'progress';
+    src: url('polices/progress_3/PROGRESS PERSONAL USE.ttf') format('truetype');
+}
+
+body{
+    background: url('../images/logo/background.png') repeat fixed;
+}
+
+footer{
+    margin-top:15px;
+    bottom:2px;
+    width:100%;
+}
+
+.content{
+    box-shadow : 5px 5px 5px 5px grey;
+    padding:1px;
+}
+
+.container{
+    background-color:white;
+}
+
 .image-item-search{
     margin-left:30px;
     margin-right:30px;
     margin-top:40px;
     max-height:300px;
     max-width:300px;
+}
+
+.image-item-Manager{
+    max-height:150px;
+    max-width:150px;
 }
 
 .image-binet-search{
@@ -32,6 +61,8 @@ and open the template in the editor.
     max-width:150px;
 }
 
+
+
 .pageLogo{
     float:right;
     max-height:150px;
@@ -40,7 +71,13 @@ and open the template in the editor.
 
 .titreSite{
     text-align:center;
-    font-style: arial;
+    font-family:  'progress','Jazz LET', Impact, serif;
+    font-size:1.6em;
+    margin-top:3px;
+}
+
+.upperNavBar{
+    padding: 2px;
 }
 
 .image-caroussel{

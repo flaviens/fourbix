@@ -404,6 +404,8 @@ CHAINE_DE_FIN;
     
 }
 
+
+
 /*function addItem($dbh, $nomItem, $marqueItem, $typeItem){
     $query="INSERT INTO `items` (`nom`, `marque`, `type`) VALUES (?, ?, ?);";
     $sth=$dbh->prepare($query);
@@ -429,8 +431,8 @@ function addItem($dbh, $nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, 
 }
 
         
-if (isset($_POST["pageBinet"]) && Binet::doesBinetExist($dbh, $_POST["pageBinet"]) && $_POST["pageBinet"]!="Administrateurs"){
-    $binet= htmlspecialchars($_POST["pageBinet"]);
+if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"]) && $_GET["pageBinet"]!="Administrateurs"){
+    $binet= htmlspecialchars($_GET["pageBinet"]);
     printHeaderPage($binet);
     //Si la page s'affiche, on sait par la condition dans index.php que $_SESSION[loggedIn] est actif et que l'utilisateur a un login.
     $role; //rôle du visiteur pour ce binet.

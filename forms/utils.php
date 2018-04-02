@@ -10,12 +10,15 @@ function generateHTMLHeader($titre, $linkCSS) {
         <!-- CSS Bootstrap -->
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="$linkCSS">
+        <link rel="shortcut icon" href="favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="favicon.ico" />
+        <link rel="icon" type="image/png" href="favicon.png" />
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/code.js"></script>
         <script type="text/javascript" src="js/sorttable.js"></script>
         <script type="text/javascript" src="bootstrap/js/bootstrap.js"></script>
-            <script type="text/javascript" src="bootstrap/js/jquery.js"></script>
-            <script type="text/javascript" src="bootstrap/js/npm.js"></script>
+        <script type="text/javascript" src="bootstrap/js/jquery.js"></script>
+        <script type="text/javascript" src="bootstrap/js/npm.js"></script>
         <title>$titre</title>
     </head>
         <body>
@@ -101,12 +104,14 @@ CHAINE_DE_FIN;
 CHAINE_DE_FIN;
             $i=0;
             foreach ($binets as $binet) {
+                $nom= htmlspecialchars($binet->binet);
                 if ($i>0) echo '<li role="separator" class="divider"></li>' ;
                 echo <<< CHAINE_DE_FIN
                 <li>
-                    <form class="navbar-form" method=post action=index.php?page=binet>
-                        <input type=hidden name=pageBinet value='$binet'>
-                        <button type="submit" class="btn btn-default dropdownFont">$binet</button>
+                    <form class="navbar-form" method=get action=index.php?>
+                        <input type='hidden' name=pageBinet value="$nom">
+                        <input type='hidden' name="page" value="binet">
+                        <button type="submit" class="btn btn-default dropdownFont">$nom</button>
                     </form>
                 </li>
                 

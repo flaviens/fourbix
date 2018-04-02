@@ -47,8 +47,9 @@ function printBinets($dbh, $binet, $indexCarousel){
    echo <<< CHAINE_DE_FIN
    <tr><th scope='row' height=400>
    <span style="text-align:center">$binet->nom </span> <br/> <img src='images/binets/$imageBinet' alt='$imageBinet' class='image-binet-catalogue' />
-           <form action=index.php?page=binet method=post>
+           <form action=index.php method=get>
            <p>
+           <input type="hidden" name="page" value="binet">
            <input type="hidden" name="pageBinet" value="$binet->nom"></p>
            <p style="text-align:center">
            <input type=submit class="btn btn-primary" value="Voir la page">
@@ -92,7 +93,7 @@ CHAINE_DE_FIN;
     <div class="item active">
       <img src="images/items/$imageMatos" alt="$imageMatos" class="image-caroussel">
       <div class="carousel-caption">
-        <h3>$item->nom</h3>
+        <h3><a href='index.php?page=item&id=$item->id'>$item->nom</a></h3>
         <p>$descriptionMatos</p>
       </div>
     </div>
@@ -104,7 +105,7 @@ CHAINE_DE_FIN;
     <div class="item">
       <img src="images/items/$imageMatos" alt="$imageMatos" class="image-caroussel">
         <div class="carousel-caption">
-        <h3>$item->nom</h3>
+        <h3><a href='index.php?page=item&id=$item->id'>$item->nom</a></h3>
         <p>$descriptionMatos</p>
       </div>
     </div>

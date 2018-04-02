@@ -65,10 +65,11 @@ class Binet{
     public static function generateBinetsByMember($dbh, $login){
         $query="SELECT binet FROM membres WHERE utilisateur = ? AND binet!='Administrateurs' GROUP BY binet ORDER BY binet ASC";
         $sth = $dbh->prepare($query);
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Binet');
         $sth->execute(array($login));
         $binets = array();
         while($membre = $sth->fetch()){
-            array_push($binets, $membre['binet']);
+            array_push($binets, $membre);
         }
         $sth->closeCursor();
         return $binets;

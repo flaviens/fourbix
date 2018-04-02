@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.7.7
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  Dim 01 avr. 2018 à 23:50
--- Version du serveur :  10.1.30-MariaDB
--- Version de PHP :  7.2.1
+-- Généré le :  mar. 03 avr. 2018 à 00:50
+-- Version du serveur :  10.1.26-MariaDB
+-- Version de PHP :  7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -41,7 +41,7 @@ INSERT INTO `binets` (`nom`, `image`) VALUES
 ('Administrateurs', NULL),
 ('Binet des profs', 'Binet des profs-logo.png'),
 ('Binet Pokemon', 'Binet Pokemon-logo.png'),
-('Binet Reseau', 'BR.png');
+('Binet Reseau', 'Binet Reseau-logo.png');
 
 -- --------------------------------------------------------
 
@@ -91,10 +91,6 @@ CREATE TABLE `demandes` (
 --
 
 INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`) VALUES
-(4, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
-(5, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
-(6, 'olivier', 2, 'Binet Reseau', 3, 'coucou', '2018-04-01', NULL, NULL),
-(7, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', NULL, NULL),
 (8, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-10', '2018-04-01', NULL),
 (9, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-17', '2018-04-01', NULL),
 (10, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL),
@@ -105,25 +101,12 @@ INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `comme
 (15, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-10', '2018-04-01', NULL),
 (16, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
 (17, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
-(18, 'olivier', 2, 'Binet Reseau', 1, NULL, NULL, NULL, NULL),
 (19, 'olivier', 2, 'Binet Reseau', 2, 'coucou', '2018-04-01', '2018-04-02', NULL),
 (20, 'olivier', 2, 'Binet Reseau', 3, 'yguygu', '2018-04-01', '2018-04-03', 'Administrateurs'),
 (21, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
 (22, 'olivier', 2, 'Binet Reseau', 3, NULL, NULL, NULL, 'Administrateurs'),
 (23, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL),
 (24, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL);
-
--- --------------------------------------------------------
-
---
--- Structure de la table `itemlent`
---
-
-CREATE TABLE `itemlent` (
-  `id` int(11) NOT NULL,
-  `item` int(11) NOT NULL,
-  `quantite` float NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -142,19 +125,18 @@ CREATE TABLE `items` (
   `image` varchar(128) DEFAULT NULL,
   `offre` tinyint(1) NOT NULL DEFAULT '1',
   `isstockpublic` tinyint(1) NOT NULL DEFAULT '1',
-  `caution` float NOT NULL DEFAULT '0',
-  `quantite_prete` int(11) NOT NULL DEFAULT '0'
+  `caution` float NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `items`
 --
 
-INSERT INTO `items` (`id`, `nom`, `marque`, `type`, `binet`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`, `quantite_prete`) VALUES
-(1, 'Câble Ethernet', 'CCAUTP', 'Informatique', 'Binet Reseau', 15, 'Un super cable ethernet de 10m ! Vous n\'en renviendrez pas ! Il n\'y en aura pas pour tout le monde.', 'ethernet.jpeg', 1, 1, 1.5, 0),
-(2, 'Câble Ethernet', 'CCAUTP', 'Informatique', 'Binet Pokemon', 50, 'Un cable ethernet pour tous les attraper !', 'ethernet.jpeg', 1, 1, 0.5, 0),
-(3, 'Clef USB', 'Origin Info System', 'Informatique', 'Binet Reseau', 50, 'Une clef USB vous permettra de transporter vos données : c\'est l\'objet indispensable de tous les étudiants du platâl !', 'usbKey.jpeg', 1, 1, 0.25, 0),
-(7, 'Routeur WiFi', 'TP-Link', 'Informatique', 'Binet Reseau', 1, '515', 'image-item20180401223856.png', 1, 1, 1, 0);
+INSERT INTO `items` (`id`, `nom`, `marque`, `type`, `binet`, `quantite`, `description`, `image`, `offre`, `isstockpublic`, `caution`) VALUES
+(1, 'Câble Ethernet', 'CCAUTP', 'Informatique', 'Binet Reseau', 15, 'Un super cable ethernet de 10m ! Vous n\'en renviendrez pas ! Il n\'y en aura pas pour tout le monde.', 'ethernet.jpeg', 1, 1, 1.5),
+(2, 'Câble Ethernet', 'CCAUTP', 'Informatique', 'Binet Pokemon', 50, 'Un cable ethernet pour tous les attraper !', 'ethernet.jpeg', 1, 1, 0.5),
+(3, 'Clef USB', 'Origin Info System', 'Informatique', 'Binet Reseau', 50, 'Une clef USB vous permettra de transporter vos données : c\'est l\'objet indispensable de tous les étudiants du platâl !', 'usbKey.jpeg', 1, 1, 0.25),
+(7, 'Routeur WiFi', 'TP-Link', 'Informatique', 'Binet Reseau', 1, '515', 'image-item20180401223856.png', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -176,7 +158,6 @@ CREATE TABLE `membres` (
 INSERT INTO `membres` (`id`, `utilisateur`, `binet`, `role`) VALUES
 (1, 'Burrakauchy', 'Administrateurs', 'admin'),
 (5, 'Burrakauchy', 'Binet Reseau', 'admin'),
-(6, 'Burrakauchy', 'Binet Reseau', 'matosManager'),
 (8, 'Burrakauchy', 'Binet Reseau', 'matosManager'),
 (9, 'olivier', 'Binet des profs', 'admin'),
 (10, 'olivier', 'Administrateurs', 'admin'),
@@ -195,9 +176,9 @@ CREATE TABLE `pretoperation` (
   `binet_preteur` varchar(64) NOT NULL,
   `debut` date NOT NULL COMMENT 'debut du pret',
   `date_rendu` date DEFAULT NULL COMMENT 'date de rendu',
-  `deadline` date NOT NULL COMMENT 'date limite de rendu',
+  `deadline` date DEFAULT NULL COMMENT 'date limite de rendu',
+  `quantite_pret` int(11) NOT NULL DEFAULT '0',
   `caution` int(11) DEFAULT NULL,
-  `item_lent` int(11) NOT NULL,
   `demande` int(11) DEFAULT NULL COMMENT 'correspond a une demande de pret'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -312,13 +293,6 @@ ALTER TABLE `demandes`
   ADD KEY `binet_emprunteur` (`binet_emprunteur`);
 
 --
--- Index pour la table `itemlent`
---
-ALTER TABLE `itemlent`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `idItem` (`item`);
-
---
 -- Index pour la table `items`
 --
 ALTER TABLE `items`
@@ -343,7 +317,6 @@ ALTER TABLE `pretoperation`
   ADD KEY `binet_emprunter` (`binet_emprunteur`),
   ADD KEY `binet_preteur` (`binet_preteur`),
   ADD KEY `caution` (`caution`),
-  ADD KEY `item_lent` (`item_lent`),
   ADD KEY `utilisateur` (`utilisateur`),
   ADD KEY `demande` (`demande`);
 
@@ -394,12 +367,6 @@ ALTER TABLE `demandes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
--- AUTO_INCREMENT pour la table `itemlent`
---
-ALTER TABLE `itemlent`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT pour la table `items`
 --
 ALTER TABLE `items`
@@ -443,12 +410,6 @@ ALTER TABLE `demandes`
   ADD CONSTRAINT `demandes_ibfk_5` FOREIGN KEY (`item`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Contraintes pour la table `itemlent`
---
-ALTER TABLE `itemlent`
-  ADD CONSTRAINT `itemlent_ibfk_1` FOREIGN KEY (`item`) REFERENCES `items` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
 -- Contraintes pour la table `items`
 --
 ALTER TABLE `items`
@@ -470,7 +431,6 @@ ALTER TABLE `pretoperation`
   ADD CONSTRAINT `pretoperation_ibfk_1` FOREIGN KEY (`binet_emprunteur`) REFERENCES `binets` (`nom`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_2` FOREIGN KEY (`binet_preteur`) REFERENCES `binets` (`nom`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_3` FOREIGN KEY (`caution`) REFERENCES `cautions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `pretoperation_ibfk_4` FOREIGN KEY (`item_lent`) REFERENCES `itemlent` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_5` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_6` FOREIGN KEY (`demande`) REFERENCES `demandes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;

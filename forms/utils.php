@@ -71,6 +71,7 @@ CHAINE_DE_FIN;
     } else{
         $login= htmlspecialchars($_SESSION["login"]);
         $isAdmin= Utilisateur::isAdmin($dbh, $login);
+        $binets= Binet::generateBinetsByMember($dbh, $login);
         
             echo <<< CHAINE_DE_FIN
     <!-- Static navbar -->
@@ -94,7 +95,28 @@ CHAINE_DE_FIN;
                         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Cherchez un item" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="search" name="page"><span class="glyphicon glyphicon-search"></span></button>
                     </form></li>
-                    <li><a href="#">Mes binets</a></li>
+                    <li class='dropdown'><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mes binets<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                        
+CHAINE_DE_FIN;
+            $i=0;
+            foreach ($binets as $binet) {
+                if ($i>0) echo '<li role="separator" class="divider"></li>' ;
+                echo <<< CHAINE_DE_FIN
+                <li>
+                    <form class="navbar-form" method=post action=index.php?page=binet>
+                        <input type=hidden name=pageBinet value='$binet'>
+                        <button type="submit" class="btn btn-default dropdownFont">$binet</button>
+                    </form>
+                </li>
+                
+CHAINE_DE_FIN;
+                $i++;
+            }
+            
+            echo <<< CHAINE_DE_FIN
+                        </ul>
+                    </li>
                     <li><a href="#">Demande</a></li>
 CHAINE_DE_FIN;
 

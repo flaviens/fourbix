@@ -29,6 +29,12 @@ class Utilisateur {
         return $user;
     }
 
+    public static function deleteUser($dbh, $login){
+        $query = "DELETE FROM utilisateurs WHERE login = ?";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array($login));
+    }
+
     public static function insererUtilisateur($dbh, $login, $password, $nom, $prenom, $formation, $naissance, $email) {
         if (Utilisateur::getUtilisateur($dbh, $login) == NULL) {
             $sth = $dbh->prepare("INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `naissance`, `login`, `password`) VALUES(?,?,?,?,?,?,SHA1(?))");
@@ -77,8 +83,17 @@ class Utilisateur {
         return $sth->rowCount()==1;
     }
     
+    public static function updateProfile($dbh, $login, $new_login, $nom, $prenom, $formation, $naissance, $email){
+        $query = "UPDATE utilisateurs SET login = ?, nom = ?, prenom = ?, formation = ?, naissance = ?, email = ? WHERE login = ?";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array($new_login, $nom, $prenom, $formation, $naissance, $email, $login));
+    }
     
-    
+    public static function updatePassword($dbh, $login, $mdp){
+        $query = "UPDATE utilisateurs SET password = SHA1(?) WHERE login = ?";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array($mdp, $login));
+    }
 
 }
 

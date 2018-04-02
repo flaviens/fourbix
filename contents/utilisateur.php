@@ -82,7 +82,7 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 					$mesBinets = Binet::getBinetsByUser($dbh, $user->login);
 					foreach ($mesBinets as $binet) {
 						if($binet['binet'] != 'Administrateurs')
-							$page = 'index.php?page=binet&pageBinet=' . $binet['binet'];
+							$page = 'index.php?page=binet&pageBinet=' . htmlspecialchars($binet['binet']);
 						else
 							$page = 'index.php?page=administration';
 						echo "<li class='list-group-item'><div class='media'>";

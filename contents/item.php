@@ -18,7 +18,7 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 	</div>
 	<div class="row">
 		<div class="col-md-4 col-md-offset-2">
-			<p><b>Binet : </b><?php echo htmlspecialchars($item->binet) ?></p>
+			<p><b>Binet : </b><a href="<?php echo 'index.php?page=binet&pageBinet=' . htmlspecialchars($item->binet); ?>"><?php echo htmlspecialchars($item->binet) ?></a></p>
 			<p><b>Marque : </b><?php echo htmlspecialchars($item->marque) ?></p>
 			<p><b>Type : </b><?php echo htmlspecialchars($item->type) ?></p>
 			<p><b>Déscription : </b><br/><?php echo htmlspecialchars($item->description) ?></p>

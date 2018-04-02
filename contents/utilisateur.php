@@ -56,6 +56,7 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 
 <div class="container">
     <div class="jumbotron">
+    	<img src='images/logo/utilisateur-logo.png' alt='utilisateur-logo.png' class='pageLogo'>
         <h1><?php echo $user->prenom . " " . $user->nom ?></h1>
         <p>Votre page personnelle.</p>
     </div>

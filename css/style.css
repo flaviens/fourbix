@@ -173,6 +173,15 @@ footer{
     text-align: center;
 }
 
+#Erreur_404{
+    text-align: center;
+    text-decoration: blink underline;
+    color:darkred;
+}
+
+.center{
+    text-align:center;
+}
 
 .carousel-indicators li {
     display: inline-block;

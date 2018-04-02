@@ -61,6 +61,7 @@ else if (!isset($_SESSION['loggedIn']) or !$_SESSION['loggedIn']){
 
 <div class="container">
     <div class="jumbotron">
+        <img src='images/logo/inscription-logo.png' alt='inscription-logo.png' class='pageLogo'>
         <h1>Inscription</h1>
         <p>Créez votre compte.</p>
     </div>
@@ -69,6 +70,9 @@ else if (!isset($_SESSION['loggedIn']) or !$_SESSION['loggedIn']){
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">
+                    <div class="panel panel-info">
+                    <div class="panel-heading">Inscription</div>
+                    <div class="panel-body">
 			<form action="index.php?page=inscription" method="POST" oninput="password2.setCustomValidity(password2.value != password.value ? 'Les mots de passe différent.' : '')">
 				<p>
 					<label for="login">Login : </label><br/>
@@ -104,6 +108,8 @@ else if (!isset($_SESSION['loggedIn']) or !$_SESSION['loggedIn']){
 				</p>
 				<p><input type="submit" value="Créer compte" class="btn btn-primary"></p>
 			</form>
+                    </div>
+                    </div>
 		</div>
 	</div>
 </div>

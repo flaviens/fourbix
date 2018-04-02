@@ -61,12 +61,12 @@ else $loginRole="''";
     echo <<< CHAINE_DE_FIN
     <div class="container">
 <div class="panel panel-warning">
-            <div class="panel-heading toBeClicked0 isClickable" style="text-align:center">Administration</div>
+            <div class="panel-heading toBeClicked0 isClickable" style="text-align:center">Administration des rôles</div>
             <div class="panel-body toBeToggled0">
     <div class='row '>
         <div class='col-md-6 gris'>
             <div class="panel panel-success">
-            <div class="panel-heading">Ajouter un rôle</div>
+            <div class="panel-heading center">Ajouter un rôle</div>
             <div class="panel-body">
                 <form action=index.php?page=binet method=post>
  <p>
@@ -96,7 +96,7 @@ CHAINE_DE_FIN;
 echo<<< CHAINE_DE_FIN
     <div class='col-md-6 gris'>
             <div class="panel panel-danger">
-            <div class="panel-heading">Retirer un rôle</div>
+            <div class="panel-heading center">Retirer un rôle</div>
             <div class="panel-body">
 <table class="table table-striped table-bordered" style="table-layout:fixed">
         <thead class="thead-dark">
@@ -179,7 +179,7 @@ function printItems($dbh, $isManager, $binet){
         echo "</a>";
         if ($isManager){
             echo <<< CHAINE_DE_FIN
-        <form action=index.php?page=binet method=post>
+        <form action='index.php?page=binet&pageBinet=$binet' method=post>
                 <br/><p style="text-align:center"><input type='hidden' name='pageBinet' value='$binet'>
                 <input type='hidden' name='itemUpdateID' value='$itemUpdateID'>
                 <input type='hidden' name='toDelete' value='true'>   
@@ -189,7 +189,7 @@ CHAINE_DE_FIN;
         }
         echo "</th>";
         if($isManager){
-            echo "<form action=index.php?page=binet method=post><input type='hidden' name='pageBinet' value='$binet'><input type='hidden' name='itemUpdateID' value='$itemUpdateID'>";
+            echo "<form action='index.php?page=binet&pageBinet=$binet' method=post><input type='hidden' name='pageBinet' value='$binet'><input type='hidden' name='itemUpdateID' value='$itemUpdateID'>";
         }
         echo "<td>";
         echo htmlspecialchars($resultat->marque);
@@ -393,7 +393,7 @@ function printGestionItemsForm($dbh, $binet){
 <div class="panel panel-warning">
             <div class="panel-heading toBeClicked1 isClickable" data-toggle="collapse" data-target="#demande-form" style="text-align:center">Gestion de l'inventaire</div>
             <div class="panel-body toBeToggled1">
-    <div class='row '>
+    <div class='row'>
 CHAINE_DE_FIN;
     
     printAddItemForms($dbh, $binet);
@@ -405,7 +405,7 @@ CHAINE_DE_FIN;
 }
 
 
-
+//Ces fonctions ne sont plus valables après le changement de la BDD
 /*function addItem($dbh, $nomItem, $marqueItem, $typeItem){
     $query="INSERT INTO `items` (`nom`, `marque`, `type`) VALUES (?, ?, ?);";
     $sth=$dbh->prepare($query);
@@ -429,6 +429,130 @@ function addItem($dbh, $nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, 
     $sth->closeCursor();
     return $resultat;
 }
+
+
+function printGestionDemandes($dbh, $binet){
+    echo <<< CHAINE_DE_FIN
+    <div class="container">
+    <div class="panel panel-warning">
+            <div class="panel-heading toBeClicked2 isClickable center"  >Gestion des demandes et des prêts.</div>
+            <div class="panel-body panel-collapse collapse toBeToggled2">
+    <div class='row'>
+CHAINE_DE_FIN;
+    
+    printDemandeEnCours($dbh, $binet);
+    printPretsEnCours($dbh, $binet);
+    
+    echo <<< CHAINE_DE_FIN
+    </div></div></div></div>
+CHAINE_DE_FIN;
+}
+
+function printDemandeEnCours($dbh, $binet){
+    echo <<< CHAINE_DE_FIN
+    <div class='col-md-6'>
+        <div class="panel panel-success">
+            <div class="panel-heading center"> Demandes en cours </div>
+            <div class="panel-body panel-collapse collapse">
+            <table class="table table-striped table-bordered sortable">
+            <thead class="thead-dark">
+            <th scope="col" >Objet</th>
+            <th scope="col" >Quantité</th>
+            <th scope="col" >Utilisateur</th>
+            <th scope="col" >Au nom de</th>
+            <th scope="col" >Dates</th>
+            <th scope="col" >Commentaire</th>
+            <th scope="col" >Accepter ?</th>
+                </thead>
+                <tbody>    
+CHAINE_DE_FIN;
+    genereDemandeEnCours($dbh, $binet);
+    echo <<< CHAINE_DE_FIN
+    </tbody>
+    </table>
+    </div></div></div>
+CHAINE_DE_FIN;
+}
+
+function genereDemandeEnCours($dbh, $binet){
+    $query="SELECT `id`, `item`, `commentaire`, `utilisateur`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `binet`=?";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($binet));
+    $demandes=array();
+    while ($demande=$sth->fetch()){
+        array_push($demandes, $demande);
+    }
+    
+    foreach ($demandes as $demande) {
+         $query="SELECT `nom` FROM `items` WHERE `id`=?";   
+        $sth=$dbh->prepare($query);
+        $sth->execute(array($demande['item']));
+        $nomItem=$sth->fetch();
+        echo "<tr><th>";
+        echo htmlspecialchars($nomItem['nom']);
+        echo"</th><td>";
+        echo htmlspecialchars($demande['quantite']);
+        echo "</td><td>";
+        echo htmlspecialchars($demande['utilisateur']);
+        echo "</td><td>";
+        if ($demande['binet_emprunteur']!=NULL){
+        echo htmlspecialchars($demande['binet_emprunteur']);
+        } else{
+            echo 'Personnel';
+        }
+        echo "</td><td>";
+        if ($demande['debut']!=NULL){
+            echo 'Debut : ';
+            echo htmlspecialchars($demande['debut']);
+            echo '<br/>';
+        }
+        if ($demande['fin']!=NULL){
+            echo "Fin : ";
+            echo htmlspecialchars($demande['fin']);
+        }
+        echo "</td><td>";
+        echo htmlspecialchars($demande['commentaire']);
+        $demandeID=$demande['id'];
+        echo <<< CHAINE_DE_FIN
+        </td><td>
+        <form action='index.php?page=binet&pageBinet=$binet' method=post>
+            <input type='hidden' name='demandeID' value='$demandeID'>
+            <input type='hidden' name='toAcceptDemande' value='true'>
+            <input type=submit class="btn btn-success toBeWarnedDelete" value="Accepter" style="text-align:center" onclick="return confirm('Accepter la demande.');">
+        </form>
+        <br/>        
+        <form action='index.php?page=binet&pageBinet=$binet' method=post>
+            <input type='hidden' name='demandeID' value='$demandeID'>
+            <input type='hidden' name='toRefuseDemande' value='true'>
+            <input type=submit class="btn btn-danger toBeWarnedDelete" value="Refuser" style="text-align:center" onclick="return confirm('Confirmer le refus.');">
+        </form>
+        </td></tr>
+CHAINE_DE_FIN;
+        
+    }
+}
+
+
+
+
+
+function printPretsEnCours($dbh, $binet){
+    echo <<< CHAINE_DE_FIN
+    <div class='col-md-6'>
+        <div class="panel panel-danger">
+            <div class="panel-heading center"> Prêts en cours </div>
+            <div class="panel-body panel-collapse collapse">
+    
+CHAINE_DE_FIN;
+    
+    echo <<< CHAINE_DE_FIN
+    </div></div></div>
+CHAINE_DE_FIN;
+}
+
+
+
+
 
         
 if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"]) && $_GET["pageBinet"]!="Administrateurs"){
@@ -554,6 +678,8 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
             isset($_POST['itemUpdateID']) && $_POST['itemUpdateID']!=""){
         deleteStock($dbh, $_POST["itemUpdateID"]);
         }
+        
+        printGestionDemandes($dbh, $binet);
     }
     
     printTableItems($dbh, $isManager, $binet);

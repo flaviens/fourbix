@@ -11,6 +11,10 @@ $(document).ready(function(){ //TODO : à refaire, c'est complètement sous-opti
    $('.toBeToggled1').slideToggle("slow");
    });
   
+   $('.toBeToggled2').hide();
+   $('.toBeClicked2').click(function(){
+   $('.toBeToggled2').slideToggle("slow");
+   });
    
 });
 

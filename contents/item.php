@@ -1,5 +1,6 @@
 <div class="container">
     <div class="jumbotron">
+        <img src='images/logo/item-logo.png' alt='item-logo.png' class='pageLogo'>
         <h1>Inventaire</h1>
         <p>Informations sur les items des binets.</p>
     </div>

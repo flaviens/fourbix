@@ -10,7 +10,6 @@ function generateHTMLHeader($titre, $linkCSS) {
         <!-- CSS Bootstrap -->
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="$linkCSS">
-        <link rel="shortcut icon" href="favicon.ico" />
         <link rel="icon" type="image/x-icon" href="images/logo/favicon.ico" />
         <link rel="icon" type="image/png" href="images/logo/favicon.png" />
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
@@ -60,7 +59,6 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
                     <li><a href="index.php?page=accueil">Accueil</a></li>
-                    <li><a href="index.php?page=catalogue">Catalogue</a></li>
                     <li style=margin-top:10px>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
@@ -122,7 +120,7 @@ CHAINE_DE_FIN;
             echo <<< CHAINE_DE_FIN
                         </ul>
                     </li>
-                    <li><a href="#">Demande</a></li>
+                    <li><a href="index.php?page=demandes">Demandes</a></li>
 CHAINE_DE_FIN;
 
             if ($isAdmin){
@@ -172,9 +170,9 @@ $page_list = array(
         "menutitle" => "Recherche",
         "loggedIn" => true),
     array(
-        "name" => "demande",
+        "name" => "demandes",
         "title" => "Mes demandes",
-        "menutitle" => "Demande",
+        "menutitle" => "Demandes",
         "loggedIn" => false),
     array(
         "name" => "administration",

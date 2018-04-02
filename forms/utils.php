@@ -107,7 +107,7 @@ CHAINE_DE_FIN;
             echo <<< CHAINE_DE_FIN
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">$prenom</a></li>
+                    <li><a href="index.php?page=utilisateur"><span class="glyphicon glyphicon-user"></span> $prenom</a></li>
                     <li><a href="index.php?todo=logout&page=accueil"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 </ul>
                     
@@ -165,6 +165,10 @@ $page_list = array(
     array("name" => "item",
         "title" => "Inventaire",
         "menutitle" => "Inventaire",
+        "loggedIn" => true),
+    array("name" => "utilisateur",
+        "title" => "Utilisateur",
+        "menutitle" => "Votre page personnelle",
         "loggedIn" => true)
 );
 

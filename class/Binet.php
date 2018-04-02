@@ -76,6 +76,33 @@ class Binet{
             echo '<option>' . htmlspecialchars($binet) . '</option>';
         }
     }
+
+    public static function getBinetsByUser($dbh, $login){
+        $query = "SELECT id, binet, role, image FROM membres, binets WHERE utilisateur = ? AND membres.binet = binets.nom ORDER BY binet ASC";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array($login));
+        $mesBinets = array();
+        while($binet=$sth->fetch()){
+            array_push($mesBinets, $binet);
+        }
+        $sth->closeCursor();
+        return $mesBinets;
+    }
+
+    public static function deleteBinetMember($dbh, $id){
+        $query = "DELETE FROM membres WHERE id = ?";
+        $sth = $dbh->prepare($query);
+        $sth->execute(array($id));
+    }
+
+    public static function getMemberById($dbh, $id){
+        $query = "SELECT * FROM membres WHERE id = ?";
+        $sth= $dbh->prepare($query);
+        $sth->execute(array($id));
+        $member = $sth->fetch();
+        $sth->closeCursor();
+        return $member;
+    }
 }
 
 /* 

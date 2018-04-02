@@ -133,8 +133,9 @@ CHAINE_DE_FIN;
 
 
 function printAllBinets($dbh, $binets){ 
-   echo <<< CHAINE_DE_FIN
-    <div class="container">
+  echo '<div class="container">';
+  echo "<h4 style='text-align:center'> Voici les binets trouvés pour : <i>\"" . htmlspecialchars($_GET["searchBinets"]) . "\"</i></h4>";
+  echo <<< CHAINE_DE_FIN
      <div class="panel panel-info">
             <div class="panel-heading">Binets</div>
             <div class="panel-body">
@@ -173,6 +174,9 @@ $binets=resultSearch($dbh);
 
 if ($binets!=NULL){
     printAllBinets($dbh, $binets);
+}
+else{
+    echo "<h4 style='text-align:center'> Votre recherche pour <i>\"" . htmlspecialchars($_GET["searchBinets"]) . "\"</i> n'a rien donné ! Désolé...</h4>";
 }
 
 

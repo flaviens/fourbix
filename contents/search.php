@@ -73,8 +73,9 @@ CHAINE_DE_FIN;
 
 //var_dump($items);
 if (sizeof($items)>0){
+    echo '<div class="container">';
+    echo "<h4 style='text-align:center'> Voici les items trouvés pour : <i>\"" . htmlspecialchars($_GET["search"]) . "\"</i></h4>";
     echo <<< CHAINE_DE_FIN
-    <div class="container">
     <table class="table table-striped table-bordered sortable">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
@@ -98,7 +99,7 @@ CHAINE_DE_FIN;
     ."</div>";
 } else{
     if (strlen($_GET["search"])>0){
-        echo "<h4 style='text-align:center'> Votre recherche n'a rien donné ! Désolé...</h4>";
+        echo "<h4 style='text-align:center'> Votre recherche pour <i>\"" . htmlspecialchars($_GET["search"]) . "\"</i> n'a rien donné ! Désolé...</h4>";
     }
 }
 

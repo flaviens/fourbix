@@ -29,12 +29,12 @@ CHAINE_DE_FIN;
 }
 
 function resultSearch($dbh){
-    if (isset($_GET["searchBinets"]) && strlen($_GET["searchBinets"])>0){
+  if (isset($_GET["searchBinets"]) && strlen($_GET["searchBinets"])>0){
     $binets=Binet::getBinetResearchFunction($dbh, $_GET["searchBinets"]);
-} else {
+  } else {
     $binets=array();
-}
-return $binets;
+  }
+  return $binets;
 }
 
 function printBinets($dbh, $binet, $indexCarousel){
@@ -133,8 +133,9 @@ CHAINE_DE_FIN;
 
 
 function printAllBinets($dbh, $binets){ 
-   echo <<< CHAINE_DE_FIN
-    <div class="container">
+  echo '<div class="container">';
+  echo "<h4 style='text-align:center'> Voici les binets trouvés pour : <i>\"" . htmlspecialchars($_GET["searchBinets"]) . "\"</i></h4>";
+  echo <<< CHAINE_DE_FIN
      <div class="panel panel-info">
             <div class="panel-heading">Binets</div>
             <div class="panel-body">
@@ -173,6 +174,9 @@ $binets=resultSearch($dbh);
 
 if ($binets!=NULL){
     printAllBinets($dbh, $binets);
+}
+else if (isset($_GET["searchBinets"]) && strlen($_GET["searchBinets"])>0){
+    echo "<h4 style='text-align:center'> Votre recherche pour <i>\"" . htmlspecialchars($_GET["searchBinets"]) . "\"</i> n'a rien donné ! Désolé...</h4>";
 }
 
 

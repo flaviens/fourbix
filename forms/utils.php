@@ -11,8 +11,8 @@ function generateHTMLHeader($titre, $linkCSS) {
         <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="$linkCSS">
         <link rel="shortcut icon" href="favicon.ico" />
-        <link rel="icon" type="image/x-icon" href="favicon.ico" />
-        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="icon" type="image/x-icon" href="images/logo/favicon.ico" />
+        <link rel="icon" type="image/png" href="images/logo/favicon.png" />
         <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
         <script type="text/javascript" src="js/code.js"></script>
         <script type="text/javascript" src="js/sorttable.js"></script>

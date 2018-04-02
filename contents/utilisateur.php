@@ -81,14 +81,18 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 				<?php
 					$mesBinets = Binet::getBinetsByUser($dbh, $user->login);
 					foreach ($mesBinets as $binet) {
+						if($binet['binet'] != 'Administrateurs')
+							$page = 'index.php?page=binet&pageBinet=' . $binet['binet'];
+						else
+							$page = 'index.php?page=administration';
 						echo "<li class='list-group-item'><div class='media'>";
-						echo "<div class='media-left media-top'><img src='images/binets/" . htmlspecialchars($binet['image']) . "' alt='" . htmlspecialchars($binet['image']) . "' class='image-binet-catalogue' /></div>";
-						echo "<div class='media-body'><h4 class='media-heading'>" . htmlspecialchars($binet['binet']) . "</h4><p style='font-style: italic'>" . htmlspecialchars($binet['role']) . "</p>";
-						if ($binet['binet'] != 'Administrateurs')
+						echo "<div class='media-left media-top'><a href='" . $page . "'><img src='images/binets/" . htmlspecialchars($binet['image']) . "' alt='" . htmlspecialchars($binet['image']) . "' class='image-binet-catalogue' /></a></div>";
+						echo "<div class='media-body'><h4 class='media-heading'><a href='" . $page . "'>" . htmlspecialchars($binet['binet']) . "</a></h4><p style='font-style: italic'>" . htmlspecialchars($binet['role']) . "</p>";
+						/*if ($binet['binet'] != 'Administrateurs')
 							echo "<form style='display: inline-block; margin-right: 5px; margin-bottom: 5px;' action='index.php' method='get'><input type='hidden' value='binet' name='page'><button type='submit' class='btn btn-primary' value='" . htmlspecialchars($binet['binet']) . "' name='pageBinet'><span class='glyphicon glyphicon-new-window'></span> Voir la page</button></form>";
 						else
-							echo "<form style='display: inline-block; margin-right: 5px; margin-bottom: 5px;' action='index.php' method='get'><button type='submit' class='btn btn-primary' value='administration' name='page'><span class='glyphicon glyphicon-new-window'></span> Voir la page</button></form>";
-						echo "<form style='display: inline-block;' method='post' action='index.php?page=utilisateur'><button type='submit' class='btn btn-danger' name='abandonnerBinet' value='" . htmlspecialchars($binet['id']) . "' onclick='return confirm(\"Voulez-vous quitter le binet ce binet ?\")'><span class='glyphicon glyphicon-trash'></span> Abandonner</button></form>";
+							echo "<form style='display: inline-block; margin-right: 5px; margin-bottom: 5px;' action='index.php' method='get'><button type='submit' class='btn btn-primary' value='administration' name='page'><span class='glyphicon glyphicon-new-window'></span> Voir la page</button></form>";*/
+						echo "<form method='post' action='index.php?page=utilisateur'><button type='submit' class='btn btn-danger' name='abandonnerBinet' value='" . htmlspecialchars($binet['id']) . "' onclick='return confirm(\"Voulez-vous quitter le binet ce binet ?\")'><span class='glyphicon glyphicon-trash'></span> Abandonner</button></form>";
 						echo "</div>";
 						echo "</div></li>";
 					}

@@ -98,7 +98,7 @@ echo<<< CHAINE_DE_FIN
             <div class="panel panel-danger">
             <div class="panel-heading center">Retirer un rôle</div>
             <div class="panel-body">
-<table class="table table-striped table-bordered" style="table-layout:fixed">
+<table class="table table-striped table-bordered sortable" style="table-layout:fixed">
         <thead class="thead-dark">
             <th scope="col">login</th>
             <th scope="col">role</th>
@@ -456,11 +456,7 @@ function printDemandeEnCours($dbh, $binet){
             <div class="panel-body panel-collapse">
             <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
             <thead class="thead-dark">
-            <th scope="col" >Objet</th>
-            <th scope="col" >Quantité</th>
-            <th scope="col" >Utilisateur</th>
-            <th scope="col" >Au nom de</th>
-            <th scope="col" >Dates</th>
+            <th scope="col" >Contenu</th>
             <th scope="col" >Commentaire</th>
             <th scope="col" >Accepter ?</th>
                 </thead>
@@ -489,26 +485,26 @@ function genereDemandeEnCours($dbh, $binet){
         $sth->execute(array($demande['item']));
         $nomItem=$sth->fetch();
         $demandeID=$demande['id'];
-        echo "<tr><th>";
+        echo "<tr><td>";
         echo htmlspecialchars($nomItem['nom']);
-        echo"</th><td>";
+        echo"<br/> Quantité : ";
         echo htmlspecialchars($demande['quantite']);
-        echo "</td><td>";
+        echo "<br/> Pour ";
         echo htmlspecialchars($demande['utilisateur']);
-        echo "</td><td>";
+        echo " au nom de ";
         if ($demande['binet_emprunteur']!=NULL){
         echo htmlspecialchars($demande['binet_emprunteur']);
         } else{
             echo 'Personnel';
         }
-        echo "</td><td>";
+        echo "<br/>";
+        echo 'Debut : ';
         if ($demande['debut']!=NULL){
-            echo 'Debut : ';
             echo htmlspecialchars($demande['debut']);
-            echo '<br/>';
         }
+        echo '<br/>';
+        echo "Fin : ";
         if ($demande['fin']!=NULL){
-            echo "Fin : ";
             echo htmlspecialchars($demande['fin']);
         }
         echo "</td><td>";

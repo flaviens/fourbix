@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mar. 03 avr. 2018 à 22:44
+-- Généré le :  mar. 03 avr. 2018 à 23:22
 -- Version du serveur :  10.1.26-MariaDB
 -- Version de PHP :  7.1.9
 
@@ -68,6 +68,19 @@ CREATE TABLE `cautions` (
   `date_encaissement` date DEFAULT NULL COMMENT 'date de l''encaissement'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `cautions`
+--
+
+INSERT INTO `cautions` (`id`, `valeur`, `encaisse`, `date_encaissement`) VALUES
+(2, '1', 0, NULL),
+(3, '1', 0, NULL),
+(4, '1', 0, NULL),
+(5, '1', 0, NULL),
+(6, '2', 0, NULL),
+(7, '2', 0, NULL),
+(8, '2', 0, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -92,7 +105,6 @@ CREATE TABLE `demandes` (
 --
 
 INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`, `isAccepted`) VALUES
-(10, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL, 0),
 (11, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL, 0),
 (12, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
 (13, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
@@ -105,7 +117,8 @@ INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `comme
 (21, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL, 0),
 (22, 'olivier', 2, 'Binet Reseau', 3, NULL, NULL, NULL, 'Administrateurs', 0),
 (23, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL, 0),
-(24, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL, 0);
+(24, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL, 0),
+(25, 'Burrakauchy', 1, 'Binet Reseau', 2, 'Pour jouer aux jeux videos !', '2018-04-07', '2018-04-08', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -177,6 +190,15 @@ CREATE TABLE `pretoperation` (
   `caution` int(11) DEFAULT NULL,
   `demande` int(11) DEFAULT NULL COMMENT 'correspond a une demande de pret'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `pretoperation`
+--
+
+INSERT INTO `pretoperation` (`id`, `debut`, `date_rendu`, `deadline`, `quantite_pret`, `caution`, `demande`) VALUES
+(4, '2018-04-03', NULL, '2018-04-08', 2, 6, 25),
+(5, '2018-04-03', NULL, '2018-04-08', 2, 7, 25),
+(6, '2018-04-03', NULL, '2018-04-08', 2, 8, 25);
 
 -- --------------------------------------------------------
 
@@ -351,13 +373,13 @@ ALTER TABLE `bugreports`
 -- AUTO_INCREMENT pour la table `cautions`
 --
 ALTER TABLE `cautions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `demandes`
 --
 ALTER TABLE `demandes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT pour la table `items`
@@ -375,7 +397,7 @@ ALTER TABLE `membres`
 -- AUTO_INCREMENT pour la table `pretoperation`
 --
 ALTER TABLE `pretoperation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pour la table `suggestions`

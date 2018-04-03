@@ -453,8 +453,8 @@ function printDemandeEnCours($dbh, $binet){
     <div class='col-md-6'>
         <div class="panel panel-success">
             <div class="panel-heading center"> Demandes en cours </div>
-            <div class="panel-body panel-collapse collapse">
-            <table class="table table-striped table-bordered sortable">
+            <div class="panel-body panel-collapse">
+            <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
             <thead class="thead-dark">
             <th scope="col" >Objet</th>
             <th scope="col" >Quantité</th>
@@ -488,6 +488,7 @@ function genereDemandeEnCours($dbh, $binet){
         $sth=$dbh->prepare($query);
         $sth->execute(array($demande['item']));
         $nomItem=$sth->fetch();
+        $demandeID=$demande['id'];
         echo "<tr><th>";
         echo htmlspecialchars($nomItem['nom']);
         echo"</th><td>";
@@ -512,7 +513,6 @@ function genereDemandeEnCours($dbh, $binet){
         }
         echo "</td><td>";
         echo htmlspecialchars($demande['commentaire']);
-        $demandeID=$demande['id'];
         echo <<< CHAINE_DE_FIN
         </td><td>
         <form action='index.php?page=binet&pageBinet=$binet' method=post>

@@ -10,7 +10,6 @@ function printLoginForm($askedPage){
     else
         $login="''";
     echo <<<CHAINE_DE_FIN
-    <div class="container">
     <div class="row">
     <div class="col-md-4">
     <div class="panel panel-primary">
@@ -28,7 +27,6 @@ function printLoginForm($askedPage){
         <p><input type="submit" class="btn btn-primary" value="Valider"</p>
     </form>
     </div
-    </div>
     </div>
     </div>
     </div>

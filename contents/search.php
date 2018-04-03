@@ -33,13 +33,13 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
             echo "' class='image-item-search'/>";
         echo "</td><td class='description-search'>";
         echo htmlspecialchars($item->description);
-        echo "</td><td style='text-align:center'>";
+        echo "</td><td style='text-align:center'><a href='index.php?page=binet&pageBinet=" . htmlspecialchars($item->binet) . "'>";
         echo htmlspecialchars($item->binet);
-            echo "<br /><img src='images/binets/";
+            echo "</a><br /><a href='index.php?page=binet&pageBinet=" . htmlspecialchars($item->binet) . "'><img src='images/binets/";
             echo htmlspecialchars($imageBinet["image"]);
             echo "' alt='";
             echo htmlspecialchars($imageBinet["image"]);
-            echo "' class='image-binet-search'/>";
+            echo "' class='image-binet-search'/></a>";
         echo "</td><td>";
         if ($item->isstockpublic){
             echo htmlspecialchars($item->quantite);

@@ -36,19 +36,20 @@ if (isset($_GET["todo"])){
 }
 
 generateNavBar($dbh, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
-
-
 ?>
 
 
 <div id="content" class="container content">
 	<?php
 		if($authorized)
-                   if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]){
+                    if(isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]){
                         require("contents/$askedPage.php");
-                    }else{
-                        if ($_GET['page']=='inscription') require("contents/inscription.php");
-                        else require("contents/accueil.php");
+                    }
+                    else{
+                        if ($askedPage=='inscription')
+                            require("contents/inscription.php");
+                        else
+                            require("contents/accueil.php");
                     }
 		else
 			require("contents/erreur.php");

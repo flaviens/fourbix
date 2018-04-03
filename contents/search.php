@@ -21,21 +21,20 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
     if ($item->offre){
         echo"<tr><th scope='row'><a href='index.php?page=item&id={$item->id}'>";
         echo htmlspecialchars($item->nom);
-        echo "</a></th> <td>";
-        echo htmlspecialchars($item->marque);
-        echo "</td><td>";
-        echo htmlspecialchars($item->type);
-        echo "</td><td>";
-            echo "<img src=images/items/";
+        echo "<img src=images/items/";
             echo htmlspecialchars($item->image);
             echo " alt='";
             echo htmlspecialchars($item->image);
             echo "' class='image-item-search'/>";
+        echo "</a></th><td>";
+        echo htmlspecialchars($item->marque) . '<br/><i>' . htmlspecialchars($item->type) . '</i>';
+        /*echo "</td><td>";
+        echo htmlspecialchars($item->type);
         echo "</td><td class='description-search'>";
-        echo htmlspecialchars($item->description);
+        echo htmlspecialchars($item->description);*/
         echo "</td><td style='text-align:center'><a href='index.php?page=binet&pageBinet=" . htmlspecialchars($item->binet) . "'>";
         echo htmlspecialchars($item->binet);
-            echo "</a><br /><a href='index.php?page=binet&pageBinet=" . htmlspecialchars($item->binet) . "'><img src='images/binets/";
+            echo "</a><br/><a href='index.php?page=binet&pageBinet=" . htmlspecialchars($item->binet) . "'><img src='images/binets/";
             echo htmlspecialchars($imageBinet["image"]);
             echo "' alt='";
             echo htmlspecialchars($imageBinet["image"]);
@@ -43,16 +42,16 @@ function printItem($dbh, $item){ //TODO : génère le format créé par un objet
         echo "</td><td>";
         if ($item->isstockpublic){
             echo htmlspecialchars($item->quantite);
-            echo "</td><td>";
+            echo "</td>";
         } else {
-            echo "Non renseigné</td><td>";
+            echo "Non renseigné</td>";
         }
-        if (strlen($item->caution)>0){
+        /*if (strlen($item->caution)>0){
             echo htmlspecialchars($item->caution);
             echo " &euro;</td>";
         }else {
             echo "Non renseigné</td>";
-        }
+        }*/
         echo "</tr>";
     }
     $sth->closeCursor();
@@ -75,8 +74,8 @@ CHAINE_DE_FIN;
 if (sizeof($items)>0){
     echo '<div class="container">';
     echo "<h4 style='text-align:center'> Voici les items trouvés pour : <i>\"" . htmlspecialchars($_GET["search"]) . "\"</i></h4>";
-    echo <<< CHAINE_DE_FIN
-    <table class="table table-striped table-bordered sortable">
+    /*echo <<< CHAINE_DE_FIN
+    <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
             <th scope="col" >Marque</th>
@@ -86,6 +85,17 @@ if (sizeof($items)>0){
             <th scope="col" >Binet</th>
             <th scope="col" >Stock disponible</th>
             <th scope="col" >Caution</th>
+        </thead>
+        <tbody>
+
+CHAINE_DE_FIN;*/
+    echo <<< CHAINE_DE_FIN
+    <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
+        <thead class="thead-dark">
+            <th scope="col" >Nom</th>
+            <th scope="col" >Marque</th>
+            <th scope="col" >Binet</th>
+            <th scope="col" >Stock disponible</th>
         </thead>
         <tbody>
 

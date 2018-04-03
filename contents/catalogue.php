@@ -139,7 +139,7 @@ function printAllBinets($dbh, $binets){
      <div class="panel panel-info">
             <div class="panel-heading">Binets</div>
             <div class="panel-body">
-    <table class="table table-striped table-bordered" style="table-layout:fixed">
+    <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
         <thead class="thead-dark" style="texte-align:center">
             <th scope="col" width=170px>Binet</th>
             <th scope="col">Ce qu'on propose</th>

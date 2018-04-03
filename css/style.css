@@ -152,6 +152,10 @@ footer{
     color: darkred;
 }
 
+.redCell{
+    background-color: lightcoral;
+}
+
 .enregistrement-valide{
     border : 2px solid green;
     padding: 2px;

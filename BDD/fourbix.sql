@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mar. 03 avr. 2018 à 00:50
+-- Généré le :  mar. 03 avr. 2018 à 22:44
 -- Version du serveur :  10.1.26-MariaDB
 -- Version de PHP :  7.1.9
 
@@ -83,30 +83,29 @@ CREATE TABLE `demandes` (
   `commentaire` text,
   `debut` date DEFAULT NULL,
   `fin` date DEFAULT NULL,
-  `binet_emprunteur` varchar(64) DEFAULT NULL
+  `binet_emprunteur` varchar(64) DEFAULT NULL,
+  `isAccepted` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Vaut true si la demande a ete acceptee'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Déchargement des données de la table `demandes`
 --
 
-INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`) VALUES
-(8, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-10', '2018-04-01', NULL),
-(9, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-17', '2018-04-01', NULL),
-(10, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL),
-(11, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL),
-(12, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
-(13, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
-(14, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-17', '2018-04-01', NULL),
-(15, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-10', '2018-04-01', NULL),
-(16, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
-(17, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL),
-(19, 'olivier', 2, 'Binet Reseau', 2, 'coucou', '2018-04-01', '2018-04-02', NULL),
-(20, 'olivier', 2, 'Binet Reseau', 3, 'yguygu', '2018-04-01', '2018-04-03', 'Administrateurs'),
-(21, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL),
-(22, 'olivier', 2, 'Binet Reseau', 3, NULL, NULL, NULL, 'Administrateurs'),
-(23, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL),
-(24, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL);
+INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`, `isAccepted`) VALUES
+(10, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL, 0),
+(11, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL, 0),
+(12, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
+(13, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
+(14, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-17', '2018-04-01', NULL, 0),
+(15, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-10', '2018-04-01', NULL, 0),
+(16, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
+(17, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
+(19, 'olivier', 2, 'Binet Reseau', 2, 'coucou', '2018-04-01', '2018-04-02', NULL, 0),
+(20, 'olivier', 2, 'Binet Reseau', 3, 'yguygu', '2018-04-01', '2018-04-03', 'Administrateurs', 0),
+(21, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL, 0),
+(22, 'olivier', 2, 'Binet Reseau', 3, NULL, NULL, NULL, 'Administrateurs', 0),
+(23, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL, 0),
+(24, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -171,9 +170,6 @@ INSERT INTO `membres` (`id`, `utilisateur`, `binet`, `role`) VALUES
 
 CREATE TABLE `pretoperation` (
   `id` int(11) NOT NULL,
-  `utilisateur` varchar(64) NOT NULL,
-  `binet_emprunteur` varchar(64) DEFAULT NULL,
-  `binet_preteur` varchar(64) NOT NULL,
   `debut` date NOT NULL COMMENT 'debut du pret',
   `date_rendu` date DEFAULT NULL COMMENT 'date de rendu',
   `deadline` date DEFAULT NULL COMMENT 'date limite de rendu',
@@ -314,10 +310,7 @@ ALTER TABLE `membres`
 --
 ALTER TABLE `pretoperation`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `binet_emprunter` (`binet_emprunteur`),
-  ADD KEY `binet_preteur` (`binet_preteur`),
   ADD KEY `caution` (`caution`),
-  ADD KEY `utilisateur` (`utilisateur`),
   ADD KEY `demande` (`demande`);
 
 --
@@ -428,10 +421,7 @@ ALTER TABLE `membres`
 -- Contraintes pour la table `pretoperation`
 --
 ALTER TABLE `pretoperation`
-  ADD CONSTRAINT `pretoperation_ibfk_1` FOREIGN KEY (`binet_emprunteur`) REFERENCES `binets` (`nom`) ON UPDATE CASCADE,
-  ADD CONSTRAINT `pretoperation_ibfk_2` FOREIGN KEY (`binet_preteur`) REFERENCES `binets` (`nom`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_3` FOREIGN KEY (`caution`) REFERENCES `cautions` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
-  ADD CONSTRAINT `pretoperation_ibfk_5` FOREIGN KEY (`utilisateur`) REFERENCES `utilisateurs` (`login`) ON UPDATE CASCADE,
   ADD CONSTRAINT `pretoperation_ibfk_6` FOREIGN KEY (`demande`) REFERENCES `demandes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 

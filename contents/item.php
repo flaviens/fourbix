@@ -67,7 +67,7 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 					$valid_demande = false;
 
 				if ($valid_demande){
-					$sth = $dbh->prepare("INSERT INTO demandes (utilisateur, item_id, binet, commentaire, debut, fin, binet_emprunteur, quantite) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+					$sth = $dbh->prepare("INSERT INTO demandes (utilisateur, item, binet, commentaire, debut, fin, binet_emprunteur, quantite) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 					$sth->execute(array($_SESSION["login"], $item->id, $item->binet, $commentaire, $debut, $fin, $binet_emprunteur, $quantite));
 				}
 				else

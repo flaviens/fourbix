@@ -41,7 +41,7 @@ CHAINE_DE_FIN;
 }
 
 function genereDemandesEnCours($dbh, $login){
-    $query="SELECT `id`, `item`, `binet`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `utilisateur`=?";
+    $query="SELECT `id`, `item`, `binet`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `utilisateur`=? AND `isAccepted`=0";
     $sth=$dbh->prepare($query);
     $sth->execute(array($login));
     $demandes=array();
@@ -134,7 +134,7 @@ CHAINE_DE_FIN;
 }
 
 function generePretsEnCours($dbh, $login){
-    $query="SELECT `demande`, `binet_preteur`, `quantite_pret`, `deadline`, `binet_emprunteur` FROM  `pretoperation` WHERE `utilisateur`=? AND `date_rendu` IS NULL";
+    $query="SELECT `demande`, `quantite_pret`, `deadline` FROM  `pretoperation` WHERE  (`date_rendu` IS NULL OR `caution` IN (SELECT `id` FROM `cautions` WHERE `encaisse`=0)) AND `demande` IN (SELECT `id` FROM `demandes` WHERE `utilisateur`=?);";
     $sth=$dbh->prepare($query);
     $sth->execute(array($login));
     $prets=array();
@@ -143,11 +143,15 @@ function generePretsEnCours($dbh, $login){
     }
     
     foreach ($prets as $pret) {
-        $query="SELECT `nom` FROM `items` WHERE `id` IN (SELECT `item` FROM `demandes` WHERE `id`=?)";   
+        $query="SELECT `id`, `item`, `utilisateur`, `binet_emprunteur`, `binet` FROM  `demandes` WHERE `id`=?"; 
         $sth=$dbh->prepare($query);
         $sth->execute(array($pret['demande']));
+        $demande=$sth->fetch();
+        $query="SELECT `nom` FROM `items` WHERE `id`=?";   
+        $sth=$dbh->prepare($query);
+        $sth->execute(array($demande['item']));
         $nomItem=$sth->fetch();
-        $nomBinet=$pret['binet_preteur'];
+        $nomBinet=$demande['binet'];
         echo "<tr><th>";
         echo htmlspecialchars($nomItem['nom']);
         echo"</th><td>";
@@ -155,15 +159,15 @@ function generePretsEnCours($dbh, $login){
         echo "</td><td><a href='index.php?page=binet&pageBinet=$nomBinet'>";
         echo htmlspecialchars($nomBinet);
         echo "</a></td><td>";
-        if ($pret['binet_emprunteur']!=NULL){
-        echo htmlspecialchars($pret['binet_emprunteur']);
+        if ($demande['binet_emprunteur']!=NULL){
+        echo htmlspecialchars($demande['binet_emprunteur']);
         } else{
             echo 'Personnel';
         }
         
         echo "</td><td>";
         if ($pret['deadline']!=NULL){
-            echo htmlspecialchars($demande['debut']);
+            echo htmlspecialchars($pret['deadline']);
         } else{
             echo 'Sans contrainte';
         }

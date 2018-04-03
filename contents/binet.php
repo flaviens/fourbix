@@ -456,7 +456,7 @@ function printDemandeEnCours($dbh, $binet){
             <div class="panel-body panel-collapse">
             <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
             <thead class="thead-dark">
-            <th scope="col" >Contenu</th>
+            <th scope="col" >Informations</th>
             <th scope="col" >Commentaire</th>
             <th scope="col" >Accepter ?</th>
                 </thead>
@@ -471,7 +471,7 @@ CHAINE_DE_FIN;
 }
 
 function genereDemandeEnCours($dbh, $binet){
-    $query="SELECT `id`, `item`, `commentaire`, `utilisateur`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `binet`=?";
+    $query="SELECT `id`, `item`, `commentaire`, `utilisateur`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `binet`=? AND `isAccepted`=0";
     $sth=$dbh->prepare($query);
     $sth->execute(array($binet));
     $demandes=array();
@@ -480,35 +480,39 @@ function genereDemandeEnCours($dbh, $binet){
     }
     
     foreach ($demandes as $demande) {
-         $query="SELECT `nom` FROM `items` WHERE `id`=?";   
+        $query="SELECT `nom` FROM `items` WHERE `id`=?";   
         $sth=$dbh->prepare($query);
         $sth->execute(array($demande['item']));
         $nomItem=$sth->fetch();
         $demandeID=$demande['id'];
-        echo "<tr><td>";
+        echo "<tr><td> <strong>";
         echo htmlspecialchars($nomItem['nom']);
-        echo"<br/> Quantité : ";
+        echo"</strong><br/> Quantité : <strong>";
         echo htmlspecialchars($demande['quantite']);
-        echo "<br/> Pour ";
+        echo "</strong><br/> Pour <strong>";
         echo htmlspecialchars($demande['utilisateur']);
-        echo " au nom de ";
+        echo "</strong> au nom de <strong>";
         if ($demande['binet_emprunteur']!=NULL){
         echo htmlspecialchars($demande['binet_emprunteur']);
         } else{
             echo 'Personnel';
         }
-        echo "<br/>";
-        echo 'Debut : ';
+        echo "</strong><br/>";
+        echo 'Debut : <strong>';
         if ($demande['debut']!=NULL){
             echo htmlspecialchars($demande['debut']);
         }
-        echo '<br/>';
-        echo "Fin : ";
+        echo '</strong><br/>';
+        echo "Fin : <strong>";
         if ($demande['fin']!=NULL){
             echo htmlspecialchars($demande['fin']);
         }
-        echo "</td><td>";
+        echo "</strong></td><td>";
+        if ($demande['commentaire']!=NULL){
         echo htmlspecialchars($demande['commentaire']);
+        }else{
+            echo "<span style='font-style:italic'>Pas de commentaire...</span>";
+        }
         echo <<< CHAINE_DE_FIN
         </td><td>
         <form action='index.php?page=binet&pageBinet=$binet' method=post>
@@ -528,7 +532,46 @@ CHAINE_DE_FIN;
     }
 }
 
+function acceptDemandeEnCours($dbh, $demandeID){
+    $query="SELECT `caution` FROM `items` WHERE `id` IN (SELECT `item` FROM `demandes` WHERE `id`=?);";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($demandeID));
+    $caution=$sth->fetch();
+    $valeurCaution= htmlspecialchars($caution['caution']);
+    $query="INSERT INTO `cautions` (`id`, `valeur`, `encaisse`, `date_encaissement`) VALUES (NULL, ?, '0', NULL);";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($valeurCaution));
+    $idCaution=$dbh->lastInsertId();
+    
+    $query="SELECT `quantite`, `fin` FROM `demandes` WHERE `id`=?";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array(htmlspecialchars($demandeID)));
+    $result=$sth->fetch();
+    $quantite_pret=$result['quantite'];
+    $dateFin=$result['fin'];
+    
+    $today = date("Y-m-d");    
+    $query="INSERT INTO `pretoperation` (`id`, `debut`, `date_rendu`, `deadline`, `quantite_pret`, `caution`, `demande`) VALUES (NULL, ?, NULL, ?, ?, ?, ?)";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($today, $dateFin ,$quantite_pret, $idCaution, $demandeID));
+    
+    $query="UPDATE `demandes` SET `isAccepted` = '1' WHERE `demandes`.`id` = ?;";
+    $sth=$dbh->prepare($query);
+    if ($sth->execute(array($demandeID))){
+         echo "<div class='container'><span class='enregistrement-valide'>Vous avez accepté la demande !</span></div><br/>";
+    } else{
+        echo "<div class='container'><span class='enregistrement-invalide'>Erreur : impossible d'accepter.</span></div><br/>";
+    }
+}
 
+function deleteDemandeEnCours($dbh, $demandeID){
+    $sth=$dbh->prepare("DELETE FROM `demandes` WHERE `id`=?");
+    if($sth->execute(array($demandeID))){
+        echo "<div class='container'><span class='enregistrement-valide'>Déletion de la demande réussie !</span></div><br/>";
+    } else{
+        echo "<div class='container'><span class='enregistrement-invalide'>Erreur : impossible de refuser.</span></div><br/>";
+    }
+}
 
 
 
@@ -537,16 +580,92 @@ function printPretsEnCours($dbh, $binet){
     <div class='col-md-6'>
         <div class="panel panel-danger">
             <div class="panel-heading center"> Prêts en cours </div>
-            <div class="panel-body panel-collapse collapse">
-    
+            <div class="panel-body panel-collapse">
+    <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
+            <thead class="thead-dark">
+            <th scope="col" >Informations</th>
+            <th scope="col" class="redCell">Deadline</th>
+            <th scope="col" >Rendu ?</th>
+                </thead>
+                <tbody>    
 CHAINE_DE_FIN;
     
+    generePretsEnCours($dbh, $binet);
+    
     echo <<< CHAINE_DE_FIN
+    </tbody>
+    </table>
     </div></div></div>
 CHAINE_DE_FIN;
 }
 
-
+function generePretsEnCours($dbh, $binet){
+    $query="SELECT `id`, `debut`, `deadline`, `quantite_pret`, `caution`, `demande` FROM  `pretoperation` WHERE `demande` IN (SELECT `id` FROM `demandes` WHERE `binet`=?) AND (date_rendu IS NULL OR `caution` IN (SELECT `id` FROM `cautions` WHERE `encaisse`=0));";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($binet));
+    $prets=array();
+    while ($pret=$sth->fetch()){
+        array_push($prets, $pret);
+    }
+    
+    foreach ($prets as $pret) {
+        $pretID=$pret["id"];
+        $query="SELECT `id`, `item`, `utilisateur`, `binet_emprunteur` FROM  `demandes` WHERE `id`=?"; 
+        $sth=$dbh->prepare($query);
+        $sth->execute(array($pret['demande']));
+        $demande=$sth->fetch();
+        $query="SELECT `nom` FROM `items` WHERE `id`=?";   
+        $sth=$dbh->prepare($query);
+        $sth->execute(array($demande['item']));
+        $nomItem=$sth->fetch();
+        echo "<tr><td> <strong>";
+        echo htmlspecialchars($nomItem['nom']);
+        echo"</strong><br/> Quantité : <strong>";
+        echo htmlspecialchars($pret['quantite_pret']);
+        echo "</strong><br/> Pour <strong>";
+        echo htmlspecialchars($demande['utilisateur']);
+        echo "</strong> au nom de <strong>";
+        if ($demande['binet_emprunteur']!=NULL){
+        echo htmlspecialchars($demande['binet_emprunteur']);
+        } else{
+            echo 'Personnel';
+        }
+        echo "</strong><br/>";
+        echo 'Depuis : <strong>';
+        if ($pret['debut']!=NULL){
+            echo htmlspecialchars($pret['debut']);
+        }
+        echo '</strong><br/>';
+       echo "</td><td>";
+        if ($pret['deadline']!=NULL){
+            echo htmlspecialchars($pret['deadline']);
+        } else{
+            echo "<span style='font-style:italic'>Pas de deadline</span>";
+        }
+        echo "</td><td>";
+      
+        echo <<< CHAINE_DE_FIN
+        <form action='index.php?page=binet&pageBinet=$binet' method=post>
+            <input type='hidden' name='pretID' value='$pretID'>
+            <input type='hidden' name='toArchivePret' value='true'>
+            <input type=submit class="btn btn-success toBeWarnedDelete" value="Accepter" style="text-align:center" onclick="return confirm('Archiver le pret.');">
+        </form>
+CHAINE_DE_FIN;
+        $today=$datetime = date("Y-m-d");
+        if ($today>$pret['deadline']){
+        echo <<< CHAINE_DE_FIN
+        <br/>        
+        <form action='index.php?page=binet&pageBinet=$binet' method=post>
+            <input type='hidden' name='pretID' value='$pretID'>
+            <input type='hidden' name='encaisserCaution' value='true'>
+                <p style='color:darkred'>La deadline a été dépassé.</p>
+            <input type=submit class="btn btn-danger toBeWarnedDelete" value="Encaisser caution" style="text-align:center" onclick="return confirm('Encaisser la caution ?');">
+        </form>
+        </td></tr>
+CHAINE_DE_FIN;
+        }
+    }
+}
 
 
 
@@ -673,6 +792,16 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
         if (isset($_POST["toDelete"]) && $_POST["toDelete"]==true &&
             isset($_POST['itemUpdateID']) && $_POST['itemUpdateID']!=""){
         deleteStock($dbh, $_POST["itemUpdateID"]);
+        }
+        
+        if (isset($_POST['toRefuseDemande']) && $_POST['toRefuseDemande'] && isset($_POST['demandeID']) && $_POST['demandeID']!=""){
+            $demandeID= htmlspecialchars($_POST['demandeID']);
+            deleteDemandeEnCours($dbh, $demandeID);
+        }
+        
+        if (isset($_POST['toAcceptDemande']) && $_POST['toAcceptDemande'] && isset($_POST['demandeID']) && $_POST['demandeID']!=""){
+            $demandeID= htmlspecialchars($_POST['demandeID']);
+            acceptDemandeEnCours($dbh, $demandeID);
         }
         
         printGestionDemandes($dbh, $binet);

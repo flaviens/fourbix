@@ -1,3 +1,13 @@
+TOP PRIORITY :
+
+-Faire les deux fonctions pour effacer(manque un bouton pour lui, le faire peut-etre que pour admin administrateurs), accepter ou encaisser une operation de pret.
+
+
+------------
+
+
+
+
 -Page Administration : ne pas oublier d'avoir une liste pour trouver les utilisateurs.
 
 -Administration : report de bugs, de suggestions pour le développement du site.

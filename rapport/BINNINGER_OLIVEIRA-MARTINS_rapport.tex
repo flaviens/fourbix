@@ -1,0 +1,71 @@
+\documentclass[titlepage,11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage[french]{babel}
+\usepackage{url,csquotes}
+\usepackage[hidelinks,hyperfootnotes=false]{hyperref}
+\usepackage[titlepage,fancysections]{polytechnique}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage{stmaryrd}
+\usepackage{textcomp} %permet de faire le °
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{listings} %permet d'inclure du java
+
+%Ajouter ça pour le code java en couleur :
+
+\lstset{
+language=php,
+basicstyle=\normalsize, % ou ça==> basicstyle=\scriptsize,
+upquote=true,
+aboveskip={1.5\baselineskip},
+columns=fullflexible,
+showstringspaces=false,
+extendedchars=true,
+breaklines=true,
+showtabs=false,
+showspaces=false,
+showstringspaces=false,
+identifierstyle=\ttfamily,
+keywordstyle=\color[rgb]{0,0,1},
+commentstyle=\color[rgb]{0.133,0.545,0.133},
+stringstyle=\color[rgb]{0.627,0.126,0.941},
+numbers=left,
+}
+
+
+\title{Fourbix}
+\logo{../images/logo/accueil-logo.png}
+\subtitle{INF473W - modal Web - Rapport de projet}
+\author{Alexandre \bsc{Binninger} - Gabriel \bsc{Oliveira Martins}}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\clearpage
+
+\setcounter{page}{1}
+
+\section{Utilisation du site}
+
+\subsection{A quoi sert ce site ?}
+
+\emph{FourbiX} est un site de prêt de matériel par les binets. Il permet ainsi aux utilisateurs de consulter les offres des binets et de réaliser facilement leur demande en ligne. Pour cela, il est possible de taper directement le nom d'un item dans la barre de recherche ou alors de rechercher un binet dans le catalogue. Les pages des binets exposent le matériel à prêter et il suffit de cliquer dessus pour réaliser une commande. Les demandes peuvent être faites à son propre nom ou au nom d'un binet auquel on appartient.\\
+
+Les Administrateurs de binet peuvent gérer les membres dudit binet. Les responsables de matériel gèrent le matériel et les demandes associées. 
+
+\section{Le Front-end}
+
+\section{Le Back-end}
+
+
+
+\end{document}

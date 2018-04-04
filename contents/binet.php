@@ -600,7 +600,7 @@ CHAINE_DE_FIN;
 }
 
 function generePretsEnCours($dbh, $binet){
-    $query="SELECT `id`, `debut`, `deadline`, `quantite_pret`, `caution`, `demande` FROM  `pretoperation` WHERE `demande` IN (SELECT `id` FROM `demandes` WHERE `binet`=?) AND (date_rendu IS NULL OR `caution` IN (SELECT `id` FROM `cautions` WHERE `encaisse`=0));";
+    $query="SELECT `id`, `debut`, `deadline`, `quantite_pret`, `caution`, `demande` FROM  `pretoperation` WHERE `demande` IN (SELECT `id` FROM `demandes` WHERE `binet`=?) AND (date_rendu IS NULL AND `caution` IN (SELECT `id` FROM `cautions` WHERE `encaisse`=0));";
     $sth=$dbh->prepare($query);
     $sth->execute(array($binet));
     $prets=array();
@@ -648,7 +648,7 @@ function generePretsEnCours($dbh, $binet){
         <form action='index.php?page=binet&pageBinet=$binet' method=post>
             <input type='hidden' name='pretID' value='$pretID'>
             <input type='hidden' name='toArchivePret' value='true'>
-            <input type=submit class="btn btn-success toBeWarnedDelete" value="Accepter" style="text-align:center" onclick="return confirm('Archiver le pret.');">
+            <input type=submit class="btn btn-success toBeWarnedDelete" value="Archiver" style="text-align:center" onclick="return confirm('Archiver le pret.');">
         </form>
 CHAINE_DE_FIN;
         $today=$datetime = date("Y-m-d");
@@ -667,7 +667,27 @@ CHAINE_DE_FIN;
     }
 }
 
+function archivePret($dbh, $pretID){
+    $today=date("Y-m-d");
+    $query="UPDATE `pretoperation` SET `date_rendu` = ? WHERE `pretoperation`.`id` = ?;";
+    $sth=$dbh->prepare($query);
+    if($sth->execute(array($today, $pretID))){
+        echo "<div class='container'><span class='enregistrement-valide'>Vous avez archivé le prêt.</span></div><br/>";
+    } else{
+        echo "<div class='container'><span class='enregistrement-invalide'>Erreur : impossible d'archiver.</span></div><br/>";
+    }
+}
 
+function encaisseCaution($dbh, $pretID){
+    $today=date("Y-m-d");
+    $query="UPDATE `cautions` SET `encaisse`=1, `date_encaissement`=? WHERE `id` IN (SELECT `caution` FROM `pretoperation` WHERE `id`=?);";
+    $sth=$dbh->prepare($query);
+    if ($sth->execute(array($today, $pretID))){
+        echo "<div class='container'><span class='enregistrement-valide'>Vous avez encaissé la caution.</span></div><br/>";
+    } else{
+        echo "<div class='container'><span class='enregistrement-invalide'>Erreur : impossible d'encaisser la caution.</span></div><br/>";
+    }   
+}
 
         
 if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"]) && $_GET["pageBinet"]!="Administrateurs"){
@@ -802,6 +822,16 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
         if (isset($_POST['toAcceptDemande']) && $_POST['toAcceptDemande'] && isset($_POST['demandeID']) && $_POST['demandeID']!=""){
             $demandeID= htmlspecialchars($_POST['demandeID']);
             acceptDemandeEnCours($dbh, $demandeID);
+        }
+        
+        if (isset($_POST['toArchivePret']) && $_POST['toArchivePret'] && isset($_POST['pretID']) && $_POST['pretID']!=""){
+            $pretID= htmlspecialchars($_POST['pretID']);
+            archivePret($dbh, $pretID);
+        }
+        
+        if (isset($_POST['encaisserCaution']) && $_POST['encaisserCaution'] && isset($_POST['pretID']) && $_POST['pretID']!=""){
+            $pretID= htmlspecialchars($_POST['pretID']);
+            encaisseCaution($dbh, $pretID);
         }
         
         printGestionDemandes($dbh, $binet);

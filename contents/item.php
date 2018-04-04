@@ -71,11 +71,11 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 					$sth->execute(array($_SESSION["login"], $item->id, $item->binet, $commentaire, $debut, $fin, $binet_emprunteur, $quantite));
 				}
 				else
-					echo "<div><span class='enregistrement-invalide'>Votre demande a échoué. Veuillez essayer à nouveau.</span></div><br/>";
+					echo "<div class='row'><div class='col-md-6 col-md-offset-2 enregistrement-invalide'>Votre demande a échoué. Veuillez essayer à nouveau.</div></div><br/>";
 			}
 
 			if ($valid_demande)
-				echo "<div><span class='enregistrement-valide'>Demande de prêt réussi ! Veuillez attendre la confirmation du binet. </span></div>"
+				echo "<div class='row'><div class='col-md-6 col-md-offset-2 enregistrement-valide'>Demande de prêt réussi ! Veuillez attendre la confirmation du binet.</div></div><br/>"
 ?>
 	<div class="row"><div class="col-md-4 col-md-offset-2">
 		<div class="panel panel-primary">
@@ -98,7 +98,7 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 					<label for="date-fin">Date de fin estimée : </label>
 					<input class="form-control" type="date" name="date-fin" id="date-fin">
 				</p>
-				<p><label>Demande faite par un binet ?</label>
+				<p><label>Demande faite par un binet ? </label>
 					<label class="radio-inline" style="margin-left: 5px;"><input class="radio-inline" type="radio" name="checkBinet" id="yesBinet" value="yes" onclick="showBinet()">Oui</label>
 					<label class="radio-inline"><input class="radio-inline" type="radio" name="checkBinet" id="noBinet" value="no" onclick="showBinet()" checked="on">Non</label>
 				</p>

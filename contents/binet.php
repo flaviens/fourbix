@@ -46,7 +46,7 @@ function genereTableDelete($dbh, $binet){
                     <input type="hidden" name="pageBinet" value="$binet">
                     <input type="hidden" name="loginRoleBinetDelete" value="$nomUtilisateur">
                     <input type="hidden" name="roleDelete" value="$nomRole">
-                    <input type=submit class="btn btn-danger toBeWarnedDelete" value="X" style="text-align:center" onclick="return confirm('Confirmer la suppression.');">
+                    <button type=submit class="btn btn-danger toBeWarnedDelete" style="text-align:center" onclick="return confirm('Confirmer la suppression.');"><span class="glyphicon glyphicon-remove"></span></button>
                     </form>
                 </td>
         </tr>
@@ -71,7 +71,7 @@ else $loginRole="''";
                 <form action=index.php?page=binet method=post>
  <p>
   <label for="loginRole">login : </label>
-  <input id="loginRole" type=text name=loginRoleBinetAdd value=$loginRole required>
+  <input class="form-control" id="loginRole" type=text name=loginRoleBinetAdd value=$loginRole required>
     <input type="hidden" name="pageBinet" value="$binet">
  </p>
 
@@ -336,15 +336,15 @@ function printAddItemForms($dbh, $binet){
         <input type="hidden" name="pageBinet" value="$binet" />
  <p>
   <label for="nomItem">Nom :</label>
-  <input id="nomItem" type=text name=nomItem value='$nomItem' required>
+  <input class="form-control" id="nomItem" type=text name=nomItem value='$nomItem' required>
  </p>
  <p>
   <label for="marqueItem">Marque :</label>
-  <input id="marqueItem" type=text name=marqueItem value='$marqueItem'>
+  <input class="form-control" id="marqueItem" type=text name=marqueItem value='$marqueItem'>
  </p>
  <p>
   <label for="typeItem">Type :</label>
-  <select id="typeItem" name=typeItem required>
+  <select class="form-control" id="typeItem" name=typeItem required>
 CHAINE_DE_FIN;
     
     genereTypes($dbh);
@@ -354,32 +354,32 @@ CHAINE_DE_FIN;
  </p>
  <p>
   <label for="quantiteItem">Quantité :</label>
-  <input id="quantiteItem" type=number step='any' name=quantiteItem value='$quantiteItem'>
+  <input class="form-control" id="quantiteItem" type=number step='any' name=quantiteItem value='$quantiteItem'>
  </p>
  <p>
-  <span style="font-weight:bold">Stock public ?</span>
-    <input type="radio" value='oui' name=isStockPublicItem id="StockPublicItem" checked><label for="StockPublicItem">oui</label>
-    <input type="radio" value='non' name=isStockPublicItem id="StockPriveItem"><label for="StockPriveItem">non</label>
+  <label>Stock public ? </label>
+    <label class="radio-inline"><input type="radio" value='oui' name=isStockPublicItem id="StockPublicItem" checked>Oui</label>
+    <label class="radio-inline"><input type="radio" value='non' name=isStockPublicItem id="StockPriveItem">Non</label>
  </p>
     <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />         
  <p>
    <label for="imageItem"> Image : (1 Mo max | format jpeg, jpg, gif ou png)</label>
-   <input id="imageItem" type=file name=imageItem>
+   <input class="form-control" id="imageItem" type=file name=imageItem>
  </p>
 </div>
 <div class='col-md-6 gris'>
  <p>
   <label for="descriptionItem">Description :</label><br/>
-  <textarea id="descriptionItem" rows=5 name=descriptionItem>$descriptionItem</textarea>
+  <textarea class="form-control" id="descriptionItem" rows=5 name=descriptionItem>$descriptionItem</textarea>
  </p>
  <p>
-  <span style="font-weight:bold">Offre publique ?</span>
-    <input type="radio" value='oui' name=isOffrePublicItem id="OffrePublicItem" checked><label for="OffrePublicItem">oui</label>
-    <input type="radio" value='non' name=isOffrePublicItem id="OffrePriveItem"><label for="OffrePriveItem">non</label>
+  <label>Offre publique ? </label>
+    <label class="radio-inline"><input type="radio" value='oui' name=isOffrePublicItem id="OffrePublicItem" checked>Oui</label>
+    <label class="radio-inline"><input type="radio" value='non' name=isOffrePublicItem id="OffrePriveItem">Non</label>
  </p>
  <p>
   <label for="cautionItem">Caution :</label>
-  <input id="cautionItem" type=number step='0.01' name=cautionItem value='$cautionItem'>
+  <input class="form-control" id="cautionItem" type=number step='0.01' name=cautionItem value='$cautionItem'>
  </p>
  <input type=submit class="btn btn-warning" value="Ajouter l'objet">
  </form>
@@ -444,7 +444,7 @@ CHAINE_DE_FIN;
     printPretsEnCours($dbh, $binet);
     
     echo <<< CHAINE_DE_FIN
-    </div></div></div></div>
+    </div></div></div>
 CHAINE_DE_FIN;
 }
 
@@ -453,25 +453,17 @@ function printDemandeEnCours($dbh, $binet){
     <div class='col-md-6'>
         <div class="panel panel-success">
             <div class="panel-heading center"> Demandes en cours </div>
-            <div class="panel-body panel-collapse">
-            <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
-            <thead class="thead-dark">
-            <th scope="col" >Informations</th>
-            <th scope="col" >Commentaire</th>
-            <th scope="col" >Accepter ?</th>
-                </thead>
-                <tbody>    
+            <ul class="list-group">    
 CHAINE_DE_FIN;
     genereDemandeEnCours($dbh, $binet);
     echo <<< CHAINE_DE_FIN
-    </tbody>
-    </table>
-    </div></div></div>
+    </ul>
+    </div></div>
 CHAINE_DE_FIN;
 }
 
 function genereDemandeEnCours($dbh, $binet){
-    $query="SELECT `id`, `item`, `commentaire`, `utilisateur`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `binet`=? AND `isAccepted`=0";
+    $query="SELECT `id`, `item`, `commentaire`, `utilisateur`, `quantite`, `debut`, `fin`, `binet_emprunteur`, nom, prenom FROM  `demandes`, utilisateurs WHERE `binet`=? AND `isAccepted`=0 AND login = utilisateur";
     $sth=$dbh->prepare($query);
     $sth->execute(array($binet));
     $demandes=array();
@@ -485,50 +477,41 @@ function genereDemandeEnCours($dbh, $binet){
         $sth->execute(array($demande['item']));
         $nomItem=$sth->fetch();
         $demandeID=$demande['id'];
-        echo "<tr><td> <strong>";
-        echo htmlspecialchars($nomItem['nom']);
-        echo"</strong><br/> Quantité : <strong>";
-        echo htmlspecialchars($demande['quantite']);
-        echo "</strong><br/> Pour <strong>";
-        echo htmlspecialchars($demande['utilisateur']);
-        echo "</strong> au nom de <strong>";
-        if ($demande['binet_emprunteur']!=NULL){
-        echo htmlspecialchars($demande['binet_emprunteur']);
-        } else{
-            echo 'Personnel';
-        }
-        echo "</strong><br/>";
-        echo 'Debut : <strong>';
-        if ($demande['debut']!=NULL){
-            echo htmlspecialchars($demande['debut']);
-        }
-        echo '</strong><br/>';
-        echo "Fin : <strong>";
-        if ($demande['fin']!=NULL){
-            echo htmlspecialchars($demande['fin']);
-        }
-        echo "</strong></td><td>";
-        if ($demande['commentaire']!=NULL){
-        echo htmlspecialchars($demande['commentaire']);
-        }else{
-            echo "<span style='font-style:italic'>Pas de commentaire...</span>";
-        }
+        echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle'>";
         echo <<< CHAINE_DE_FIN
-        </td><td>
         <form action='index.php?page=binet&pageBinet=$binet' method=post>
             <input type='hidden' name='demandeID' value='$demandeID'>
             <input type='hidden' name='toAcceptDemande' value='true'>
-            <input type=submit class="btn btn-success toBeWarnedDelete" value="Accepter" style="text-align:center" onclick="return confirm('Accepter la demande.');">
+            <button type=submit class="btn btn-success toBeWarnedDelete" style="text-align:center" onclick="return confirm('Accepter la demande.');"><span class="glyphicon glyphicon-ok"></span> Accepter</button>
         </form>
         <br/>        
         <form action='index.php?page=binet&pageBinet=$binet' method=post>
             <input type='hidden' name='demandeID' value='$demandeID'>
             <input type='hidden' name='toRefuseDemande' value='true'>
-            <input type=submit class="btn btn-danger toBeWarnedDelete" value="Refuser" style="text-align:center" onclick="return confirm('Confirmer le refus.');">
+            <button type=submit class="btn btn-danger toBeWarnedDelete" style="text-align:center" onclick="return confirm('Confirmer le refus.');"><span class="glyphicon glyphicon-remove"></span> Refuser</button>
         </form>
-        </td></tr>
 CHAINE_DE_FIN;
-        
+        echo "</div><div class='media-body'><h4>";
+        echo htmlspecialchars($nomItem['nom']);
+        echo"</h4>Quantité : <strong>";
+        echo htmlspecialchars($demande['quantite']);
+        echo "</strong><br/> Pour <strong>" . htmlspecialchars($demande['prenom']) . " " . htmlspecialchars($demande['nom']) . "</strong>";
+        echo " (<i>" . htmlspecialchars($demande['utilisateur']) . "</i>)";
+        if ($demande['binet_emprunteur']!=NULL)
+            echo " au nom de <strong>" . htmlspecialchars($demande['binet_emprunteur']) . "</strong>";
+        echo '<br/>Debut : <strong>';
+        if ($demande['debut']!=NULL){
+            echo date_format(date_create(htmlspecialchars($demande['debut'])), 'd/m/Y');
+        }
+        echo '</strong><br/>';
+        echo "Fin : <strong>";
+        if ($demande['fin']!=NULL){
+            echo date_format(date_create(htmlspecialchars($demande['fin'])), 'd/m/Y');
+        }
+        echo "</strong>";
+        if ($demande['commentaire']!=NULL){
+        echo "<br/>Commentaire : " . htmlspecialchars($demande['commentaire']);
+        }
     }
 }
 

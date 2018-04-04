@@ -93,21 +93,6 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 
 					}
 
-					/*foreach ($mesBinets as $binet) {
-						if($binet['binet'] != 'Administrateurs')
-							$page = 'index.php?page=binet&pageBinet=' . htmlspecialchars($binet['binet']);
-						else
-							$page = 'index.php?page=administration';
-						echo "<li class='list-group-item'><div class='media'>";
-						echo "<div class='media-left media-top'><a href='" . $page . "'><img src='images/binets/" . htmlspecialchars($binet['image']) . "' alt='" . htmlspecialchars($binet['image']) . "' class='image-binet-catalogue' /></a></div>";
-						echo "<div class='media-body'><h4 class='media-heading'><a href='" . $page . "'>" . htmlspecialchars($binet['binet']) . "</a></h4><p style='font-style: italic'>" . htmlspecialchars($binet['role']) . "</p>";
-						echo "<form method='post' action='index.php?page=utilisateur'><button type='submit' class='btn btn-danger' name='abandonnerBinet' value='" . htmlspecialchars($binet['id']) . "' onclick='return confirm(\"Voulez-vous quitter le binet ce binet ?\")'><span class='glyphicon glyphicon-trash'></span> Abandonner</button></form>";
-						echo "</div>";
-						echo "</div></li>";
-					}
-
-					if (empty($mesBinets))
-						echo "<li class='list-group-item' style='font-style: italic;'>Vous n'avez pas de binets à afficher.";*/
 					foreach ($mesBinetsGrouped as $binet) {
 						if($binet['binet'] != 'Administrateurs')
 							$page = 'index.php?page=binet&pageBinet=' . htmlspecialchars($binet['binet']);

@@ -147,19 +147,20 @@ if (isset($_POST["binet"]) && $_POST["binet"]!=""){
         if (isset($error_file)){
            echo "<div><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
         } else{
-            $adresse_image="images/binets/".$_POST['binet']."-logo.png";
-            $resultat = move_uploaded_file($_FILES['image']['tmp_name'],$adresse_image);
+            $adresse_image=$_POST['binet']."-logo.png";
+            $resultat = move_uploaded_file($_FILES['image']['tmp_name'],"images/binets/".$adresse_image);
             if ($resultat){
                echo "<p class='enregistrement-valide'>L'image a bien été téléversée !</p>";
-               Binet::insererBinet($dbh, $_POST["binet"]);
+               Binet::insererBinet($dbh, $_POST["binet"], $adresse_image);
                $form_values_valid_binet=true;
             } else{
                  echo "<p class='enregistrement-invalide'>BUG : l'image n'a pas pu être téléversée !</p>";
             }
         }
     } else{
-    Binet::insererBinet($dbh, $_POST["binet"]);
-    $form_values_valid_binet=true;
+        $adresse_image="default-binetlogo.png";
+        Binet::insererBinet($dbh, $_POST["binet"], $adresse_image);
+        $form_values_valid_binet=true;
     }
     
    } else{
@@ -309,12 +310,36 @@ echo <<< CHAINE_DE_FIN
    
  <button type=submit class="btn btn-success" ><span class="glyphicon glyphicon-plus-sign"></span> Ajouter le rôle</button>
 </form>
-</div>
+</div></div>
 CHAINE_DE_FIN;
 
+if (isset($_POST['loginDelete']) && $_POST['loginDelete']){
+    $query="DELETE FROM `utilisateurs` WHERE `login`=?;";
+    $sth=$dbh->prepare($query);
+    if ($sth->execute(array($_POST['loginDelete']))){
+        echo "<div><span class='enregistrement-valide'>Utilisateur effacé.</span></div><br/>";
+   } else{
+        echo "<div><span class='enregistrement-invalide'>Impossible de retirer l'utilisateur.</span></div><br/>";
+    }
+    $sth->closeCursor();
+}
 
-echo "</div></div></div>";
+echo <<< CHAINE_DE_FIN
+<div class="panel panel-danger">
+            <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Supprimer un utilisateur</div>
+            <div class="panel-body">
+                <form action=index.php?page=administration method=post>
+ <p>
+  <label for="loginDelete">login : </label>
+  <input id="loginDelete" type=text name=loginDelete required>
+ </p>
+  
+ <button type=submit class="btn btn-danger" onclick="return confirm('Etes vous sûr de vouloir supprimer cet utilisateur ?');"><span class="glyphicon glyphicon-minus-sign"></span> Supprimer l'utilisateur</button>
+</form>
+</div></div>
+CHAINE_DE_FIN;
 
+echo "</div>";
 function genereBugRapports($dbh){
     $query ="SELECT `id`, `description`, `utilisateur` FROM `bugreports`";
     $sth=$dbh->prepare($query);

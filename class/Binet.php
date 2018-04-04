@@ -13,11 +13,18 @@ class Binet{
         return $binet;
     }
     
-    public static function insererBinet($dbh, $nom){
+    public static function insererBinet($dbh, $nom, $image){
         if (Binet::getBinet($dbh, $nom)==NULL){
            $sth=$dbh->prepare("INSERT INTO `binets` (`nom`, `image`) VALUES(?, ?)");
-           $sth->execute(array($nom, $nom ."-logo.png"));
+           $sth->execute(array($nom, $image));
         }   
+    }
+    
+    public static function getImageBinet($dbh, $nom){
+        $sth=$dbh->prepare("SELECT `image` FROM `binets` WHERE `nom`=?");
+        $sth->execute(array(htmlspecialchars($nom)));
+        $resultat=$sth->fetch();
+        return $resultat['image'];
     }
     
     public static function getBinetResearchFunction($dbh, $nom){

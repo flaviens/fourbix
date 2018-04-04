@@ -1,25 +1,25 @@
 
--Page Administration : ne pas oublier d'avoir une liste pour trouver les utilisateurs. supprimer utilisateur
-
--Interface admin : rajouter en bas un tableau de recherche pour pouvoir voir quels sont les membres de tel ou tel binet. (Ou alors : un gros ladder avec tous les utilisateurs ?)
-
 -page de binet : modifier la disposition des colonnes
 
--mettre image par défaut pour un item ou un binet
 
 -Dans l'interface de gestion : Possibilité de changer l'image ?
 
--Page du binet : rajouter les différentes personnes ainsi que les différents respos.
 
--Mettre un formulaire d'inscription avec une Captcha ? (c'est mieux pour la soutenance, c'est plus visible comme systeme).
+
+
+
+
+
 
 -BONUS : suggestions pour un binet
 -BONUS : possibilité de changer le background
 -BONUS : Lors d'une demande, les admins et respos matériels reçoivent un mail. (Dur à faire ?)
 
+-TODO : changer la manière dont les images des items sont stockées.
+-TODO : Remplissage BDD !!!
 -RAPPORT
 
--BONUS : faire un effet stylé sur le leaderboard d'un binet en JS.
+-BONUS : faire un effet stylé sur le leaderboard d'un binet en JS. (changement de couleurs)
 
 
 

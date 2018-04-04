@@ -391,7 +391,7 @@ function printGestionItemsForm($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class="container">
 <div class="panel panel-warning">
-            <div class="panel-heading toBeClicked1 isClickable" data-toggle="collapse" data-target="#demande-form" style="text-align:center">Gestion de l'inventaire</div>
+            <div class="panel-heading toBeClicked1 isClickable center">Gestion de l'inventaire</div>
             <div class="panel-body toBeToggled1">
     <div class='row'>
 CHAINE_DE_FIN;

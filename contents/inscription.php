@@ -71,40 +71,40 @@ else if (!isset($_SESSION['loggedIn']) or !$_SESSION['loggedIn']){
 	<div class="row">
 		<div class="col-md-6">
                     <div class="panel panel-info">
-                    <div class="panel-heading">Inscription</div>
+                    <div class="panel-heading"><span class="glyphicon glyphicon-pencil"></span> Inscription</div>
                     <div class="panel-body">
 			<form action="index.php?page=inscription" method="POST" oninput="password2.setCustomValidity(password2.value != password.value ? 'Les mots de passe différent.' : '')">
 				<p>
 					<label for="login">Login : </label><br/>
-					<input id="login" type="text" name="login" value=<?php echo "'$login'"; ?> required/>
+					<input class="form-control" id="login" type="text" name="login" value=<?php echo "'$login'"; ?> required/>
 				</p>
 				<p>
 					<label for="email">E-mail : </label><br/>
-					<input type="email" id="email" name="email" value=<?php echo "'$email'"; ?> required/>
+					<input class="form-control" type="email" id="email" name="email" value=<?php echo "'$email'"; ?> required/>
 				</p>
 				<p>
 					<label for="password">Mot de passe : </label><br/>
-					<input type="password" id="password" name="password" required>
+					<input class="form-control" type="password" id="password" name="password" required>
 				</p>
 				<p>
 					<label for="password2">Confirmez mot de passe : </label><br/>
-					<input type="password" id="password2" name="password2" required>
+					<input class="form-control" type="password" id="password2" name="password2" required>
 				</p>
 				<p>
 					<label for="nom">Nom : </label><br/>
-					<input type="text" id="nom" name="nom" value=<?php echo "'$nom'"; ?> required/>
+					<input class="form-control" type="text" id="nom" name="nom" value=<?php echo "'$nom'"; ?> required/>
 				</p>
 				<p>
 					<label for="prenom">Prénom : </label><br/> 
-					<input type="text" id="prenom" name="prenom" value=<?php echo "'$prenom'"; ?> required/>
+					<input class="form-control" type="text" id="prenom" name="prenom" value=<?php echo "'$prenom'"; ?> required/>
 				</p>
 				<p>
 					<label for="formation">Formation : </label><br/> 
-					<input type="text" id="formation" name="formation" value=<?php echo "'$formation'"; ?>/>
+					<input class="form-control" type="text" id="formation" name="formation" value=<?php echo "'$formation'"; ?>/>
 				</p>
 				<p>
 					<label for="naissance">Date de naissance : </label><br/>
-					<input type="date" id="naissance" name="naissance" value=<?php echo "'$naissance'"; ?> require/>
+					<input class="form-control" type="date" id="naissance" name="naissance" value=<?php echo "'$naissance'"; ?> require/>
 				</p>
 				<p><input type="submit" value="Créer compte" class="btn btn-primary"></p>
 			</form>

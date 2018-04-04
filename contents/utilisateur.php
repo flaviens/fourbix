@@ -81,7 +81,19 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 				<ul class="list-group">
 				<?php
 					$mesBinets = Binet::getBinetsByUser($dbh, $user->login);
+					$mesBinetsGrouped = array();
 					foreach ($mesBinets as $binet) {
+						if(isset($mesBinetsGrouped[$binet['binet']]))
+							array_push($mesBinetsGrouped[$binet['binet']]['roles'], array('role' => $binet['role'], 'id' => $binet['role']));
+						else{
+							$mesBinetsGrouped[$binet['binet']] = array('binet' => $binet['binet'],
+																		'image' => $binet['image'],
+																		'roles' =>  array(array('role' => $binet['role'], 'id' => $binet['id'])));
+						}
+
+					}
+
+					/*foreach ($mesBinets as $binet) {
 						if($binet['binet'] != 'Administrateurs')
 							$page = 'index.php?page=binet&pageBinet=' . htmlspecialchars($binet['binet']);
 						else
@@ -89,13 +101,27 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 						echo "<li class='list-group-item'><div class='media'>";
 						echo "<div class='media-left media-top'><a href='" . $page . "'><img src='images/binets/" . htmlspecialchars($binet['image']) . "' alt='" . htmlspecialchars($binet['image']) . "' class='image-binet-catalogue' /></a></div>";
 						echo "<div class='media-body'><h4 class='media-heading'><a href='" . $page . "'>" . htmlspecialchars($binet['binet']) . "</a></h4><p style='font-style: italic'>" . htmlspecialchars($binet['role']) . "</p>";
-						/*if ($binet['binet'] != 'Administrateurs')
-							echo "<form style='display: inline-block; margin-right: 5px; margin-bottom: 5px;' action='index.php' method='get'><input type='hidden' value='binet' name='page'><button type='submit' class='btn btn-primary' value='" . htmlspecialchars($binet['binet']) . "' name='pageBinet'><span class='glyphicon glyphicon-new-window'></span> Voir la page</button></form>";
-						else
-							echo "<form style='display: inline-block; margin-right: 5px; margin-bottom: 5px;' action='index.php' method='get'><button type='submit' class='btn btn-primary' value='administration' name='page'><span class='glyphicon glyphicon-new-window'></span> Voir la page</button></form>";*/
 						echo "<form method='post' action='index.php?page=utilisateur'><button type='submit' class='btn btn-danger' name='abandonnerBinet' value='" . htmlspecialchars($binet['id']) . "' onclick='return confirm(\"Voulez-vous quitter le binet ce binet ?\")'><span class='glyphicon glyphicon-trash'></span> Abandonner</button></form>";
 						echo "</div>";
 						echo "</div></li>";
+					}
+
+					if (empty($mesBinets))
+						echo "<li class='list-group-item' style='font-style: italic;'>Vous n'avez pas de binets à afficher.";*/
+					foreach ($mesBinetsGrouped as $binet) {
+						if($binet['binet'] != 'Administrateurs')
+							$page = 'index.php?page=binet&pageBinet=' . htmlspecialchars($binet['binet']);
+						else
+							$page = 'index.php?page=administration';
+						echo "<li class='list-group-item'><div class='media'>";
+						echo "<div class='media-left media-top'><a href='" . $page . "'><img src='images/binets/" . htmlspecialchars($binet['image']) . "' alt='" . htmlspecialchars($binet['image']) . "' class='image-binet-catalogue' /></a></div>";
+						echo "<div class='media-body'><h4 class='media-heading'><a href='" . $page . "'>" . htmlspecialchars($binet['binet']) . "</a></h4>";
+						echo "<ul style='list-style-type: none; padding: 0;'>";
+						foreach ($binet['roles'] as $role) {
+							echo "<li style='margin-bottom: 5px;'><span style='font-style: italic; margin-right: 5px; display: inline-block;'>" . htmlspecialchars($role['role']) . "</span>";
+							echo "<form method='post' action='index.php?page=utilisateur' style='display: inline-block'><button type='submit' class='btn btn-danger' name='abandonnerBinet' value='" . htmlspecialchars($role['id']) . "' onclick='return confirm(\"Voulez-vous quitter le binet ce binet ?\")'><span class='glyphicon glyphicon-trash'></span> Abandonner</button></form></li>";
+						}
+						echo "</ul></div></div></li>";
 					}
 
 					if (empty($mesBinets))
@@ -116,27 +142,27 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 					<form action="index.php?page=utilisateur" method="POST">
 						<p>
 							<label for="login">Login : </label><br/>
-							<input id="login" type="text" name="login" value="<?php echo htmlspecialchars($user->login); ?>" required/>
+							<input class="form-control" id="login" type="text" name="login" value="<?php echo htmlspecialchars($user->login); ?>" required/>
 						</p>
 						<p>
 							<label for="email">E-mail : </label><br/>
-							<input type="email" id="email" name="email" value="<?php echo htmlspecialchars($user->email); ?>" required/>
+							<input class="form-control" type="email" id="email" name="email" value="<?php echo htmlspecialchars($user->email); ?>" required/>
 						</p>
 						<p>
 							<label for="nom">Nom : </label><br/>
-							<input type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($user->nom); ?>" required/>
+							<input class="form-control" type="text" id="nom" name="nom" value="<?php echo htmlspecialchars($user->nom); ?>" required/>
 						</p>
 						<p>
 							<label for="prenom">Prénom : </label><br/>
-							<input type="text" id="prenom" name="prenom" value="<?php echo htmlspecialchars($user->prenom); ?>" required/>
+							<input class="form-control" type="text" id="prenom" name="prenom" value="<?php echo htmlspecialchars($user->prenom); ?>" required/>
 						</p>
 						<p>
 							<label for="formation">Formation : </label><br/>
-							<input type="text" id="formation" name="formation" value="<?php echo htmlspecialchars($user->formation); ?>" />
+							<input class="form-control" type="text" id="formation" name="formation" value="<?php echo htmlspecialchars($user->formation); ?>" />
 						</p>
 						<p>
 							<label for="naissance">Date de naissance : </label><br/>
-							<input type="date" id="naissance" name="naissance" value="<?php echo htmlspecialchars($user->naissance); ?>" required/>
+							<input class="form-control" type="date" id="naissance" name="naissance" value="<?php echo htmlspecialchars($user->naissance); ?>" required/>
 						</p>
 						<button type='submit' class='btn btn-success' name='updateUser' value='true'><span class='glyphicon glyphicon-floppy-disk'></span> Enregistrer</button>
 					</form>
@@ -150,18 +176,18 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 					<span class="glyphicon glyphicon-lock"></span> Modifier votre mot de passe
 				</div>
 				<div class="panel-body panel-collapse collapse" id="mdp-form">
-					<form action="index.php?page=utilisateur" method="POST" oninput="password2.setCustomValidity(password2.value != password1.value ? 'Les mots de passe différent.' : '')">
+					<form action="index.php?page=utilisateur" method="POST" oninput=class="form-control" "password2.setCustomValidity(password2.value != password1.value ? 'Les mots de passe différent.' : '')">
 						<p>
 							<label for="password">Mot de passe actuel : </label><br/>
-							<input type="password" id="password" name="password" required>
+							<input class="form-control" type="password" id="password" name="password" required>
 						</p>
 						<p>
 							<label for="password1">Nouveau mot de passe : </label><br/>
-							<input type="password" id="password1" name="password1" required>
+							<input class="form-control" type="password" id="password1" name="password1" required>
 						</p>
 						<p>
 							<label for="password2">Confirmez nouveau mot de passe : </label><br/>
-							<input type="password" id="password2" name="password2" required>
+							<input class="form-control" type="password" id="password2" name="password2" required>
 						</p>
 						<button type='submit' class='btn btn-success' name='updateMdp' value='true'><span class='glyphicon glyphicon-floppy-disk'></span> Enregistrer</button>
 					</form>
@@ -177,7 +203,7 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 				<div class="panel-body panel-collapse collapse" id="bug-form">
 					<form action="index.php?page=utilisateur" method="post">
 						<label for="bugDescription">Avez-vous trouvé un bug dans le site ? Dites-le-nous !</label>
-						<p><textarea name="bugDescription" id="bugDescription" placeholder="Description" required=""></textarea></p>
+						<p><textarea class="form-control" name="bugDescription" id="bugDescription" placeholder="Description" required=""></textarea></p>
 						<button type='submit' class='btn btn-warning' name='bugReport' value='true'><span class='glyphicon glyphicon-envelope'></span> Envoyer</button>
 					</form>
 				</div>

@@ -1,11 +1,7 @@
 
 -Page Administration : ne pas oublier d'avoir une liste pour trouver les utilisateurs. supprimer utilisateur
 
--Administration : report de bugs, de suggestions pour le développement du site.
-
 -Interface admin : rajouter en bas un tableau de recherche pour pouvoir voir quels sont les membres de tel ou tel binet. (Ou alors : un gros ladder avec tous les utilisateurs ?)
-
--(Easy) : mettre un sel pour les mots de passe
 
 -Mettre un formulaire d'inscription avec une Capcha ? (c'est mieux pour la soutenance, c'est plus visible comme systeme).
 

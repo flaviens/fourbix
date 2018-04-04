@@ -8,6 +8,12 @@ class Utilisateur {
     public $email;
     public $login;
     public $password;
+    public static $salt='gcGEZPjSBOZzx+lIC6AYzebtXzaVbsQCGMoKmvEv6a3+A7QjJiHhtN9hJRfL'.
+            'VoxRkc1bavwpMwFS20b6t6PAQpJG7jhZBRn2MU1gaiWeVyRatLsvAAAAFQC0Wn+2DFB9Y3'.
+            '2PChf9gWnInBeTJwAAAIBnQKZyRqtnk0IlZnU26MhHxrh+A7OMq9YxbqMaVGpBgWJ6SRrX'.
+            'Mcd7VuEPuULKYR/ll6O7H60Zt5a9eznT079wdN6UsCjwbFGatjJo+YwyL5XOeGyXccwuvW'.
+            'cdy1h4qZNP8sLt+yZ5IT0spcvh0ULfGDmjJtlL9CqFtsfTE5FFLQAAAIB8y4g11dxmckfb'.
+            'T7Vs/jZAzYsnW/rQ2zreZs+6ja7EkQ/UN4Q/dh+CbwNnYQJwnvJtLTH6bSH7D7';
     public $naissance;
     
     public function __toString() {
@@ -38,7 +44,7 @@ class Utilisateur {
     public static function insererUtilisateur($dbh, $login, $password, $nom, $prenom, $formation, $naissance, $email) {
         if (Utilisateur::getUtilisateur($dbh, $login) == NULL) {
             $sth = $dbh->prepare("INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `naissance`, `login`, `password`) VALUES(?,?,?,?,?,?,SHA1(?))");
-            $sth->execute(array($prenom, $nom, $formation, $email, $naissance, $login, $password));
+            $sth->execute(array($prenom, $nom, $formation, $email, $naissance, $login, $password.Utilisateur::$salt));
         } 
     }
 
@@ -46,7 +52,7 @@ class Utilisateur {
         $sth = $dbh->prepare("SELECT `password` FROM `utilisateurs` WHERE `login` = ?;");
         $resultat = $sth->execute(array($login));
         $trueMDP = $sth->fetch(PDO::FETCH_ASSOC);
-        if (SHA1($mdp) == $trueMDP["password"]) {
+        if (SHA1($mdp. Utilisateur::$salt) == $trueMDP["password"]) {
             return true;
         } else {
             return false;
@@ -92,7 +98,7 @@ class Utilisateur {
     public static function updatePassword($dbh, $login, $mdp){
         $query = "UPDATE utilisateurs SET password = SHA1(?) WHERE login = ?";
         $sth = $dbh->prepare($query);
-        $sth->execute(array($mdp, $login));
+        $sth->execute(array($mdp.Utilisateur::$salt, $login));
     }
 
 }

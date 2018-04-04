@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  mar. 03 avr. 2018 à 23:22
+-- Généré le :  mer. 04 avr. 2018 à 17:23
 -- Version du serveur :  10.1.26-MariaDB
 -- Version de PHP :  7.1.9
 
@@ -79,7 +79,9 @@ INSERT INTO `cautions` (`id`, `valeur`, `encaisse`, `date_encaissement`) VALUES
 (5, '1', 0, NULL),
 (6, '2', 0, NULL),
 (7, '2', 0, NULL),
-(8, '2', 0, NULL);
+(8, '2', 0, NULL),
+(9, '1', 1, '2018-04-04'),
+(10, '1', 1, '2018-04-04');
 
 -- --------------------------------------------------------
 
@@ -99,26 +101,6 @@ CREATE TABLE `demandes` (
   `binet_emprunteur` varchar(64) DEFAULT NULL,
   `isAccepted` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Vaut true si la demande a ete acceptee'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `demandes`
---
-
-INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`, `isAccepted`) VALUES
-(11, 'olivier', 2, 'Binet Reseau', 3, NULL, '2018-04-09', '2018-04-01', NULL, 0),
-(12, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
-(13, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
-(14, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-17', '2018-04-01', NULL, 0),
-(15, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-10', '2018-04-01', NULL, 0),
-(16, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
-(17, 'olivier', 2, 'Binet Reseau', 2, NULL, '2018-04-03', '2018-04-01', NULL, 0),
-(19, 'olivier', 2, 'Binet Reseau', 2, 'coucou', '2018-04-01', '2018-04-02', NULL, 0),
-(20, 'olivier', 2, 'Binet Reseau', 3, 'yguygu', '2018-04-01', '2018-04-03', 'Administrateurs', 0),
-(21, 'olivier', 2, 'Binet Reseau', 2, NULL, NULL, NULL, NULL, 0),
-(22, 'olivier', 2, 'Binet Reseau', 3, NULL, NULL, NULL, 'Administrateurs', 0),
-(23, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL, 0),
-(24, 'gabriel', 1, 'Binet Reseau', 4, NULL, NULL, NULL, NULL, 0),
-(25, 'Burrakauchy', 1, 'Binet Reseau', 2, 'Pour jouer aux jeux videos !', '2018-04-07', '2018-04-08', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -168,12 +150,8 @@ CREATE TABLE `membres` (
 --
 
 INSERT INTO `membres` (`id`, `utilisateur`, `binet`, `role`) VALUES
-(1, 'Burrakauchy', 'Administrateurs', 'admin'),
-(5, 'Burrakauchy', 'Binet Reseau', 'admin'),
-(8, 'Burrakauchy', 'Binet Reseau', 'matosManager'),
-(9, 'olivier', 'Binet des profs', 'admin'),
-(10, 'olivier', 'Administrateurs', 'admin'),
-(11, 'dominique', 'Binet des profs', 'matosManager');
+(13, 'Burrakauchy', 'Administrateurs', 'admin'),
+(14, 'olivier', 'Administrateurs', 'admin');
 
 -- --------------------------------------------------------
 
@@ -190,15 +168,6 @@ CREATE TABLE `pretoperation` (
   `caution` int(11) DEFAULT NULL,
   `demande` int(11) DEFAULT NULL COMMENT 'correspond a une demande de pret'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Déchargement des données de la table `pretoperation`
---
-
-INSERT INTO `pretoperation` (`id`, `debut`, `date_rendu`, `deadline`, `quantite_pret`, `caution`, `demande`) VALUES
-(4, '2018-04-03', NULL, '2018-04-08', 2, 6, 25),
-(5, '2018-04-03', NULL, '2018-04-08', 2, 7, 25),
-(6, '2018-04-03', NULL, '2018-04-08', 2, 8, 25);
 
 -- --------------------------------------------------------
 
@@ -271,11 +240,8 @@ CREATE TABLE `utilisateurs` (
 --
 
 INSERT INTO `utilisateurs` (`prenom`, `nom`, `formation`, `email`, `login`, `password`, `naissance`) VALUES
-('Alexandre', 'Binninger', 'X2016', 'alexandre.binninger@polytechnique.edu', 'Burrakauchy', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3', '1996-06-15'),
-('Dominique', 'Rossin', 'Adjoint DER', 'dominique.rossin@polytechnique.edu', 'dominique', '9cc140dd813383e134e7e365b203780da9376438', '1970-02-11'),
-('Martins', 'Oliveira', 'X2016', 'gabriel@mail.com', 'gabriel', '7c222fb2927d828af22f592134e8932480637c0d', '1996-06-10'),
-('Joao', 'Silva', 'X2016', 'joao@gmail.com', 'joao', '356a192b7913b04c54574d18c28d46e6395428ab', '2018-04-01'),
-('Olivier', 'Serre', 'professeur', 'olivier.serre@polytechnique.edu', 'olivier', '663194f2b9123a38cd9e2e2811f8d2fd387b765e', '1980-03-14');
+('Alexandre', 'Binninger', 'X2016', 'alexandre.binninger@polytechnique.edu', 'Burrakauchy', '2bac2aaed823620d75679dd4ff939e475979c511', '1996-06-15'),
+('Olivier', 'Serre', 'Professeur', 'olivier.serre@polytechnique.edu', 'olivier', 'd428549ca0899ee3edc266c44eca8db740a2e602', '1988-04-07');
 
 --
 -- Index pour les tables déchargées
@@ -367,13 +333,13 @@ ALTER TABLE `utilisateurs`
 -- AUTO_INCREMENT pour la table `bugreports`
 --
 ALTER TABLE `bugreports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `cautions`
 --
 ALTER TABLE `cautions`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT pour la table `demandes`
@@ -391,13 +357,13 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pour la table `pretoperation`
 --
 ALTER TABLE `pretoperation`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pour la table `suggestions`

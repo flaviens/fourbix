@@ -62,6 +62,15 @@ class Binet{
         }
     }
     
+    public static function generateBinetOptionsNoAdmin($dbh){
+        $binets = Binet::getAllBinets($dbh);
+        foreach ($binets as $binet){
+            if ($binet->nom !='Administrateurs'){
+                echo '<option>' . htmlspecialchars($binet->nom) . '</option>';
+            }
+        }
+    }
+    
     public static function generateBinetsByMember($dbh, $login){
         $query="SELECT binet FROM membres WHERE utilisateur = ? AND binet!='Administrateurs' GROUP BY binet ORDER BY binet ASC";
         $sth = $dbh->prepare($query);
@@ -115,6 +124,12 @@ class Binet{
         $member = $sth->fetch();
         $sth->closeCursor();
         return $member;
+    }
+    
+    public static function deleteBinet($dbh, $nom){
+        $query="DELETE FROM `binets` WHERE `binets`.`nom` =?";
+        $sth=$dbh->prepare($query);
+        return $sth->execute(array($nom));
     }
 }
 

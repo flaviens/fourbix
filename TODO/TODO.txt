@@ -1,14 +1,5 @@
-TOP PRIORITY :
 
--Faire les deux fonctions pour effacer(manque un bouton pour lui, le faire peut-etre que pour admin administrateurs), accepter ou encaisser une operation de pret.
-
-
-------------
-
-
-
-
--Page Administration : ne pas oublier d'avoir une liste pour trouver les utilisateurs.
+-Page Administration : ne pas oublier d'avoir une liste pour trouver les utilisateurs. supprimer utilisateur
 
 -Administration : report de bugs, de suggestions pour le développement du site.
 
@@ -18,26 +9,29 @@ TOP PRIORITY :
 
 -Mettre un formulaire d'inscription avec une Capcha ? (c'est mieux pour la soutenance, c'est plus visible comme systeme).
 
--Lors d'une demande, les admins et respos matériels reçoivent un mail. (Dur à faire ?)
+-Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée + modifier la quantité disponible.
 
--Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée
+-Demande : modifier la page de demande (tableau : améliorer la visibilité)
 
+-page de binet : modifier la disposition des colonnes
 
+-mettre image par défaut pour un item ou un binet
 
--Faire une interface qui permette d'accéder aux binets qu'on administre, et permettre ainsi de rajouter des objets, des membres (avec leur rôle). Gérer les gens qui ont des pouvoirs. En gros, faire la page binets avec : "nos demandes, administration si on est admin du binet, gestion de l'inventaire si on est admin OU inventorymanager, ensemble du matos proposé pour tout le monde"
--Dans l'interface de gestion : possibilité de rajouter du matériel. Possibilité de changer l'image ? Possibilité de mettre des items et du stock !!
+-Dans l'interface de gestion : Possibilité de changer l'image ?
+
 -Page du binet : rajouter les différentes personnes ainsi que les différents respos.
--Faire un bouton "commander" vers la page de l'objet. 
 
--Demande : Interface pour réaliser une demande | consulter ses demandes | vérifier si le chèque de caution a été encaissé
+-BONUS : suggestions pour un binet
+-BONUS : possibilité de changer le background
+-BONUS : Lors d'une demande, les admins et respos matériels reçoivent un mail. (Dur à faire ?)
 
--Javascript : quand on a la souris sur "mes binets", alors "mes binets" affiche les binets dans lesquels on se trouve. Faire un alert pour le delete d'un utilisateur ?
+-RAPPORT
 
 
-DONE :
--Faire une interface admin pour rajouter des utilisateurs, des binets... Dans l'administration, gérer l'administration des rôles des utilisateurs par exemple.
--mettre du htmlspecialchars
--Catalogue : faire une page par binet (qui sera générée en fonction des informations post), et si on clique sur un objet cela nous redirige vers le lien pour faire une demande. On peut également faire un un caroussel avec : https://tympanus.net/codrops/2011/08/16/circular-content-carousel/  ||| Possibilité d'utiliser bootstrap : https://getbootstrap.com/docs/4.0/components/carousel/ !
+
+
+
+
 
 
 

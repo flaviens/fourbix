@@ -18,11 +18,11 @@ function printLoginForm($askedPage){
     <form action="index.php?todo=login&page=$askedPage" method="post">
         <p>
             <label for="login">Login : </label>
-            <input type="text" name="login" id="login" placeholder="Login" value=$login required>
+            <input class="form-control" type="text" name="login" id="login" placeholder="Login" value=$login required>
         </p>
         <p>
             <label for="password">Password : </label>
-            <input type="password" name="password" id="password" placeholder="Mot de Passe" required>
+            <input class="form-control" type="password" name="password" id="password" placeholder="Mot de Passe" required>
         </p>
         <p><input type="submit" class="btn btn-primary" value="Valider"</p>
     </form>

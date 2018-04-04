@@ -86,26 +86,25 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 			<form action=<?php echo "'index.php?page=item&id=$item->id'";?> method="post" oninput="binet.setCustomValidity(binet.value == '' && checkBinet.value == 'yes' ? 'Veuillez sélectionner binet.' : '')">
 				<p>
 					<label for="quantite">Quantité : </label>
-					<input type="number" name="quantite" id="quantite" min="1" max="<?php echo htmlspecialchars($item->quantite) ?>" required>
+					<input class="form-control" type="number" name="quantite" id="quantite" min="1" max="<?php echo htmlspecialchars($item->quantite) ?>" required>
 				</p>
 				<p><label for="commentaire">Commentaire : </label></p>
-				<p><textarea name="commentaire" id="commentaire" placeholder="Écrivez votre commentaire." style="margin-bottom: 3px"></textarea></p>
+				<p><textarea class="form-control" name="commentaire" id="commentaire" placeholder="Écrivez votre commentaire." style="margin-bottom: 3px"></textarea></p>
 				<p>
 					<label for="date-debut">Date de début : </label>
-					<input type="date" name="date-debut" id="date-debut">
+					<input class="form-control" type="date" name="date-debut" id="date-debut">
 				</p>
 				<p>
 					<label for="date-fin">Date de fin estimée : </label>
-					<input type="date" name="date-fin" id="date-fin">
+					<input class="form-control" type="date" name="date-fin" id="date-fin">
 				</p>
-				<p>
-					<label for="checkBinet">Demande faite par un binet ? </label>
-					<input type="radio" name="checkBinet" id="yesBinet" value="yes" onclick="showBinet()" style="margin-left: 5px">Oui
-					<input type="radio" name="checkBinet" id="noBinet" value="no" onclick="showBinet()" style="margin-left: 5px" checked="on">Non
+				<p><label>Demande faite par un binet ?</label>
+					<label class="radio-inline" style="margin-left: 5px;"><input class="radio-inline" type="radio" name="checkBinet" id="yesBinet" value="yes" onclick="showBinet()">Oui</label>
+					<label class="radio-inline"><input class="radio-inline" type="radio" name="checkBinet" id="noBinet" value="no" onclick="showBinet()" checked="on">Non</label>
 				</p>
 				<p id="binet-emprunteur" style="display: none">
 					<label for="binet">Binet : </label>
-					<select name="binet" id="binet">
+					<select class="form-control" name="binet" id="binet">
 					<option value="" disabled selected>Sélectionnez votre binet</option>
 					<?php Binet::generateBinetsByMemberOptions($dbh, $_SESSION["login"]); ?>
 					</select>

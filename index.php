@@ -38,7 +38,6 @@ if (isset($_GET["todo"])){
 generateNavBar($dbh, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
 ?>
 
-
 <div id="content" class="container content">
 	<?php
 		if($authorized)

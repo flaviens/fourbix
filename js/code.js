@@ -1,20 +1,11 @@
 
 $(document).ready(function(){ //TODO : à refaire, c'est complètement sous-optimal...
-   $('.toBeToggled0').hide();
-   $('.toBeClicked0').click(function(){
-   $('.toBeToggled0').slideToggle("slow");
+    
+   $('.toBeToggled').hide();
+   $('.isClickable').click(function(){
+   $(this).parent('.toBeClicked').children('.toBeToggled').slideToggle("slow");
    });
    
-   
-   $('.toBeToggled1').hide();
-   $('.toBeClicked1').click(function(){
-   $('.toBeToggled1').slideToggle("slow");
-   });
-  
-   $('.toBeToggled2').hide();
-   $('.toBeClicked2').click(function(){
-   $('.toBeToggled2').slideToggle("slow");
-   });
    
 });
 

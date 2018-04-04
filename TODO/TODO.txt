@@ -3,12 +3,6 @@
 
 -Interface admin : rajouter en bas un tableau de recherche pour pouvoir voir quels sont les membres de tel ou tel binet. (Ou alors : un gros ladder avec tous les utilisateurs ?)
 
--Mettre un formulaire d'inscription avec une Capcha ? (c'est mieux pour la soutenance, c'est plus visible comme systeme).
-
--Gérer la race condition si deux personnes demandent simultanément un même objet en quantité limitée + modifier la quantité disponible.
-
--Demande : modifier la page de demande (tableau : améliorer la visibilité)
-
 -page de binet : modifier la disposition des colonnes
 
 -mettre image par défaut pour un item ou un binet
@@ -17,13 +11,15 @@
 
 -Page du binet : rajouter les différentes personnes ainsi que les différents respos.
 
+-Mettre un formulaire d'inscription avec une Captcha ? (c'est mieux pour la soutenance, c'est plus visible comme systeme).
+
 -BONUS : suggestions pour un binet
 -BONUS : possibilité de changer le background
 -BONUS : Lors d'une demande, les admins et respos matériels reçoivent un mail. (Dur à faire ?)
 
 -RAPPORT
 
-
+-BONUS : faire un effet stylé sur le leaderboard d'un binet en JS.
 
 
 

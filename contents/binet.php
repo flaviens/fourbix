@@ -15,6 +15,59 @@ function printHeaderPage($binet){ //TODO : rajouter l'image du binet ?
 CHAINE_DE_FIN;
 }
 
+function genereLeaderBoard($dbh, $binet){
+    echo <<< CHAINE_DE_FIN
+    <div class="container">
+        <div class="panel panel-info toBeClicked">
+            <div class="panel-heading isClickable center"><span class="glyphicon glyphicon-home"></span> Leaderboard</div>
+            <div class="panel-body toBeToggled">
+    
+    
+CHAINE_DE_FIN;
+    
+    genereRolesLeaderboard($dbh, $binet);
+    
+    
+    echo <<< CHAINE_DE_FIN
+    </div></div></div>
+CHAINE_DE_FIN;
+}
+
+function genereRolesLeaderboard($dbh, $binet){
+    $query="SELECT * FROM `role`;";
+    $sth=$dbh->prepare($query);
+    $sth->execute();
+    $rolesToBePrinted=array("admin" => "Administrateurs", "matosManager" => "Respo Matériel", "membre" => "Membres");
+    $userQueue="''";
+    while($roles=$sth->fetch()){
+        $role= htmlspecialchars($roles['nom']);
+        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN ($userQueue) GROUP BY `utilisateur`;";
+        $sth2=$dbh->prepare($query);
+        $sth2->execute(array(htmlspecialchars($binet), $role));
+        $roleToBePrinted=$rolesToBePrinted[$role];
+        
+        echo <<< CHAINE_DE_FIN
+        <div class="panel panel-info">
+            <div class="panel-heading center"><h3>$roleToBePrinted</h3></div>
+            <div class="panel-body">
+CHAINE_DE_FIN;
+        while ($user=$sth2->fetch()){
+            $login= htmlspecialchars($user['utilisateur']);
+            $userQueue=$userQueue.", '$login'";
+            $query="SELECT `nom`, `prenom` FROM `utilisateurs` WHERE `login`=?";
+            $sth3=$dbh->prepare($query);
+            $sth3->execute(array($login));
+            $resultat=$sth3->fetch();
+            $nom=$resultat['nom'];
+            $prenom=$resultat['prenom'];
+            echo <<< CHAINE_DE_FIN
+            <span class="glyphicon glyphicon-asterisk"></span> $prenom $nom (<span style="font-style:italic">$login</span>)<br/>
+CHAINE_DE_FIN;
+        }
+        echo "</div></div>";
+    }
+}
+
 function genereRolesChoices($dbh){
     $sth=$dbh->prepare("SELECT `nom` FROM `role`");
     $sth->execute();
@@ -42,8 +95,7 @@ function genereTableDelete($dbh, $binet){
                     $nomRole
                 </td>
                 <td>
-                    <form action=index.php?page=binet method=post>
-                    <input type="hidden" name="pageBinet" value="$binet">
+                    <form action="index.php?page=binet&pageBinet=$binet" method=post>
                     <input type="hidden" name="loginRoleBinetDelete" value="$nomUtilisateur">
                     <input type="hidden" name="roleDelete" value="$nomRole">
                     <button type=submit class="btn btn-danger toBeWarnedDelete" style="text-align:center" onclick="return confirm('Confirmer la suppression.');"><span class="glyphicon glyphicon-remove"></span></button>
@@ -60,19 +112,18 @@ else $loginRole="''";
 
     echo <<< CHAINE_DE_FIN
     <div class="container">
-<div class="panel panel-warning">
-            <div class="panel-heading toBeClicked0 isClickable" style="text-align:center">Administration des rôles</div>
-            <div class="panel-body toBeToggled0">
+<div class="panel panel-warning toBeClicked">
+            <div class="panel-heading isClickable" style="text-align:center">Administration des rôles</div>
+            <div class="panel-body toBeToggled">
     <div class='row '>
         <div class='col-md-6 gris'>
             <div class="panel panel-success">
             <div class="panel-heading center">Ajouter un rôle</div>
             <div class="panel-body">
-                <form action=index.php?page=binet method=post>
+                <form action="index.php?page=binet&pageBinet=$binet" method=post>
  <p>
   <label for="loginRole">login : </label>
   <input class="form-control" id="loginRole" type=text name=loginRoleBinetAdd value=$loginRole required>
-    <input type="hidden" name="pageBinet" value="$binet">
  </p>
 
  <p>
@@ -390,9 +441,9 @@ CHAINE_DE_FIN;
 function printGestionItemsForm($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class="container">
-<div class="panel panel-warning">
-            <div class="panel-heading toBeClicked1 isClickable center">Gestion de l'inventaire</div>
-            <div class="panel-body toBeToggled1">
+<div class="panel panel-warning toBeClicked ">
+            <div class="panel-heading isClickable center">Gestion de l'inventaire</div>
+            <div class="panel-body toBeToggled">
     <div class='row'>
 CHAINE_DE_FIN;
     
@@ -434,9 +485,9 @@ function addItem($dbh, $nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, 
 function printGestionDemandes($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class="container">
-    <div class="panel panel-warning">
-            <div class="panel-heading toBeClicked2 isClickable center"  >Gestion des demandes et des prêts.</div>
-            <div class="panel-body panel-collapse collapse toBeToggled2">
+    <div class="panel panel-warning toBeClicked">
+            <div class="panel-heading isClickable center"  >Gestion des demandes et des prêts.</div>
+            <div class="panel-body panel-collapse collapse toBeToggled">
     <div class='row'>
 CHAINE_DE_FIN;
     
@@ -516,11 +567,12 @@ CHAINE_DE_FIN;
 }
 
 function acceptDemandeEnCours($dbh, $demandeID){
-    $query="SELECT `caution` FROM `items` WHERE `id` IN (SELECT `item` FROM `demandes` WHERE `id`=?);";
+    $query="SELECT `caution`, `quantite` FROM `items` WHERE `id` IN (SELECT `item` FROM `demandes` WHERE `id`=?);";
     $sth=$dbh->prepare($query);
     $sth->execute(array($demandeID));
-    $caution=$sth->fetch();
-    $valeurCaution= htmlspecialchars($caution['caution']);
+    $item=$sth->fetch();
+    $valeurCaution= htmlspecialchars($item['caution']);
+    $quantite=htmlspecialchars($item['quantite']);
     $query="INSERT INTO `cautions` (`id`, `valeur`, `encaisse`, `date_encaissement`) VALUES (NULL, ?, '0', NULL);";
     $sth=$dbh->prepare($query);
     $sth->execute(array($valeurCaution));
@@ -537,6 +589,13 @@ function acceptDemandeEnCours($dbh, $demandeID){
     $query="INSERT INTO `pretoperation` (`id`, `debut`, `date_rendu`, `deadline`, `quantite_pret`, `caution`, `demande`) VALUES (NULL, ?, NULL, ?, ?, ?, ?)";
     $sth=$dbh->prepare($query);
     $sth->execute(array($today, $dateFin ,$quantite_pret, $idCaution, $demandeID));
+    
+    $query="UPDATE `items` SET `quantite`=? WHERE `id` IN (SELECT `item` FROM `demandes` WHERE `id`=?);";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($quantite-$quantite_pret,htmlspecialchars($demandeID)));
+    if ($quantite-$quantite_pret<=0){
+        echo "<div class='container'><span class='enregistrement-invalide'>Attention : rupture de stock.</span></div><br/>";
+    }
     
     $query="UPDATE `demandes` SET `isAccepted` = '1' WHERE `demandes`.`id` = ?;";
     $sth=$dbh->prepare($query);
@@ -651,6 +710,22 @@ CHAINE_DE_FIN;
 }
 
 function archivePret($dbh, $pretID){
+    $query="SELECT `quantite` FROM `items` WHERE `id` IN (SELECT `item` FROM `demandes` WHERE `id` IN (SELECT `demande` FROM `pretoperation` WHERE `id`=?));";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($pretID));
+    $item=$sth->fetch();
+    $quantite=htmlspecialchars($item['quantite']);
+    
+    $query="SELECT `quantite_pret` FROM `pretoperation` WHERE `id`=?;";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($pretID));
+    $pret=$sth->fetch();
+    $quantite_pret=htmlspecialchars($pret['quantite_pret']);
+    
+    $query="UPDATE `items` SET `quantite`=? WHERE `id` IN (SELECT `item` FROM `demandes` WHERE `id` IN (SELECT `demande` FROM `pretoperation` WHERE `id`=?));";
+    $sth=$dbh->prepare($query);
+    $sth->execute(array($quantite+$quantite_pret,htmlspecialchars($pretID)));
+    
     $today=date("Y-m-d");
     $query="UPDATE `pretoperation` SET `date_rendu` = ? WHERE `pretoperation`.`id` = ?;";
     $sth=$dbh->prepare($query);
@@ -698,6 +773,7 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
                 echo "<div class='container'><span class='enregistrement-invalide'>Erreur.</span></div><br/>";
             }
         }
+        genereLeaderBoard($dbh, $binet);
         printAdministration($dbh, $binet);
     } elseif (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] && Utilisateur::isMatosManager($dbh, $_SESSION["login"], $binet)) {
         $role="matosManager";

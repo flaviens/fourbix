@@ -5,7 +5,7 @@ function printLoginForm($askedPage){
     if (isset($_POST["login"])){
         $login=$_POST["login"];
         if (!$validLogin)
-            echo "<div class='container'><span class='enregistrement-invalide'>Login invalide : login ou mot de passe incorrects</span></div><br/>";
+            echo "<div class='container'><span class='enregistrement-invalide'>Connexion impossible : login ou mot de passe incorrects</span></div><br/>";
     }
     else
         $login="''";

@@ -7,14 +7,14 @@
             <file>file:/opt/lampp/htdocs/fourbix/contents/administration.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/css/style.css</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/catalogue.php</file>
-            <file>file:/opt/lampp/htdocs/fourbix/class/Item.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/demandes.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/item.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/stock.php</file>
+            <file>file:/opt/lampp/htdocs/fourbix/class/Utilisateur.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/accueil.php</file>
+            <file>file:/opt/lampp/htdocs/fourbix/contents/utilisateur.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/forms/utils.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/class/Binet.php</file>
-            <file>file:/opt/lampp/htdocs/fourbix/contents/search.php</file>
             <file>file:/opt/lampp/htdocs/fourbix/contents/binet.php</file>
         </group>
     </open-files>

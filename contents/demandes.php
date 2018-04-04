@@ -22,9 +22,10 @@ CHAINE_DE_FIN;
 }
 
 function genereDemandesEnCours($dbh, $login){
-    $query="SELECT `id`, `item`, `binet`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `utilisateur`=? AND `isAccepted`=0";
+    $today=date("Y-m-d");
+    $query="SELECT `id`, `item`, `binet`, `quantite`, `debut`, `fin`, `binet_emprunteur` FROM  `demandes` WHERE `utilisateur`=? AND `isAccepted`=0 AND `fin`>?";
     $sth=$dbh->prepare($query);
-    $sth->execute(array($login));
+    $sth->execute(array($login, $today));
     $demandes=array();
     while ($demande=$sth->fetch()){
         array_push($demandes, $demande);

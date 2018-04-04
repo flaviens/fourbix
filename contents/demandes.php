@@ -40,7 +40,7 @@ function genereDemandesEnCours($dbh, $login){
         $demandeID=$demande['id']; 
         $imageItem = htmlspecialchars($item['image']);
         echo <<< CHAINE_DE_FIN
-        <li class='list-group-item'><div class='media'><div class='media-left media-middle' style="text-align: center;">
+        <li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>
         <img src="images/items/$imageItem" class="image-item-Manager"/><br/>
         <form action=index.php?page=demandes method=post>
             <input type='hidden' name='demandeID' value='$demandeID'>
@@ -53,11 +53,11 @@ CHAINE_DE_FIN;
         echo '<h4>' . htmlspecialchars($nomItem) . '</h4>';
         echo '<label>Quantité :</label> ' . htmlspecialchars($demande['quantite']);
         echo "<br/><label>Binet :</label> <a href='index.php?page=binet&pageBinet=$nomBinet'>" . htmlspecialchars($nomBinet) . "</a>";
-        if ($demande['binet_emprunteur']!=NULL){
-        echo '<br/><i>Au nom de <label>' . htmlspecialchars($demande['binet_emprunteur']) . '</label></i>';
-        } else{
+        if ($demande['binet_emprunteur']!=NULL)
+            echo '<br/><i>Au nom de <label>' . htmlspecialchars($demande['binet_emprunteur']) . '</label></i>';
+        else
             echo '<br/><i><label>Personnel</label></i>';
-        }
+
         if ($demande['debut']!=NULL){
             echo '<br/><label>Debut :</label> ';
             echo date_format(date_create(htmlspecialchars($demande['debut'])), 'd/m/Y');
@@ -85,29 +85,11 @@ function printPretsEnCours($dbh, $login){
     <div class='col-md-6'>
         <div class="panel panel-warning">
             <div class="panel-heading center">Prêts en cours</div>
-            <div class="panel-body center">
-                <table class="table table-striped table-bordered sortable">
-                <thead class="thead-dark">
-                    <th scope="col" >Objet</th>
-                    <th scope="col" >Quantité</th>
-                    <th scope="col" >Binet de prêt</th>
-                    <th scope="col" >Au nom de</th>
-                    <th scope="col" >Deadline</th>
-                </thead>
-                <tbody>
+            <ul class="list-group">
 CHAINE_DE_FIN;
      
     generePretsEnCours($dbh, $login);
-     
-     echo <<< CHAINE_DE_FIN
-        
-        </tbody>
-    </table>
-    
-CHAINE_DE_FIN;
-    
-
-    echo '</div></div></div>';
+    echo '</div></div>';
 }
 
 function generePretsEnCours($dbh, $login){
@@ -124,31 +106,28 @@ function generePretsEnCours($dbh, $login){
         $sth=$dbh->prepare($query);
         $sth->execute(array($pret['demande']));
         $demande=$sth->fetch();
-        $query="SELECT `nom` FROM `items` WHERE `id`=?";   
+        $query="SELECT `nom`, image FROM `items` WHERE `id`=?";   
         $sth=$dbh->prepare($query);
         $sth->execute(array($demande['item']));
-        $nomItem=$sth->fetch();
+        $item=$sth->fetch();
+        $imageItem = $item['image'];
         $nomBinet=$demande['binet'];
-        echo "<tr><th>";
-        echo htmlspecialchars($nomItem['nom']);
-        echo"</th><td>";
-        echo htmlspecialchars($pret['quantite_pret']);
-        echo "</td><td><a href='index.php?page=binet&pageBinet=$nomBinet'>";
-        echo htmlspecialchars($nomBinet);
-        echo "</a></td><td>";
-        if ($demande['binet_emprunteur']!=NULL){
-        echo htmlspecialchars($demande['binet_emprunteur']);
-        } else{
-            echo 'Personnel';
-        }
+        echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>";
+        echo "<img src='images/items/$imageItem' class='image-item-Manager'/></div><div class='media-body'>";
+        echo '<h4>' . htmlspecialchars($item['nom']) . '</h4>';
+        echo '<label>Quantité :</label> ' . htmlspecialchars($pret['quantite_pret']);
+        echo "<br/><label>Binet :</label> <a href='index.php?page=binet&pageBinet=$nomBinet'>" . htmlspecialchars($nomBinet) . "</a>";
+        if ($demande['binet_emprunteur']!=NULL)
+            echo '<br/><i>Au nom de <label>' . htmlspecialchars($demande['binet_emprunteur']) . '</label></i>';
+        else
+            echo '<br/><i><label>Personnel</label></i>';
         
         echo "</td><td>";
         if ($pret['deadline']!=NULL){
-            echo htmlspecialchars($pret['deadline']);
+            echo '<br/><label>Deadline :</label> ' . date_format(date_create(htmlspecialchars($pret['deadline'])), 'd/m/Y');
         } else{
-            echo 'Sans contrainte';
+            echo '<br/><label>Sans contrainte</label>';
         }
-        echo '</td></tr>';
     }
 }
 

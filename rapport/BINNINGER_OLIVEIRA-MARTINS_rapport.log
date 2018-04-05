@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.1)  5 APR 2018 02:12
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.1)  5 APR 2018 04:30
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1436,16 +1436,17 @@ Underfull \hbox (badness 10000) in paragraph at lines 131--132
 
  []
 
-File: polytechnique-logohori.pdf Graphic file (type pdf)
-<use polytechnique-logohori.pdf>
-Package pdftex.def Info: polytechnique-logohori.pdf used on input line 133.
-(pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
- [3 <./js-jquery.png>]
-<BDD_FourbiX.png, id=219, 1545.775pt x 873.2625pt>
+<BDD_FourbiX.png, id=207, 1545.775pt x 873.2625pt>
 File: BDD_FourbiX.png Graphic file (type png)
  <use BDD_FourbiX.png>
 Package pdftex.def Info: BDD_FourbiX.png used on input line 134.
 (pdftex.def)             Requested size: 463.73608pt x 261.98076pt.
+File: polytechnique-logohori.pdf Graphic file (type pdf)
+
+<use polytechnique-logohori.pdf>
+Package pdftex.def Info: polytechnique-logohori.pdf used on input line 135.
+(pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
+ [3 <./js-jquery.png>]
 File: polytechnique-filetcourtbleuclair.pdf Graphic file (type pdf)
 
 <use polytechnique-filetcourtbleuclair.pdf>
@@ -1526,7 +1527,7 @@ s/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb><
 /public/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/pu
 blic/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on BINNINGER_OLIVEIRA-MARTINS_rapport.pdf (7 pages, 2021235 byte
+Output written on BINNINGER_OLIVEIRA-MARTINS_rapport.pdf (7 pages, 2021227 byte
 s).
 PDF statistics:
  335 PDF objects out of 1000 (max. 8388607)

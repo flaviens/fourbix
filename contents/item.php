@@ -1,6 +1,6 @@
 <div class="container">
     <div class="jumbotron">
-        <img src='images/logo/item-logo.png' alt='item-logo.png' class='pageLogo'>
+        <img >='images/logo/item-logo.png' alt='item-logo.png' class='pageLogo'>
         <h1>Inventaire</h1>
         <p>Informations sur les items des binets.</p>
     </div>
@@ -27,7 +27,7 @@ if (isset($_GET['id']) and ctype_digit($_GET['id'])){
 			<p><b>Caution : </b><?php echo htmlspecialchars($item->caution) ?> &euro;</p>
 		</div>
 		<div class="col-md-4">
-			<img src=<?php echo "'images/items/{$item->image}'"; ?> class="image-item-item">
+			<img src=<?php echo "\"images/items/{$item->image}\" alt=\"images/items/{$item->image}\""; ?> class="image-item-Manager">
 		</div>
 	</div>
 </div>

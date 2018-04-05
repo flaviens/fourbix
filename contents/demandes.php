@@ -42,8 +42,8 @@ function genereDemandesEnCours($dbh, $login){
         $imageItem = htmlspecialchars($item['image']);
         echo <<< CHAINE_DE_FIN
         <li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>
-        <img src="images/items/$imageItem" class="image-item-Manager"/><br/>
-        <form action=index.php?page=demandes method=post>
+        <img src="images/items/$imageItem" alt="images/items/$imageItem"  class="image-item-Manager"/><br/>
+        <form action="index.php?page=demandes" method=post>
             <input type='hidden' name='demandeID' value='$demandeID'>
             <input type='hidden' name='toDelete' value='true'>
             <button type=submit class="btn btn-danger toBeWarnedDelete" onclick="return confirm('Confirmer la suppression.');"><span class="glyphicon glyphicon-trash"></span></button>
@@ -114,7 +114,7 @@ function generePretsEnCours($dbh, $login){
         $imageItem = $item['image'];
         $nomBinet=$demande['binet'];
         echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>";
-        echo "<img src='images/items/$imageItem' class='image-item-Manager'/></div><div class='media-body'>";
+        echo "<img src=\"images/items/$imageItem\" alt=\"images/items/$imageItem\" class='image-item-Manager'/></div><div class='media-body'>";
         echo '<h4>' . htmlspecialchars($item['nom']) . '</h4>';
         echo '<label>Quantité :</label> ' . htmlspecialchars($pret['quantite_pret']);
         echo "<br/><label>Binet :</label> <a href='index.php?page=binet&pageBinet=$nomBinet'>" . htmlspecialchars($nomBinet) . "</a>";
@@ -145,7 +145,7 @@ CHAINE_DE_FIN;
     
     
 
-    echo '</div></div></div>';
+    echo '</div></div>';
 }
 
 if (isset($_SESSION['login'])){

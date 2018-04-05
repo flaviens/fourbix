@@ -20,7 +20,7 @@ function printRechercheForm(){
             <div class="panel-body">
         <form class="form-inline" method="get" id="rechercheBinetsCatalogue">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="searchBinets">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="page" value="catalogue"><span class="glyphicon glyphicon-search"></span></button></li>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" name="page" value="catalogue"><span class="glyphicon glyphicon-search"></span></button>
         </form>
     </div>
     </div>
@@ -45,17 +45,17 @@ function printBinets($dbh, $binet, $indexCarousel){
    $imageBinet=$imageBinet["image"];
    
    echo <<< CHAINE_DE_FIN
-   <tr><th scope='row' height=400>
-   <span style="text-align:center">$binet->nom </span> <br/> <img src='images/binets/$imageBinet' alt='$imageBinet' class='image-binet-catalogue' />
+   <tr><td scope='row' style="height:400px">
+   <span class="center">$binet->nom </span> <br/> <img src='images/binets/$imageBinet' alt='$imageBinet' class='image-binet-catalogue' />
            <form action=index.php method=get>
            <p>
            <input type="hidden" name="page" value="binet">
            <input type="hidden" name="pageBinet" value="$binet->nom"></p>
-           <p style="text-align:center">
+           <p class="center">
            <input type=submit class="btn btn-primary" value="Voir la page">
            </p>
            </form>
-   </th>      
+   </td>      
 CHAINE_DE_FIN;
    echo "<td>";
    $items = Item::getItemsFromBinetsWithImage($dbh, $binet->nom);
@@ -126,7 +126,8 @@ CHAINE_DE_FIN;
     <span class="sr-only">Next</span>
   </a>
 </div>
-   </td>
+</div>
+   
 CHAINE_DE_FIN;
    
 }
@@ -141,7 +142,7 @@ function printAllBinets($dbh, $binets){
             <div class="panel-body">
     <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
         <thead class="thead-dark" style="texte-align:center">
-            <th scope="col" width=170px>Binet</th>
+            <th scope="col" style="width:170px">Binet</th>
             <th scope="col">Ce qu'on propose</th>
         </thead>
         <tbody>

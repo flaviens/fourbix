@@ -7,7 +7,7 @@ function printHeaderPage($binet, $image){ //TODO : rajouter l'image du binet ?
     echo <<< CHAINE_DE_FIN
     <div class="container">
     <div class="jumbotron">
-            <img src='images/binets/$image' alt='$image' class='pageLogo'>
+            <img src="images/binets/$image" alt=\"$image\" class='pageLogo'>
             <h1>$binet</h1>
         <p>Consultez ici ce que ce binet souhaite vous proposer.</p>
     </div>
@@ -39,9 +39,9 @@ function genereRolesLeaderboard($dbh, $binet){
     $userQueue="''";
     while($roles=$sth->fetch()){
         $role= htmlspecialchars($roles['nom']);
-        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN (?) GROUP BY `utilisateur`;";
+        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN ($userQueue) GROUP BY `utilisateur`;";
         $sth2=$dbh->prepare($query);
-        $sth2->execute(array(htmlspecialchars($binet), $role, $userQueue));
+        $sth2->execute(array(htmlspecialchars($binet), $role));
         $roleToBePrinted=$rolesToBePrinted[$role];
         
         echo <<< CHAINE_DE_FIN
@@ -190,7 +190,7 @@ function printItemsUser($dbh, $binet){
         if($item->offre){
             $nothingToShow = false;
             echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>";
-            echo "<a href='index.php?page=item&id={$item->id}'><img src='images/items/" . htmlspecialchars($item->image) . "' class='image-item-Manager'/></a><br/>";
+            echo "<a href='index.php?page=item&id={$item->id}'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" class='image-item-Manager'/></a><br/>";
             echo "</div><div class='media-body'>";
             echo "<h4 class='media-heading'><a href='index.php?page=item&id={$item->id}'>" . htmlspecialchars($item->nom) . "</a></h4>";
             echo "<div class='container-fluid'><div class='row'>";
@@ -221,7 +221,7 @@ function printItemsManager($dbh, $binet){
     foreach ($items as $item) {
         $nothingToShow = false;
         echo "<li class='list-group-item'><div class='media'>";
-        echo "<div class='media-left media-middle' style='text-align: center;'><img src='images/items/" . htmlspecialchars($item->image) . "' class='image-item-Manager'/>";
+        echo "<div class='media-left media-middle' style='text-align: center;'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" class='image-item-Manager'/>";
         echo "<a href='index.php?page=item&id={$item->id}' class='btn btn-primary' style='margin:5px'><span class='glyphicon glyphicon-book'></span> Voir la page</a><br/>";
         echo "<form action='index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "' method='post'>";
         echo "<button type='submit' class='btn btn-danger' name='itemDeleteID' value='{$item->id}'><span class='glyphicon glyphicon-trash'></span> Supprimer</button></form>";
@@ -311,14 +311,14 @@ CHAINE_DE_FIN;
         echo "</td><td>";
         echo htmlspecialchars($resultat->type);
         echo "</td><td>";
-            echo "<img src=images/items/";
+            echo "<img src=\"images/items/";
             echo htmlspecialchars($resultat->image);
-            echo " alt='";
+            echo "\" alt=\"";
             echo htmlspecialchars($resultat->image);
             if ($isManager){
-                echo "' class='image-item-Manager'/>";
+                echo "\" class='image-item-Manager'/>";
             }else{
-                echo "' class='image-item-search'/>";
+                echo "\" class='image-item-search'/>";
             }
         echo "</td><td class='description-search'>";
         if ($isManager){
@@ -913,14 +913,15 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
         }
         
         if (isset($error_file)){
-           echo "<div><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
+            $imageItem="default-itemlogo.png";
+            echo "<div><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
         } else{
             $dateToInsert=date('YmdHis');
-            $adresse_image="images/items/image".$nomItem.$dateToInsert.".png";
+            $adresse_image="images/items/image-".htmlspecialchars($nomItem).$dateToInsert.".png";
             $resultat = move_uploaded_file($_FILES['imageItem']['tmp_name'], $adresse_image);
             if ($resultat){
                echo "<p class='enregistrement-valide'>L'image a bien été téléversée !</p>";
-                $imageItem="image".$nomItem.$dateToInsert.".png";
+                $imageItem="image-".htmlspecialchars($nomItem).$dateToInsert.".png";
             } else{
                  $imageItem="default-itemlogo.png";
                   echo "<p class='enregistrement-invalide'>BUG : l'image n'a pas pu être téléversée !</p>";

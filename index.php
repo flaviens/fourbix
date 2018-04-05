@@ -9,14 +9,14 @@ if (!isset($_SESSION['initiated'])) {
 // Décommenter la ligne suivante pour afficher le tableau $_SESSION pour le debuggage
 //var_dump($_SESSION);
 
-require("forms/utils.php");
-require("forms/printForms.php");
+require("utilities/utils.php");
+require("utilities/printForms.php");
 require("database/database.php");
 require("class/Utilisateur.php");
 require("class/Item.php");
 require("class/Binet.php");
 require("class/Stock.php");
-require("forms/logInOut.php");
+require("utilities/logInOut.php");
 
 $askedPage = isset($_GET['page']) ? $_GET['page'] : 'accueil';
 $authorized = checkPage($askedPage, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);

@@ -1,4 +1,6 @@
 
+-TODO : footer
+
 -page de binet : modifier la disposition des colonnes
 
 
@@ -6,14 +8,14 @@
 
 
 
-
-
-
-
-
 -BONUS : suggestions pour un binet
+
+
 -BONUS : possibilité de changer le background
+
+
 -BONUS : Lors d'une demande, les admins et respos matériels reçoivent un mail. (Dur à faire ?)
+
 
 -TODO : changer la manière dont les images des items sont stockées.
 -TODO : Remplissage BDD !!!

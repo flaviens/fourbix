@@ -41,9 +41,9 @@ function genereRolesLeaderboard($dbh, $binet){
     $userQueue="''";
     while($roles=$sth->fetch()){
         $role= htmlspecialchars($roles['nom']);
-        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN ($userQueue) GROUP BY `utilisateur`;";
+        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN (?) GROUP BY `utilisateur`;";
         $sth2=$dbh->prepare($query);
-        $sth2->execute(array(htmlspecialchars($binet), $role));
+        $sth2->execute(array(htmlspecialchars($binet), $role, $userQueue));
         $roleToBePrinted=$rolesToBePrinted[$role];
         
         echo <<< CHAINE_DE_FIN
@@ -752,6 +752,7 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
     printHeaderPage($binet, Binet::getImageBinet($dbh, $binet));
     //Si la page s'affiche, on sait par la condition dans index.php que $_SESSION[loggedIn] est actif et que l'utilisateur a un login.
     $role; //rôle du visiteur pour ce binet.
+    $isManager=false;
     if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] && (Utilisateur::isAdminBinet($dbh, $_SESSION["login"], $binet) || Utilisateur::isAdmin($dbh, $_SESSION["login"]))){
         $role="admin";
         $isManager=true;
@@ -772,7 +773,9 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
                 echo "<div class='container'><span class='enregistrement-invalide'>Erreur.</span></div><br/>";
             }
         }
-        genereLeaderBoard($dbh, $binet);
+    }
+    genereLeaderBoard($dbh, $binet);
+    if ($isManager){
         printAdministration($dbh, $binet);
     } elseif (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] && Utilisateur::isMatosManager($dbh, $_SESSION["login"], $binet)) {
         $role="matosManager";

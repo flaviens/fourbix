@@ -68,35 +68,35 @@ echo <<< CHAINE_DE_FIN
                 <form action=index.php?page=administration method=post oninput="up2.setCustomValidity(up2.value != up.value ? 'Les mots de passe diffèrent.' : '')">
 <p>
   <label for="login">Login : </label>
-  <input id="login" type=text value=$login name=login required>
+  <input class="form-control" id="login" type=text value=$login name=login required>
  </p>
 <p>
   <label for="nom">Nom : </label>
-  <input id="nom" type=text value=$nom required name=nom>
+  <input class="form-control" id="nom" type=text value=$nom required name=nom>
  </p>
 <p>
   <label for="prenom">Prénom : </label>
-  <input id="prenom" type=text value=$prenom required name=prenom>
+  <input class="form-control" id="prenom" type=text value=$prenom required name=prenom>
  </p>
 <p>
   <label for="mail">Adresse mail : </label>
-  <input id="mail" type=email required value=$email name=email>
+  <input class="form-control" id="mail" type=email required value=$email name=email>
 </p>
 <p>
   <label for="formation">Formation : </label>
-  <input id="formation" type=text required value=$formation name=formation>
+  <input class="form-control" id="formation" type=text required value=$formation name=formation>
 </p>
 <p>
   <label for="naissance">Date de naissance : </label>
-  <input id="naissance" type=date value=$naissance name=naissance>
+  <input class="form-control" id="naissance" type=date value=$naissance name=naissance>
 </p>
  <p>
   <label for="password1">Password : </label>
-  <input id="password1" type=password required name=up>
+  <input class="form-control" id="password1" type=password required name=up>
  </p>
  <p>
   <label for="password2">Confirm password : </label>
-  <input id="password2" type=password name=up2>
+  <input class="form-control" id="password2" type=password name=up2>
  </p>
   <button type=submit class="btn btn-primary" ><span class="glyphicon glyphicon-plus-sign"></span> Créer l'utilisateur</button>
 </form>
@@ -176,12 +176,12 @@ echo <<< CHAINE_DE_FIN
                 <form action=index.php?page=administration method=post enctype='multipart/form-data'>
  <p>
   <label for="binet">Binet :</label>
-  <input id="binet" type=text name=binet required>
+  <input class="form-control" id="binet" type=text name=binet required>
  </p>
     <input type="hidden" name="MAX_FILE_SIZE" value="1048576" />
  <p>
    <label for="image"> Image : (1 Mo max | format jpeg, jpg, gif ou png)</label>
-   <input id="image" type=file name=image>
+   <input class="form-control" id="image" type=file name=image>
  </p>
  <button type=submit class="btn btn-warning"> <span class="glyphicon glyphicon-plus-sign"></span> Ajouter le Binet</button>
  </form>
@@ -282,7 +282,7 @@ echo <<< CHAINE_DE_FIN
                 <form action=index.php?page=administration method=post>
  <p>
   <label for="loginRole">login : </label>
-  <input id="loginRole" type=text name=loginRole value=$loginRole required>
+  <input class="form-control" id="loginRole" type=text name=loginRole value=$loginRole required>
  </p>
  <p>
   <label for="binetRole">Binet : </label>

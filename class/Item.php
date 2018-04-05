@@ -79,6 +79,7 @@ class Item{
             $items[$i] = clone $item;
             $i++;
         }
+        $sth->closeCursor();
         return $items;
     }
 

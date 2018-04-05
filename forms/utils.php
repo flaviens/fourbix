@@ -96,6 +96,9 @@ CHAINE_DE_FIN;
                         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Cherchez un item" aria-label="Search">
                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit" value="search" name="page"><span class="glyphicon glyphicon-search"></span></button>
                     </form></li>
+CHAINE_DE_FIN;
+        if (sizeof($binets) != 0){
+                    echo <<< CHAINE_DE_FIN
                     <li class='dropdown'><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mes binets<span class="caret"></span></a>
                         <ul class="dropdown-menu">
                         
@@ -120,8 +123,10 @@ CHAINE_DE_FIN;
             echo <<< CHAINE_DE_FIN
                         </ul>
                     </li>
-                    <li><a href="index.php?page=demandes">Demandes</a></li>
 CHAINE_DE_FIN;
+        }
+                echo '<li><a href="index.php?page=demandes">Demandes</a></li>';
+
 
             if ($isAdmin){
                 echo <<< CHAINE_DE_FIN

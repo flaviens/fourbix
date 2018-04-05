@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost
--- Généré le :  jeu. 05 avr. 2018 à 04:13
+-- Généré le :  jeu. 05 avr. 2018 à 05:39
 -- Version du serveur :  10.1.26-MariaDB
 -- Version de PHP :  7.1.9
 
@@ -123,6 +123,13 @@ CREATE TABLE `demandes` (
   `isAccepted` tinyint(4) NOT NULL DEFAULT '0' COMMENT 'Vaut true si la demande a ete acceptee'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Déchargement des données de la table `demandes`
+--
+
+INSERT INTO `demandes` (`id`, `utilisateur`, `item`, `binet`, `quantite`, `commentaire`, `debut`, `fin`, `binet_emprunteur`, `isAccepted`) VALUES
+(4, 'dominique', 28, 'Binet Reseau', 1, 'J\'en ai besoin pour mes élèves !', '2018-04-07', '2018-04-13', 'Binet des profs', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -210,7 +217,6 @@ INSERT INTO `membres` (`id`, `utilisateur`, `binet`, `role`) VALUES
 (16, 'Burrakauchy', 'Binet Reseau', 'matosManager'),
 (17, 'Burrakauchy', 'Binet Reseau', 'membre'),
 (20, 'Burrakauchy', 'Binet Reseau', 'admin'),
-(24, 'olivier', 'Binet Reseau', 'matosManager'),
 (25, 'dominique', 'Binet Reseau', 'matosManager'),
 (29, 'Burrakauchy', 'Binet Philosophie', 'admin'),
 (30, 'Burrakauchy', 'Binet Philosophie', 'matosManager'),
@@ -246,7 +252,10 @@ INSERT INTO `membres` (`id`, `utilisateur`, `binet`, `role`) VALUES
 (60, 'Sacha', 'Styx', 'matosManager'),
 (61, 'Maxou', 'ADO', 'matosManager'),
 (62, 'Maxou', 'JTX', 'admin'),
-(63, 'Maxou', 'X-Broadway', 'membre');
+(63, 'Maxou', 'X-Broadway', 'membre'),
+(64, 'gabriel', 'Administrateurs', 'admin'),
+(65, 'dominique', 'Binet des profs', 'admin'),
+(67, 'olivier', 'Binet des profs', 'matosManager');
 
 -- --------------------------------------------------------
 
@@ -459,7 +468,7 @@ ALTER TABLE `cautions`
 -- AUTO_INCREMENT pour la table `demandes`
 --
 ALTER TABLE `demandes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pour la table `items`
@@ -471,7 +480,7 @@ ALTER TABLE `items`
 -- AUTO_INCREMENT pour la table `membres`
 --
 ALTER TABLE `membres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=64;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT pour la table `pretoperation`

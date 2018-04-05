@@ -79,6 +79,7 @@ footer{
 }
 
 .image-item-Manager{
+    width:100%;
     max-height:150px;
     max-width:150px;
 }

@@ -703,11 +703,11 @@ function printPretsEnCours($dbh, $binet){
             <div class="panel-heading center"><span class="glyphicon glyphicon-calendar"></span> Prêts en cours </div>
             <div class="panel-body panel-collapse">
     <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
-            <thead class="thead-dark">
+            <tr class="thead-dark">
             <th scope="col" >Informations</th>
             <th scope="col" class="redCell">Deadline</th>
             <th scope="col" >Rendu ?</th>
-                </thead>
+                </tr>
                 <tbody>    
 CHAINE_DE_FIN;
     

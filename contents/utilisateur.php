@@ -161,7 +161,7 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 					<span class="glyphicon glyphicon-lock"></span> Modifier votre mot de passe
 				</div>
 				<div class="panel-body panel-collapse collapse" id="mdp-form">
-					<form action="index.php?page=utilisateur" method="POST" oninput=class="form-control" "password2.setCustomValidity(password2.value != password1.value ? 'Les mots de passe différent.' : '')">
+					<form action="index.php?page=utilisateur" method="POST" oninput="password2.setCustomValidity(password2.value != password1.value ? 'Les mots de passe différent.' : '')">
 						<p>
 							<label for="password">Mot de passe actuel : </label><br/>
 							<input class="form-control" type="password" id="password" name="password" required>
@@ -219,7 +219,7 @@ if (isset($_POST['updateUser']) && $_POST['updateUser'] &&
 	<div class="row">
 		<div class="col-md-2 col-md-offset-5" style="text-align:center">
 			<form method='post' action='index.php?page=utilisateur'>
-				<button type='submit' class='btn btn-danger' name='suprimmerCompte' value='true' onclick='return confirm("Voulez-vous supprimer votre compte ?")';><span class='glyphicon glyphicon-remove-sign'></span> Supprimer compte</button>
+				<button type='submit' class='btn btn-danger' name='suprimmerCompte' value='true' onclick='return confirm("Voulez-vous supprimer votre compte ?");'><span class='glyphicon glyphicon-remove-sign'></span> Supprimer compte</button>
 			</form>
 		</div>
 		<br/><br/><br/>

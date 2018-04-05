@@ -65,7 +65,7 @@ echo <<< CHAINE_DE_FIN
             <div class="panel panel-primary">
             <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Ajouter un utilisateur</div>
             <div class="panel-body">
-                <form action=index.php?page=administration method=post oninput="up2.setCustomValidity(up2.value != up.value ? 'Les mots de passe diffèrent.' : '')">
+                <form action='index.php?page=administration' method='post' oninput="up2.setCustomValidity(up2.value != up.value ? 'Les mots de passe diffèrent.' : '')">
 <p>
   <label for="login">Login : </label>
   <input class="form-control" id="login" type=text value=$login name=login required>
@@ -174,7 +174,7 @@ echo <<< CHAINE_DE_FIN
             <div class="panel panel-warning">
             <div class="panel-heading"><span class="glyphicon glyphicon-bitcoin"></span> Ajouter un Binet</div>
             <div class="panel-body">
-                <form action=index.php?page=administration method=post enctype='multipart/form-data'>
+                <form action='index.php?page=administration' method='post' enctype='multipart/form-data'>
  <p>
   <label for="binet">Binet :</label>
   <input class="form-control" id="binet" type=text name=binet required>
@@ -206,7 +206,7 @@ echo <<< CHAINE_DE_FIN
     <div class="panel panel-danger">
             <div class="panel-heading"><span class="glyphicon glyphicon-bitcoin"></span> Supprimer un Binet</div>
             <div class="panel-body">
-                <form action=index.php?page=administration method=post>
+                <form action='index.php?page=administration' method='post'>
  <p>
   <label for="suppressionBinet">Binet : </label>
   <select id="suppressionBinet" name="suppressionBinet" class="form-control" required>
@@ -280,7 +280,7 @@ echo <<< CHAINE_DE_FIN
             <div class="panel panel-success">
             <div class="panel-heading"><span class="glyphicon glyphicon-registration-mark"></span> Ajouter un rôle</div>
             <div class="panel-body">
-                <form action=index.php?page=administration method=post>
+                <form action='index.php?page=administration' method='post'>
  <p>
   <label for="loginRole">login : </label>
   <input class="form-control" id="loginRole" type=text name=loginRole value=$loginRole required>
@@ -328,7 +328,7 @@ echo <<< CHAINE_DE_FIN
 <div class="panel panel-danger">
             <div class="panel-heading"><span class="glyphicon glyphicon-user"></span> Supprimer un utilisateur</div>
             <div class="panel-body">
-                <form action=index.php?page=administration method=post>
+                <form action='index.php?page=administration' method='post'>
  <p>
   <label for="loginDelete">login : </label>
   <input id="loginDelete" type=text name=loginDelete required>
@@ -350,7 +350,7 @@ function genereBugRapports($dbh){
         $idBug=htmlspecialchars($bugRapport['id']);
         echo <<< CHAINE_DE_FIN
         <th class="center">$user
-            <form action='index.php?page=administration' method=post>
+            <form action='index.php?page=administration' method='post'>
                 <br/><p style="text-align:center">
                 <input type='hidden' name='bugDeleteID' value='$idBug'>
                 <input type='hidden' name='toDeleteBug' value='true'>   
@@ -373,17 +373,19 @@ if (isset($_POST['toDeleteBug']) && $_POST['toDeleteBug'] && isset($_POST['bugDe
    }
 }
 
+
 echo <<< CHAINE_DE_FIN
+</div>
 <div class='row'>
     <div class='col-md-12'>
         <div class="panel panel-info">
             <div class="panel-heading center isClickable"  data-toggle="collapse" data-target="#bugRapports"><span class="glyphicon glyphicon-alert"></span> Rapports de bug</div>
             <div class="panel-body" id='bugRapports'>
                 <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
-                <thead class="thead-dark">
+                <tr class="thead-dark">
                 <th scope="col" style="width:20%">Utilisateur</th>
                 <th scope="col" >Rapport de bug</th>
-                </thead>
+                </tr>
                 <tbody>
 CHAINE_DE_FIN;
      
@@ -395,8 +397,9 @@ echo <<< CHAINE_DE_FIN
             </div>
         </div>
     </div>
-</div>
+</div></div>
 CHAINE_DE_FIN;
+
 
 } else{
     

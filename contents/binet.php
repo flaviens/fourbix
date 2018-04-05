@@ -3,11 +3,11 @@
 //TODO : rajouter une requête BDD pour connaître le rôle de la personne dans le binet.
 //Division en 3 : pas membre du binet, inventory manager ou Admin. Si Inventory manager, ajustage des quantités possible. Si Admin, panneau d'administration pour rajouter des personnes dans le binet comme Inventory Manager.
 
-function printHeaderPage($binet){ //TODO : rajouter l'image du binet ?
+function printHeaderPage($binet, $image){ //TODO : rajouter l'image du binet ?
     echo <<< CHAINE_DE_FIN
     <div class="container">
     <div class="jumbotron">
-            <img src='images/binets/$binet-logo.png' alt='$binet-logo.png' class='pageLogo'>
+            <img src='images/binets/$image' alt='$image' class='pageLogo'>
             <h1>$binet</h1>
         <p>Consultez ici ce que ce binet souhaite vous proposer.</p>
     </div>
@@ -39,14 +39,14 @@ function genereRolesLeaderboard($dbh, $binet){
     $userQueue="''";
     while($roles=$sth->fetch()){
         $role= htmlspecialchars($roles['nom']);
-        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN ($userQueue) GROUP BY `utilisateur`;";
+        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN (?) GROUP BY `utilisateur`;";
         $sth2=$dbh->prepare($query);
-        $sth2->execute(array(htmlspecialchars($binet), $role));
+        $sth2->execute(array(htmlspecialchars($binet), $role, $userQueue));
         $roleToBePrinted=$rolesToBePrinted[$role];
         
         echo <<< CHAINE_DE_FIN
         <div class="panel panel-info">
-            <div class="panel-heading center"><h3>$roleToBePrinted</h3></div>
+            <div class="panel-heading center roleLeaderboard"><h3>$roleToBePrinted</h3></div>
             <div class="panel-body">
 CHAINE_DE_FIN;
         while ($user=$sth2->fetch()){
@@ -111,12 +111,12 @@ else $loginRole="''";
     echo <<< CHAINE_DE_FIN
     <div class="container">
 <div class="panel panel-warning toBeClicked">
-            <div class="panel-heading isClickable" style="text-align:center">Administration des rôles</div>
+            <div class="panel-heading isClickable" style="text-align:center"><span class="glyphicon glyphicon-cog"></span> Administration des rôles</div>
             <div class="panel-body toBeToggled">
     <div class='row '>
         <div class='col-md-6 gris'>
             <div class="panel panel-success">
-            <div class="panel-heading center">Ajouter un rôle</div>
+            <div class="panel-heading center"><span class="glyphicon glyphicon-plus-sign"></span> Ajouter un rôle</div>
             <div class="panel-body">
                 <form action="index.php?page=binet&pageBinet=$binet" method=post>
  <p>
@@ -145,7 +145,7 @@ CHAINE_DE_FIN;
 echo<<< CHAINE_DE_FIN
     <div class='col-md-6 gris'>
             <div class="panel panel-danger">
-            <div class="panel-heading center">Retirer un rôle</div>
+            <div class="panel-heading center"><span class="glyphicon glyphicon-minus-sign"></span>Retirer un rôle</div>
             <div class="panel-body">
 <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
         <thead class="thead-dark">
@@ -463,9 +463,8 @@ function printAddItemForms($dbh, $binet){
     else $cautionItem="";
     
     echo <<< CHAINE_DE_FIN
-    <form action=index.php?page=binet method=post enctype='multipart/form-data'>
+    <form action="index.php?page=binet&pageBinet=$binet" method=post enctype='multipart/form-data'>
     <div class='col-md-6 gris'>    
-        <input type="hidden" name="pageBinet" value="$binet" />
  <p>
   <label for="nomItem">Nom :</label>
   <input class="form-control" id="nomItem" type=text name=nomItem value='$nomItem' required>
@@ -515,7 +514,7 @@ CHAINE_DE_FIN;
   <input class="form-control" id="cautionItem" type=number step='0.01' name=cautionItem value='$cautionItem'>
   <div class="input-group-addon">&euro;</div></div>
  </p>
- <input type=submit class="btn btn-warning" value="Ajouter l'objet">
+ <button type=submit class="btn btn-warning" ><span class="glyphicon glyphicon-plus-sign"></span> Ajouter l'objet</button>
  </form>
     </div>
 CHAINE_DE_FIN;
@@ -525,7 +524,7 @@ function printGestionItemsForm($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class="container">
 <div class="panel panel-warning toBeClicked ">
-            <div class="panel-heading isClickable center">Gestion de l'inventaire</div>
+            <div class="panel-heading isClickable center"><span class="glyphicon glyphicon-wrench"></span> Gestion de l'inventaire</div>
             <div class="panel-body toBeToggled">
     <div class='row'>
 CHAINE_DE_FIN;
@@ -569,7 +568,7 @@ function printGestionDemandes($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class="container">
     <div class="panel panel-warning toBeClicked">
-            <div class="panel-heading isClickable center"  >Gestion des demandes et des prêts.</div>
+            <div class="panel-heading isClickable center"><span class="glyphicon glyphicon-list-alt"></span> Gestion des demandes et des prêts.</div>
             <div class="panel-body panel-collapse collapse toBeToggled">
     <div class='row'>
 CHAINE_DE_FIN;
@@ -586,7 +585,7 @@ function printDemandeEnCours($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class='col-md-6'>
         <div class="panel panel-success">
-            <div class="panel-heading center"> Demandes en cours </div>
+            <div class="panel-heading center"><span class="glyphicon glyphicon-time"></span> Demandes en cours </div>
             <ul class="list-group">    
 CHAINE_DE_FIN;
     genereDemandeEnCours($dbh, $binet);
@@ -704,7 +703,7 @@ function printPretsEnCours($dbh, $binet){
     echo <<< CHAINE_DE_FIN
     <div class='col-md-6'>
         <div class="panel panel-danger">
-            <div class="panel-heading center"> Prêts en cours </div>
+            <div class="panel-heading center"><span class="glyphicon glyphicon-calendar"></span> Prêts en cours </div>
             <div class="panel-body panel-collapse">
     <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
             <thead class="thead-dark">
@@ -833,9 +832,10 @@ function encaisseCaution($dbh, $pretID){
         
 if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"]) && $_GET["pageBinet"]!="Administrateurs"){
     $binet= htmlspecialchars($_GET["pageBinet"]);
-    printHeaderPage($binet);
+    printHeaderPage($binet, Binet::getImageBinet($dbh, $binet));
     //Si la page s'affiche, on sait par la condition dans index.php que $_SESSION[loggedIn] est actif et que l'utilisateur a un login.
     $role; //rôle du visiteur pour ce binet.
+    $isManager=false;
     if (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] && (Utilisateur::isAdminBinet($dbh, $_SESSION["login"], $binet) || Utilisateur::isAdmin($dbh, $_SESSION["login"]))){
         $role="admin";
         $isManager=true;
@@ -856,7 +856,9 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
                 echo "<div class='container'><span class='enregistrement-invalide'>Erreur.</span></div><br/>";
             }
         }
-        genereLeaderBoard($dbh, $binet);
+    }
+    genereLeaderBoard($dbh, $binet);
+    if ($isManager){
         printAdministration($dbh, $binet);
     } elseif (isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"] && Utilisateur::isMatosManager($dbh, $_SESSION["login"], $binet)) {
         $role="matosManager";
@@ -916,18 +918,19 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
         if (isset($error_file)){
            echo "<div><span class='enregistrement-invalide'>Upload impossible : $error_file</span></div><br/>"; //erreur rencontrée : il faut avoir tous les droits sur le dossier /image
         } else{
-            $adresse_image="images/items/image-item".date('YmdHis').".png";
+            $dateToInsert=date('YmdHis');
+            $adresse_image="images/items/image".$nomItem.$dateToInsert.".png";
             $resultat = move_uploaded_file($_FILES['imageItem']['tmp_name'], $adresse_image);
             if ($resultat){
                echo "<p class='enregistrement-valide'>L'image a bien été téléversée !</p>";
-                $imageItem="image-item".date('YmdHis').".png";
+                $imageItem="image".$nomItem.$dateToInsert.".png";
             } else{
-                 $imageItem=NULL;
+                 $imageItem="default-itemlogo.png";
                   echo "<p class='enregistrement-invalide'>BUG : l'image n'a pas pu être téléversée !</p>";
             }
         }
         } else{
-            $imageItem=NULL;
+            $imageItem="default-itemlogo.png";
         }  
           if (addItem($dbh, $nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, $descriptionItem, $imageItem, $isOffrePublicItem, $isStockPublicItem, $cautionItem)){
               echo "<p class='enregistrement-valide'>Enregistrement dans le stock effectué !</p>";

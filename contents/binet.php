@@ -11,13 +11,11 @@ function printHeaderPage($binet, $image){ //TODO : rajouter l'image du binet ?
             <h1>$binet</h1>
         <p>Consultez ici ce que ce binet souhaite vous proposer.</p>
     </div>
-</div>
 CHAINE_DE_FIN;
 }
 
 function genereLeaderBoard($dbh, $binet){
     echo <<< CHAINE_DE_FIN
-    <div class="container">
         <div class="panel panel-info toBeClicked">
             <div class="panel-heading isClickable center"><span class="glyphicon glyphicon-home"></span> Leaderboard</div>
             <div class="panel-body toBeToggled">
@@ -184,10 +182,77 @@ function DeleteRole($dbh, $login, $binet, $role){
     return $resultat;
 }
 
+function printItemsUser($dbh, $binet){
+    $items = Item::getItemsFromBinets($dbh, $binet);
+    $nothingToShow = true;
+    echo "<div class='panel panel-primary'><div class='panel-heading center'>Inventaire</div>";
+    echo "<ul class='list-group'>";
+    foreach ($items as $item) {
+        if($item->offre){
+            $nothingToShow = false;
+            echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>";
+            echo "<a href='index.php?page=item&id={$item->id}'><img src='images/items/" . htmlspecialchars($item->image) . "' class='image-item-Manager'/></a><br/>";
+            echo "</div><div class='media-body'>";
+            echo "<h4 class='media-heading'><a href='index.php?page=item&id={$item->id}'>" . htmlspecialchars($item->nom) . "</a></h4>";
+            echo "<div class='container-fluid'><div class='row'>";
+            echo "<div class='col-md-4 col-sm-4'><p style='text-align: justify'>" . htmlspecialchars($item->description) . "</p></div>";
+            echo "<div class='col-md-4 col-sm-4'><p><label>Type :</label> " . htmlspecialchars($item->type) . "</p>";
+            echo "<p><label>Marque :</label> " . htmlspecialchars($item->marque) . "</p></div>";
+            echo "<div class='col-md-4 col-sm-4'>";
+            if ($item->isstockpublic)
+                echo "<p><label>Quantité disponible :</label> " . htmlspecialchars($item->quantite) . "</p>";
+            if (strlen($item->caution)>0)
+                echo "<p><label>Caution :</label> " . htmlspecialchars($item->caution) . " &euro;</p></div>";
+            else
+                echo "<p><label>Caution :</label> Non renseigné ou sans caution.</p></div>";
+            echo "</div></div>";
+            echo "</div>";
+        }
+    }
+    if($nothingToShow)
+        echo "<li class='list-group-item'><h4 style='text-align: center; font-style: italic'>Ce binet n'a pas d'items à afficher...</h4></li>";
+    echo "</ul></div>";
+}
+
+function printItemsManager($dbh, $binet){
+    $items = Item::getItemsFromBinets($dbh, $binet);
+    $nothingToShow = true;
+    echo "<div class='panel panel-primary'><div class='panel-heading center'>Inventaire</div>";
+    echo "<ul class='list-group'>";
+    foreach ($items as $item) {
+        $nothingToShow = false;
+        echo "<li class='list-group-item'><div class='media'>";
+        echo "<div class='media-left media-middle' style='text-align: center;'><img src='images/items/" . htmlspecialchars($item->image) . "' class='image-item-Manager'/>";
+        echo "<a href='index.php?page=item&id={$item->id}' class='btn btn-primary' style='margin:5px'><span class='glyphicon glyphicon-book'></span> Voir la page</a><br/>";
+        echo "<form action='index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "' method='post'>";
+        echo "<button type='submit' class='btn btn-danger' name='itemDeleteID' value='{$item->id}'><span class='glyphicon glyphicon-trash'></span> Supprimer</button></form>";
+        echo "</div><div class='media-body'><div class='container-fluid'><div class='row'><form action='index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "' method='post'>";
+        echo "<div class='col-md-4 col-sm-4'><p><input type='text' name='nom' value='" . htmlspecialchars($item->nom) . "' class='form-control' required></p>";
+        echo "<p><label for='description'>Description :</label><textarea class='form-control' name='description' id='description' rows='5' required/>" . htmlspecialchars($item->description) . "</textarea></p></div>";
+        echo "<div class='col-md-4 col-sm-4'><p><label for='type'>Type :</label><select class='form-control' id='type' name='type' required>";
+        generateTypesSelected($dbh, $item->type);
+        echo "</select></p";
+        echo "<p><label for='marque'>Marque :</label> <input type='text' name='marque' value='" . htmlspecialchars($item->marque) . "' class='form-control' required></p>";
+        echo "<p><label>Offre publique ?</label> <label class='radio-inline'><input type='radio' value='oui' name=isOfferPublic id='OfferPublic' checked>Oui</label>";
+        echo "<label class='radio-inline'><input type='radio' value='non' name=isOfferPublic id='OfferPrive'>Non</label></p>";
+        echo "<p><label>Stock public ?</label> <label class='radio-inline'><input type='radio' value='oui' name=isStockPublic id='StockPublic' checked>Oui</label>";
+        echo "<label class='radio-inline'><input type='radio' value='non' name=isStockPublic id='StockPrive'>Non</label></p></div>";
+        echo "<div class='col-md-4 col-sm-4'>";
+        echo "<p><label for='stockQuantity'>Quantité disponible :</label> <input class='form-control' type='number' value='" . htmlspecialchars($item->quantite) . "' min='0' name='stockQuantity' id='stockQuantity' required></p>";
+        echo "<p><label for='caution'>Caution :</label> <div class='input-group'><input class='form-control' type='number' value='" . htmlspecialchars($item->caution) . "' step='0.01' name=caution id='caution' min='0' required><div class='input-group-addon'>&euro;</div></div></p>";
+        echo "<p><button type='submit' class='btn btn-warning' name='itemUpdateID' value='{$item->id}'><span class='glyphicon glyphicon-edit'></span> Modifier</button></p></div></form>";
+        echo "</div></div>";
+        echo "</div></li>";
+    }
+    if($nothingToShow)
+        echo "<li class='list-group-item'><h4 style='text-align: center; font-style: italic'>Ce binet n'a pas d'items à afficher...</h4></li>";
+    echo "</ul></div>";
+}
+
 function printTableItems($dbh, $isManager, $binet){
      echo <<< CHAINE_DE_FIN
     <div class="container-fluid">
-    <table class="table table-striped table-bordered sortable">
+    <table class="table table-striped table-bordered sortable" style="table-layout:fixed">
         <thead class="thead-dark">
             <th scope="col" >Nom</th>
             <th scope="col" >Marque</th>
@@ -259,7 +324,7 @@ CHAINE_DE_FIN;
         echo "</td><td class='description-search'>";
         if ($isManager){
             $description= htmlspecialchars($resultat->description);
-            echo "<label for='description'>Description modifiable : </label><textarea name='description' rows='5'/>$description</textarea>";
+            echo "<label for='description'>Description modifiable : </label><textarea class='form-control' name='description' rows='5'/>$description</textarea>";
         } else{
         echo htmlspecialchars($resultat->description);
         }
@@ -287,7 +352,7 @@ CHAINE_DE_FIN;
             echo <<<CHAINE_DE_FIN
             <p>
                 <label for="stockQuantity">Stock:</label>
-                <input type=number value=$stockNumber step='any' name=stockQuantity id="stockQuantity">
+                <input class="form-control" type='number' value='$stockNumber' step='any' name=stockQuantity id="stockQuantity">
             </p>
             <p>Stock Public :<br/>
             <input type="radio" value='oui' name=isStockPublic id="StockPublic" checked><label for="StockPublic">oui</label><br/>
@@ -311,7 +376,9 @@ CHAINE_DE_FIN;
             $caution=htmlspecialchars($resultat->caution);
             echo <<< CHAINE_DE_FIN
             <label for="caution">Montant :</label>
-            <input type=number value=$caution step='0.01' name=caution id="caution" min='0'>
+            <div class="input-group">
+            <input class="form-control" type=number value=$caution step='0.01' name=caution id="caution" min='0'>
+            <div class="input-group-addon">&euro;</div></div>
 CHAINE_DE_FIN;
             
         }
@@ -334,10 +401,10 @@ CHAINE_DE_FIN;
     }
 }
 
-function updateStock($dbh, $stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID){
-    $query="UPDATE `items` SET `quantite`=? , `description`=?, `offre`=?, `isstockpublic`=? , `caution`=? WHERE `id`=? ;";
+function updateStock($dbh, $nom, $marque, $type, $stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID){
+    $query="UPDATE `items` SET nom = ?, marque = ?, type = ?, `quantite`=? , `description`=?, `offre`=?, `isstockpublic`=? , `caution`=? WHERE `id`=? ;";
     $sth=$dbh->prepare($query);
-    $sth->execute(array($stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID));
+    $sth->execute(array($nom, $marque, $type, $stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID));
     $sth->closeCursor();
 }
 
@@ -359,6 +426,20 @@ function genereTypes($dbh){
     while($type=$sth->fetch()){
         $toPrint=$type['nom'];
         echo "<option>$toPrint</option>";
+    }
+       
+    $sth->closeCursor();
+}
+
+function generateTypesSelected($dbh, $typeSelected){
+    $sth=$dbh->prepare("SELECT `nom` FROM `types`");
+    $sth->execute();
+    while($type = $sth->fetch()){
+        $toPrint = $type['nom'];
+        if ($typeSelected == $toPrint)
+            echo "<option selected>" . htmlspecialchars($toPrint) . "</option>";
+        else
+            echo "<option>" . htmlspecialchars($toPrint) . "</option>";
     }
        
     $sth->closeCursor();
@@ -429,7 +510,9 @@ CHAINE_DE_FIN;
  </p>
  <p>
   <label for="cautionItem">Caution :</label>
+  <div class="input-group">
   <input class="form-control" id="cautionItem" type=number step='0.01' name=cautionItem value='$cautionItem'>
+  <div class="input-group-addon">&euro;</div></div>
  </p>
  <button type=submit class="btn btn-warning" ><span class="glyphicon glyphicon-plus-sign"></span> Ajouter l'objet</button>
  </form>
@@ -862,6 +945,9 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
             isset($_POST['isOfferPublic']) && $_POST['isOfferPublic']!="" &&
             isset($_POST['isStockPublic']) && $_POST['isStockPublic']!="" &&
             isset($_POST['caution']) && $_POST['caution']!="" &&
+            isset($_POST['nom']) && $_POST['nom']!="" &&
+            isset($_POST['marque']) && $_POST['marque']!="" &&
+            isset($_POST['type']) && $_POST['type']!="" &&
             isset($_POST['itemUpdateID']) && $_POST['itemUpdateID']!=""){
             $stockQuantity= htmlspecialchars($_POST['stockQuantity']);
             $description= htmlspecialchars($_POST['description']);
@@ -869,12 +955,17 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
             $isStockPublic= $_POST['isStockPublic']=="oui" ? true : false;
             $caution= htmlspecialchars($_POST['caution']);
             $itemUpdateID= htmlspecialchars($_POST['itemUpdateID']);
-            updateStock($dbh, $stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID);
+            $itemCheck = Item::getItemById($dbh, $_POST['itemUpdateID']);
+            $userCheck = $_SESSION['login'];
+            if(Utilisateur::isAdminBinet($dbh, $userCheck, $itemCheck->binet) || Utilisateur::isMatosManager($dbh, $userCheck, $itemCheck->binet))
+                updateStock($dbh, $_POST['nom'], $_POST['marque'], $_POST['type'], $stockQuantity, $description, $isOfferPublic, $isStockPublic, $caution, $itemUpdateID);
         }
         
-        if (isset($_POST["toDelete"]) && $_POST["toDelete"]==true &&
-            isset($_POST['itemUpdateID']) && $_POST['itemUpdateID']!=""){
-        deleteStock($dbh, $_POST["itemUpdateID"]);
+        if (isset($_POST['itemDeleteID']) && $_POST['itemDeleteID']!=""){
+            $itemCheck = Item::getItemById($dbh, $_POST['itemDeleteID']);
+            $userCheck = $_SESSION['login'];
+            if(Utilisateur::isAdminBinet($dbh, $userCheck, $itemCheck->binet) || Utilisateur::isMatosManager($dbh, $userCheck, $itemCheck->binet))
+                deleteStock($dbh, $_POST["itemDeleteID"]);
         }
         
         if (isset($_POST['toRefuseDemande']) && $_POST['toRefuseDemande'] && isset($_POST['demandeID']) && $_POST['demandeID']!=""){
@@ -900,7 +991,10 @@ if (isset($_GET["pageBinet"]) && Binet::doesBinetExist($dbh, $_GET["pageBinet"])
         printGestionDemandes($dbh, $binet);
     }
     
-    printTableItems($dbh, $isManager, $binet);
+    if($isManager)
+        printItemsManager($dbh, $binet);
+    else
+        printItemsUser($dbh, $binet);
     
 } else{
     require("erreur.php");

@@ -27,7 +27,7 @@ CHAINE_DE_FIN;
     
     
     echo <<< CHAINE_DE_FIN
-    </div></div></div>
+    </div></div>
 CHAINE_DE_FIN;
 }
 
@@ -109,7 +109,6 @@ if (isset($_POST["loginRoleBinetAdd"])) $loginRole=$_POST["loginRoleBinetAdd"];
 else $loginRole="''";
 
     echo <<< CHAINE_DE_FIN
-    <div class="container">
 <div class="panel panel-warning toBeClicked">
             <div class="panel-heading isClickable" style="text-align:center"><span class="glyphicon glyphicon-cog"></span> Administration des rôles</div>
             <div class="panel-body toBeToggled">
@@ -160,7 +159,7 @@ genereTableDelete($dbh, $binet);
 
 echo "</tbody></table>";
 
-echo"</div></div></div></div></div></div></div>";
+echo"</div></div></div></div></div></div>";
 }
 
 function AddRole($dbh, $login, $binet, $role){
@@ -522,7 +521,6 @@ CHAINE_DE_FIN;
 
 function printGestionItemsForm($dbh, $binet){
     echo <<< CHAINE_DE_FIN
-    <div class="container">
 <div class="panel panel-warning toBeClicked ">
             <div class="panel-heading isClickable center"><span class="glyphicon glyphicon-wrench"></span> Gestion de l'inventaire</div>
             <div class="panel-body toBeToggled">
@@ -532,7 +530,7 @@ CHAINE_DE_FIN;
     printAddItemForms($dbh, $binet);
     
     echo <<< CHAINE_DE_FIN
-    </div></div></div></div>
+    </div></div></div>
 CHAINE_DE_FIN;
     
 }
@@ -566,7 +564,6 @@ function addItem($dbh, $nomItem, $marqueItem, $typeItem, $binet, $quantiteItem, 
 
 function printGestionDemandes($dbh, $binet){
     echo <<< CHAINE_DE_FIN
-    <div class="container">
     <div class="panel panel-warning toBeClicked">
             <div class="panel-heading isClickable center"><span class="glyphicon glyphicon-list-alt"></span> Gestion des demandes et des prêts.</div>
             <div class="panel-body panel-collapse collapse toBeToggled">

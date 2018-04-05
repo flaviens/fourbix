@@ -7,7 +7,7 @@ function printHeaderPage($binet, $image){ //TODO : rajouter l'image du binet ?
     echo <<< CHAINE_DE_FIN
     <div class="container">
     <div class="jumbotron">
-            <img src="images/binets/$image" alt='$image' class='pageLogo'>
+            <img src="images/binets/$image" alt=\"$image\" class='pageLogo'>
             <h1>$binet</h1>
         <p>Consultez ici ce que ce binet souhaite vous proposer.</p>
     </div>
@@ -191,7 +191,7 @@ function printItemsUser($dbh, $binet){
         if($item->offre){
             $nothingToShow = false;
             echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>";
-            echo "<a href='index.php?page=item&id={$item->id}'><img src='images/items/" . htmlspecialchars($item->image) . "' class='image-item-Manager'/></a><br/>";
+            echo "<a href='index.php?page=item&id={$item->id}'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" class='image-item-Manager'/></a><br/>";
             echo "</div><div class='media-body'>";
             echo "<h4 class='media-heading'><a href='index.php?page=item&id={$item->id}'>" . htmlspecialchars($item->nom) . "</a></h4>";
             echo "<div class='container-fluid'><div class='row'>";
@@ -222,7 +222,7 @@ function printItemsManager($dbh, $binet){
     foreach ($items as $item) {
         $nothingToShow = false;
         echo "<li class='list-group-item'><div class='media'>";
-        echo "<div class='media-left media-middle' style='text-align: center;'><img src='images/items/" . htmlspecialchars($item->image) . "' class='image-item-Manager'/>";
+        echo "<div class='media-left media-middle' style='text-align: center;'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" class='image-item-Manager'/>";
         echo "<a href='index.php?page=item&id={$item->id}' class='btn btn-primary' style='margin:5px'><span class='glyphicon glyphicon-book'></span> Voir la page</a><br/>";
         echo "<form action='index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "' method='post'>";
         echo "<button type='submit' class='btn btn-danger' name='itemDeleteID' value='{$item->id}'><span class='glyphicon glyphicon-trash'></span> Supprimer</button></form>";

@@ -395,7 +395,7 @@ echo <<< CHAINE_DE_FIN
             </div>
         </div>
     </div>
-</div>
+</div></div></div>
 CHAINE_DE_FIN;
 
 } else{

@@ -34,6 +34,8 @@ footer{
     margin-top:15px;
     bottom:2px;
     width:100%;
+    color:white;
+    text-shadow:1px 1px 1px black;
 }
 
 .content{

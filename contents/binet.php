@@ -36,10 +36,10 @@ function genereRolesLeaderboard($dbh, $binet){
     $sth=$dbh->prepare($query);
     $sth->execute();
     $rolesToBePrinted=array("admin" => "Administrateurs", "matosManager" => "Respo Matériel", "membre" => "Membres");
-    $userQueue="''";
+    $userQueue=array();
     while($roles=$sth->fetch()){
         $role= htmlspecialchars($roles['nom']);
-        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? AND `utilisateur` NOT IN ($userQueue) GROUP BY `utilisateur`;";
+        $query="SELECT `utilisateur` FROM `membres` WHERE `binet`=? AND `role`=? GROUP BY `utilisateur`;";
         $sth2=$dbh->prepare($query);
         $sth2->execute(array(htmlspecialchars($binet), $role));
         $roleToBePrinted=$rolesToBePrinted[$role];
@@ -51,16 +51,18 @@ function genereRolesLeaderboard($dbh, $binet){
 CHAINE_DE_FIN;
         while ($user=$sth2->fetch()){
             $login= htmlspecialchars($user['utilisateur']);
-            $userQueue=$userQueue.", '$login'";
-            $query="SELECT `nom`, `prenom` FROM `utilisateurs` WHERE `login`=?";
-            $sth3=$dbh->prepare($query);
-            $sth3->execute(array($login));
-            $resultat=$sth3->fetch();
-            $nom=$resultat['nom'];
-            $prenom=$resultat['prenom'];
-            echo <<< CHAINE_DE_FIN
+            if (!in_array($login, $userQueue)){
+                array_push($userQueue, $login);
+                $query="SELECT `nom`, `prenom` FROM `utilisateurs` WHERE `login`=?";
+                $sth3=$dbh->prepare($query);
+                $sth3->execute(array($login));
+                $resultat=$sth3->fetch();
+                $nom=$resultat['nom'];
+                $prenom=$resultat['prenom'];
+                echo <<< CHAINE_DE_FIN
             <span class="glyphicon glyphicon-asterisk"></span> $prenom $nom (<span style="font-style:italic">$login</span>)<br/>
 CHAINE_DE_FIN;
+            }
         }
         echo "</div></div>";
     }

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.1)  5 APR 2018 04:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2018.2.1)  5 APR 2018 08:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1485,7 +1485,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 155--156
 
 File: polytechnique-logohori.pdf Graphic file (type pdf)
 <use polytechnique-logohori.pdf>
-Package pdftex.def Info: polytechnique-logohori.pdf used on input line 174.
+Package pdftex.def Info: polytechnique-logohori.pdf used on input line 170.
 (pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
  [5]
 File: polytechnique-filetlongrouge.pdf Graphic file (type pdf)
@@ -1511,7 +1511,7 @@ not changed.
 Here is how much of TeX's memory you used:
  14211 strings out of 493029
  206858 string characters out of 6136235
- 610958 words of memory out of 5000000
+ 620958 words of memory out of 5000000
  17440 multiletter control sequences out of 15000+600000
  84090 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1527,7 +1527,7 @@ s/type1/public/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr12.pfb><
 /public/lm/lmss12.pfb></usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></us
 r/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fonts/type1/pu
 blic/lm/lmsy8.pfb></usr/share/texmf/fonts/type1/public/lm/lmtt10.pfb>
-Output written on BINNINGER_OLIVEIRA-MARTINS_rapport.pdf (7 pages, 2021227 byte
+Output written on BINNINGER_OLIVEIRA-MARTINS_rapport.pdf (7 pages, 2021357 byte
 s).
 PDF statistics:
  335 PDF objects out of 1000 (max. 8388607)

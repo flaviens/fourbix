@@ -191,8 +191,10 @@ function printItemsUser($dbh, $binet){
     foreach ($items as $item) {
         if($item->offre){
             $nothingToShow = false;
-            echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>";
-            echo "<a href='index.php?page=item&id={$item->id}'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" class='image-item-Manager'/></a><br/>";
+            /*echo "<li class='list-group-item'><div class='media'><div class='media-left media-middle' style='text-align: center;'>";*/
+            /*echo "<a href='index.php?page=item&id={$item->id}'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" class='image-item-Manager'/></a><br/>";*/
+            echo "<li class='list-group-item'><div class='media'>";
+            echo "<div class='media-left media-middle' style='text-align: center;'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" style='max-width: 150px; max-height: 150px;'/>";
             echo "</div><div class='media-body'>";
             echo "<h4 class='media-heading'><a href='index.php?page=item&id={$item->id}'>" . htmlspecialchars($item->nom) . "</a></h4>";
             echo "<div class='container-fluid'><div class='row'>";

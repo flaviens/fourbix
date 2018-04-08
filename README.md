@@ -1,4 +1,4 @@
-# fourbix
+# FourbiX
 
 Plateforme de prêts et gestion des matériels des binets.
 

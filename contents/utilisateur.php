@@ -4,8 +4,10 @@ $user = Utilisateur::getUtilisateur($dbh, $_SESSION['login']);
 
 if (isset($_POST['abandonnerBinet']) and ctype_digit($_POST['abandonnerBinet'])){
 	$member = Binet::getMemberById($dbh, $_POST['abandonnerBinet']);
-	if ($member['utilisateur'] == $_SESSION['login'])
+	if ($member['utilisateur'] == $_SESSION['login']){
+		echo "coucou";
 		Binet::deleteBinetMember($dbh, $member['id']);
+	}
 }
 
 if (isset($_POST['suprimmerCompte']) and $_POST['suprimmerCompte']){

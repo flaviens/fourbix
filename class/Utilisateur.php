@@ -49,7 +49,7 @@ class Utilisateur {
     }
 
     public static function testerMdp($dbh, $login, $mdp) {
-        $sth = $dbh->prepare("SELECT `password` FROM `utilisateurs` WHERE `login` = ?;");
+        $sth = $dbh->prepare("SELECT `password` FROM `utilisateurs` WHERE `login` COLLATE utf8_bin = ?");
         $resultat = $sth->execute(array($login));
         $trueMDP = $sth->fetch(PDO::FETCH_ASSOC);
         if (SHA1($mdp. Utilisateur::$salt) == $trueMDP["password"]) {

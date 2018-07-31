@@ -225,15 +225,15 @@ function printItemsManager($dbh, $binet){
         echo "<li class='list-group-item'><div class='media'>";
         echo "<div class='media-left media-middle' style='text-align: center;'><img src=\"images/items/" . htmlspecialchars($item->image) . "\" alt=\"images/items/".htmlspecialchars($item->image)."\" class='image-item-Manager'/>";
         echo "<a href='index.php?page=item&id={$item->id}' class='btn btn-primary' style='margin:5px'><span class='glyphicon glyphicon-book'></span> Voir la page</a><br/>";
-        echo "<form action='index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "' method='post'>";
+        echo "<form action=\"index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "\" method='post'>";
         echo "<button type='submit' class='btn btn-danger' name='itemDeleteID' value='{$item->id}'><span class='glyphicon glyphicon-trash'></span> Supprimer</button></form>";
-        echo "</div><div class='media-body'><div class='container-fluid'><div class='row'><form action='index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "' method='post'>";
-        echo "<div class='col-md-4 col-sm-4'><p><input type='text' name='nom' value='" . htmlspecialchars($item->nom) . "' class='form-control' required></p>";
+        echo "</div><div class='media-body'><div class='container-fluid'><div class='row'><form action=\"index.php?page=binet&pageBinet=" . htmlspecialchars($binet) . "\" method='post'>";
+        echo "<div class='col-md-4 col-sm-4'><p><input type='text' name='nom' value=\"" . htmlspecialchars($item->nom) . "\" class='form-control' required></p>";
         echo "<p><label for='description'>Description :</label><textarea class='form-control' name='description' id='description' rows='5' required/>" . htmlspecialchars($item->description) . "</textarea></p></div>";
         echo "<div class='col-md-4 col-sm-4'><p><label for='type'>Type :</label><select class='form-control' id='type' name='type' required>";
         generateTypesSelected($dbh, $item->type);
         echo "</select></p";
-        echo "<p><label for='marque'>Marque :</label> <input type='text' name='marque' value='" . htmlspecialchars($item->marque) . "' class='form-control' required></p>";
+        echo "<p><label for='marque'>Marque :</label> <input type='text' name='marque' value=\"" . htmlspecialchars($item->marque) . "\" class='form-control' required></p>";
         echo "<p><label>Offre publique ?</label> <label class='radio-inline'><input type='radio' value='oui' name=isOfferPublic id='OfferPublic' checked>Oui</label>";
         echo "<label class='radio-inline'><input type='radio' value='non' name=isOfferPublic id='OfferPrive'>Non</label></p>";
         echo "<p><label>Stock public ?</label> <label class='radio-inline'><input type='radio' value='oui' name=isStockPublic id='StockPublic' checked>Oui</label>";
@@ -468,11 +468,11 @@ function printAddItemForms($dbh, $binet){
     <div class='col-md-6 gris'>    
  <p>
   <label for="nomItem">Nom :</label>
-  <input class="form-control" id="nomItem" type=text name=nomItem value='$nomItem' required>
+  <input class="form-control" id="nomItem" type=text name=nomItem value="$nomItem" required>
  </p>
  <p>
   <label for="marqueItem">Marque :</label>
-  <input class="form-control" id="marqueItem" type=text name=marqueItem value='$marqueItem'>
+  <input class="form-control" id="marqueItem" type=text name=marqueItem value="$marqueItem">
  </p>
  <p>
   <label for="typeItem">Type :</label>
@@ -502,7 +502,7 @@ CHAINE_DE_FIN;
 <div class='col-md-6 gris'>
  <p>
   <label for="descriptionItem">Description :</label><br/>
-  <textarea class="form-control" id="descriptionItem" rows=5 name=descriptionItem>$descriptionItem</textarea>
+  <textarea class="form-control" id="descriptionItem" rows=5 name="descriptionItem">$descriptionItem</textarea>
  </p>
  <p>
   <label>Offre publique ? </label>

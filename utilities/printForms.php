@@ -1,6 +1,6 @@
 <?php
 
-function printLoginForm($askedPage){
+/*function printLoginForm($askedPage){
     global $validLogin;
     if (isset($_POST["login"])){
         $login=$_POST["login"];
@@ -30,9 +30,9 @@ function printLoginForm($askedPage){
     </div>
     </div>
     </div>
-    
+
 CHAINE_DE_FIN;
-}
+}*/
 
 //inutile : c'est le bouton connexion qui permet de se déconnecter.
 function printLogoutForm(){

@@ -41,7 +41,7 @@ numbers=left,
 }
 
 
-\title{Fourbix}
+\title{Matos}
 \logo{../images/logo/accueil-logo.png}
 \subtitle{INF473W Modal Web - Rapport de projet}
 \author{Alexandre \bsc{Binninger} - Gabriel \bsc{Oliveira Martins}}
@@ -60,14 +60,14 @@ numbers=left,
 
 \subsection{A quoi sert ce site ?}
 
-\emph{FourbiX} est un site de prêt de matériel par les binets. Il permet ainsi aux utilisateurs de consulter les offres des binets et de réaliser facilement leur demande en ligne. L'échange entre les binets est alors facilité et les démarches sont fluidifiées. Le nom du site est inspiré du mot d'argot militaire <<fourbi>> qui désigne l'ensemble des possessions d'un soldat.
+\emph{Matos} est un site de prêt de matériel par les binets. Il permet ainsi aux utilisateurs de consulter les offres des binets et de réaliser facilement leur demande en ligne. L'échange entre les binets est alors facilité et les démarches sont fluidifiées. Le nom du site est inspiré du mot d'argot militaire <<fourbi>> qui désigne l'ensemble des possessions d'un soldat.
 
-Nous avons travaillé avec GitHub pour gérer ce projet et vous pouvez trouver le dépôt à l'adresse suivante : \url{https://github.com/gabrieloliveiragom/fourbix}. 
+Nous avons travaillé avec GitHub pour gérer ce projet et vous pouvez trouver le dépôt à l'adresse suivante : \url{https://github.com/gabrieloliveiragom/matos}. 
 
 
-\subsection{Comment utiliser FourbiX ?}
+\subsection{Comment utiliser Matos ?}
 
-Sur \emph{FourbiX}, plusieurs possibilités s'offrent à l'utilisateur pour effectuer ses recherche. Il est par exemple possible de taper directement le nom d'un item dans la barre de recherche ou alors de rechercher un binet dans le catalogue. Les pages des binets exposent le matériel qu'ils mettent à disposition et il suffit de cliquer sur un objet pour arriver sur sa page dédiée et ainsi réaliser une demande. Les demandes peuvent être faites à son propre nom ou au nom d'un binet auquel on appartient. On peut les consulter directement via la page dédiée "Demandes".\\
+Sur \emph{Matos}, plusieurs possibilités s'offrent à l'utilisateur pour effectuer ses recherche. Il est par exemple possible de taper directement le nom d'un item dans la barre de recherche ou alors de rechercher un binet dans le catalogue. Les pages des binets exposent le matériel qu'ils mettent à disposition et il suffit de cliquer sur un objet pour arriver sur sa page dédiée et ainsi réaliser une demande. Les demandes peuvent être faites à son propre nom ou au nom d'un binet auquel on appartient. On peut les consulter directement via la page dédiée "Demandes".\\
 
 Certaines informations sur l'objet sont disponibles : évidemment son nom et la quantité restante, mais il est possible pour un responsable matériel du binet d'indiquer une courte description et de déposer une photo de l'objet qui seront affichées dans le caroussel du catalogue. Le binet peut fixer une caution s'il le souhaite.\\
 
@@ -128,10 +128,10 @@ $('.isClickable').click(function(){
 
 \subsection{La Base de Données}
 
-Cette section explique la manière dont la base de données a été conçues. La BDD \emph{FourbiX} est constituée des tables \textbf{\emph{utilisateurs}} et \textbf{\emph{binets}} reliés par une table relationnelle \textbf{\emph{membres}} qui relie chaque utilisateur à leur \textbf{\emph{role}} dans le binet correspondant. Les informations des \textbf{\emph{items}} sont reliées à un binet en particulier. Ils sont notamment d'un certain type (dans \textbf{\emph{types}}). Les utilisateurs peuvent réaliser pour chaque item des \textbf{\emph{demandes}} qui peuvent être acceptées : elles deviennent alors des \textbf{\emph{pretoperation}}s qui seront archivées dans la BDD si l'objet est rendu ou dont la \textbf{\emph{caution}} sera encaissée dans le cas contraire. L'utilisateur peut remonter des bugs (\textbf{\emph{bugreports}}) à l'équipe d'administration du site.\\
+Cette section explique la manière dont la base de données a été conçues. La BDD \emph{Matos} est constituée des tables \textbf{\emph{utilisateurs}} et \textbf{\emph{binets}} reliés par une table relationnelle \textbf{\emph{membres}} qui relie chaque utilisateur à leur \textbf{\emph{role}} dans le binet correspondant. Les informations des \textbf{\emph{items}} sont reliées à un binet en particulier. Ils sont notamment d'un certain type (dans \textbf{\emph{types}}). Les utilisateurs peuvent réaliser pour chaque item des \textbf{\emph{demandes}} qui peuvent être acceptées : elles deviennent alors des \textbf{\emph{pretoperation}}s qui seront archivées dans la BDD si l'objet est rendu ou dont la \textbf{\emph{caution}} sera encaissée dans le cas contraire. L'utilisateur peut remonter des bugs (\textbf{\emph{bugreports}}) à l'équipe d'administration du site.\\
 
 \begin{center}
-\includegraphics[scale=0.3]{BDD_FourbiX.png}
+\includegraphics[scale=0.3]{BDD_Matos.png}
 \end{center}
 
 Toutes les tables sont reliées entre elles par des clefs étrangères lorsque cela est nécessaire. La suppression d'entrées est ajustée pour que les données soient correctement mises à jour. Par exemple, supprimer un binet ou un utilisateur supprime son entrée dans \textbf{\emph{membres}}, mais supprimer un élément de \textbf{\emph{membres}} ne supprime pas le binet ni l'utilisateur.
@@ -200,6 +200,6 @@ Le traitement des caractéristiques de l'image est bien réalisé côté serveur
 
 \section{Conclusion}
 
-Le Modal Web a été une expérience enrichissante et la réalisation de FourbiX aura eu le double avantage de nous permettre de réaliser un projet concret en informatique et de proposer un service qui saura trouver une utilité auprès des élèves de l'École Polytechnique.
+Le Modal Web a été une expérience enrichissante et la réalisation de Matos aura eu le double avantage de nous permettre de réaliser un projet concret en informatique et de proposer un service qui saura trouver une utilité auprès des élèves de l'École Polytechnique.
 
 \end{document}

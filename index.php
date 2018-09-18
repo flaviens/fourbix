@@ -1,6 +1,6 @@
 <?php
-session_name("Session21nefontqu1"); #TODO : changer le nom ? A quoi sert le nom ? 
-// ne pas mettre d'espace dans le nom de session !
+session_name("sess"); #TODO
+
 session_start();
 if (!isset($_SESSION['initiated'])) {
     session_regenerate_id();
@@ -45,8 +45,10 @@ generateNavBar($dbh, isset($_SESSION["loggedIn"]) && $_SESSION["loggedIn"]);
                         require("contents/$askedPage.php");
                     }
                     else{
-                        if ($askedPage=='inscription')
+                        if ($askedPage == 'inscription')
                             require("contents/inscription.php");
+                        else if($askedPage == 'login')
+                            require("contents/login.php");
                         else
                             require("contents/accueil.php");
                     }
@@ -65,4 +67,3 @@ generateHTMLFooter();
 
 $dbh=null;
 ?>
-

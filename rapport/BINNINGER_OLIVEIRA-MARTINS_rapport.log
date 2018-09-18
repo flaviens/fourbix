@@ -1328,7 +1328,7 @@ ourte des-crip-tion de son
 
 
 Underfull \hbox (badness 3312) in paragraph at lines 93--94
-\T1/lmr/m/n/10.95 af-fi-chée est le logo du bi-net s'il a été ren-sei-gné ou un
+\T1/lmr/m/n/10.95 af-fi-chï¿½e est le logo du bi-net s'il a ï¿½tï¿½ ren-sei-gnï¿½ ou un
 e image
  []
 
@@ -1354,19 +1354,19 @@ Overfull \hbox (9.52446pt too wide) in paragraph at lines 102--103
 
 
 Underfull \hbox (badness 1062) in paragraph at lines 104--105
-[][]\T1/lmr/m/n/10.95 Bootstrap nous a été for-te-ment utile, no-tam-ment pour 
+[][]\T1/lmr/m/n/10.95 Bootstrap nous a ï¿½tï¿½ for-te-ment utile, no-tam-ment pour 
 la dis-po-
  []
 
 
 Underfull \hbox (badness 2197) in paragraph at lines 104--105
-\T1/lmr/m/n/10.95 si-tion de nos dif-fé-rents élé-ments et la mise en forme qui
+\T1/lmr/m/n/10.95 si-tion de nos dif-fï¿½-rents ï¿½lï¿½-ments et la mise en forme qui
  ac-com-
  []
 
 
 Underfull \hbox (badness 1701) in paragraph at lines 104--105
-\T1/lmr/m/n/10.95 nos pan-neaux avec un style ho-mo-gène, pour l'af-fi-chage de
+\T1/lmr/m/n/10.95 nos pan-neaux avec un style ho-mo-gï¿½ne, pour l'af-fi-chage de
  nos ta-
  []
 
@@ -1384,7 +1384,7 @@ er un \T1/lmr/m/it/10.95 jum-bo-
 
 
 Underfull \hbox (badness 2197) in paragraph at lines 104--105
-\T1/lmr/m/it/10.95 tron \T1/lmr/m/n/10.95 au dé-but de chaque page, pour af-fi-
+\T1/lmr/m/it/10.95 tron \T1/lmr/m/n/10.95 au dï¿½-but de chaque page, pour af-fi-
 cher la barre de na-vi-ga-
  []
 
@@ -1436,10 +1436,10 @@ Underfull \hbox (badness 10000) in paragraph at lines 131--132
 
  []
 
-<BDD_FourbiX.png, id=207, 1545.775pt x 873.2625pt>
-File: BDD_FourbiX.png Graphic file (type png)
- <use BDD_FourbiX.png>
-Package pdftex.def Info: BDD_FourbiX.png used on input line 134.
+<BDD_Matos.png, id=207, 1545.775pt x 873.2625pt>
+File: BDD_Matos.png Graphic file (type png)
+ <use BDD_Matos.png>
+Package pdftex.def Info: BDD_Matos.png used on input line 134.
 (pdftex.def)             Requested size: 463.73608pt x 261.98076pt.
 File: polytechnique-logohori.pdf Graphic file (type pdf)
 
@@ -1478,7 +1478,7 @@ File: polytechnique-logohori.pdf Graphic file (type pdf)
 <use polytechnique-logohori.pdf>
 Package pdftex.def Info: polytechnique-logohori.pdf used on input line 154.
 (pdftex.def)             Requested size: 97.76396pt x 42.67912pt.
- [4 <./BDD_FourbiX.png (PNG copy)> <./php.png>]
+ [4 <./BDD_Matos.png (PNG copy)> <./php.png>]
 Underfull \hbox (badness 10000) in paragraph at lines 155--156
 
  []

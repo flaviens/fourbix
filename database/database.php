@@ -2,8 +2,8 @@
 
 class Database {
     public static function connect() {
-        $dsn = 'mysql:dbname=fourbix;host=127.0.0.1';
-        $user = 'root';
+        $dsn = 'mysql:dbname=matos;host=127.0.0.1';
+        $user = 'matos';
         $password = '';
         $dbh = null;
         try {
@@ -15,14 +15,14 @@ class Database {
         }
         return $dbh;
     }
-    
+
     #Deja fait dans la classe utilisateur :
 //    public static function insererUtilisateur($dbh,$login,$mdp,$nom,$prenom,$promotion,$naissance,$email,$feuille){ //A REFAIRE
 //        $sth=$dbh->prepare("INSERT INTO `utilisateurs` (`login`, `mdp`, `nom`, `prenom`, `promotion`, `naissance`, `email`, `feuille`) VALUES(?,SHA1(?),?,?,?,?,?,?)");
 //        $sth=$dbh->prepare("INSERT INTO `utilisateurs` (`login`, `mdp`, `nom`, `prenom`, `promotion`, `naissance`, `email`, `feuille`) VALUES(?,SHA1(?),?,?,?,?,?,?)");
 //        $sth->execute(array($login,SHA1($mdp),$nom,$prenoms,$promotion,$naissance,$email,$feuille));
 //    }
-    
+
     public static function requete($dbh, $query, $tableau){ //effectuer une requête simple mais sécurisée)
         $sth=$dbh->prepare($query);
         $sth->execute($tableau);
@@ -30,7 +30,7 @@ class Database {
         return $result;
     }
 }
- 
+
 
 // opérations sur la base
 #$dbh = Database::connect();

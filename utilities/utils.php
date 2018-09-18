@@ -3,7 +3,7 @@ function generateHTMLHeader($titre, $linkCSS) {
 
     echo <<<CHAINE_DE_FIN
 <!DOCTYPE html>
-<html>         
+<html>
    <head>
         <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,18 +22,18 @@ function generateHTMLHeader($titre, $linkCSS) {
     </head>
         <body>
             <div class='upperNavBar'>
-            
+
             </div>
-            
+
 CHAINE_DE_FIN;
 }
 
 function generateHTMLFooter(){
     echo <<< CHAINE_DE_FIN
-    
+
     <footer class="page-footer font-small pt-4 mt-4">
         <div class="footer-copyright py-3 text-center">
-            Ce site a été réalisé en 2018 par des X2016 en modal Web.
+            Ce site a été réalisé en 2018 par des X2016 en modal Web. Propulsé par le BR.
         </div>
     </footer>
     </body>
@@ -55,7 +55,7 @@ function generateNavBar($dbh, $isLogged){ //TODO genere la navBar
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand titreSite" href="index.php">FourbiX</a>
+                <a class="navbar-brand titreSite" href="index.php">Matos</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav">
@@ -74,7 +74,7 @@ CHAINE_DE_FIN;
         $login= htmlspecialchars($_SESSION["login"]);
         $isAdmin= Utilisateur::isAdmin($dbh, $login);
         $binets= Binet::generateBinetsByMember($dbh, $login);
-        
+
             echo <<< CHAINE_DE_FIN
     <!-- Static navbar -->
     <nav class="navbar navbar-default" role="navigation" style="margin:2px">
@@ -86,7 +86,7 @@ CHAINE_DE_FIN;
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand titreSite" href="index.php">FourbiX</a>
+                <a class="navbar-brand titreSite" href="index.php">Matos</a>
             </div>
             <div class="navbar-collapse collapse" id="navbar">
                 <ul class="nav navbar-nav navbar-left">
@@ -102,7 +102,7 @@ CHAINE_DE_FIN;
                     echo <<< CHAINE_DE_FIN
                     <li class='dropdown'><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Mes binets<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                        
+
 CHAINE_DE_FIN;
             $i=0;
             foreach ($binets as $binet) {
@@ -116,11 +116,11 @@ CHAINE_DE_FIN;
                         <button type="submit" class="btn btn-default dropdownFont">$nom</button>
                     </form>
                 </li>
-                
+
 CHAINE_DE_FIN;
                 $i++;
             }
-            
+
             echo <<< CHAINE_DE_FIN
                         </ul>
                     </li>
@@ -141,7 +141,7 @@ CHAINE_DE_FIN;
                     <li><a href="index.php?page=utilisateur"><span class="glyphicon glyphicon-user"></span> $prenom</a></li>
                     <li><a href="index.php?todo=logout&page=accueil"><span class="glyphicon glyphicon-log-out"></span> Déconnexion</a></li>
                 </ul>
-                    
+
             </div>
         </div>
     </nav>
@@ -154,6 +154,11 @@ $page_list = array(
         "name" => "accueil",
         "title" => "Accueil",
         "menutitle" => "Accueil",
+        "loggedIn" => false),
+    array(
+        "name" => "login",
+        "title" => "Login",
+        "menutitle" => "Login",
         "loggedIn" => false),
     array(
         "name" => "catalogue",
@@ -223,11 +228,10 @@ function getPageTitle($askedPage){
     }
 }
 
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
 ?>
-

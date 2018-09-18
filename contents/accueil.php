@@ -4,7 +4,7 @@
     <div class="jumbotron">
         <img src='images/logo/accueil-logo.png' alt='accueil-logo.png' class='pageLogo'>
         <h1>Accueil</h1>
-        <p>Bienvenue sur <span class="nomSite"> FourbiX </span>!</p>
+        <p>Bienvenue sur <span class="nomSite"> Matos </span>!</p>
     </div>
     <h2>A quoi sert ce site ?</h2>
     <p class="accueil-content">Ce site vous permet d'emprunter du matériel à des binets. Besoin d'un clavier parce que le vôtre est tombé en panne ? D'une clef USB pour votre soutenance ? Besoin d'une caméra pour un clip ? Ou encore de matériel de cuisine spécialisé pour votre repas de binet ? Venez trouver ici tout ce dont vous avez besoin !</p>
@@ -20,11 +20,10 @@ if (!isset($_SESSION["loggedIn"]) || !$_SESSION["loggedIn"]) {
     echo <<< CHAINE_DE_FIN
     <h2>Connexion</h2>
     <p class='accueil-content'>Connectez-vous pour l'accès complet au site ou <a href='index.php?page=inscription'>inscrivez-vous.</a></p>
-
+    <p><input type="submit" class="btn btn-primary" value="Connexion via Frankiz" onclick="window.location.href='./index.php?page=login'" /></p>
 CHAINE_DE_FIN;
-   printLoginForm($askedPage);
 }
 
 ?>
-    
+
 </div>

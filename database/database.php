@@ -2,12 +2,12 @@
 
 class Database {
     public static function connect() {
+        require('password.php');
         $dsn = 'mysql:dbname=matos;host=127.0.0.1';
         $user = 'matos';
-        $password = '';
         $dbh = null;
         try {
-            $dbh = new PDO($dsn, $user, $password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
+            $dbh = new PDO($dsn, $user, $mysql_password,array(PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"));
             $dbh->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION );
         } catch (PDOException $e) {
             echo 'Connexion échouée : ' . $e->getMessage();
